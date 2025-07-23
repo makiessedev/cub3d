@@ -29,7 +29,7 @@ int main(void) {
 
   int gamemap[10][10] = {
       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-      {1, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
+      {1, 0, 0, 0, 1, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
       {1, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
       {1, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
       {1, 0, 0, 0, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
@@ -66,8 +66,25 @@ int main(void) {
     t_vector cameraPixel = vec_scale(player->plane, multiplier);
     t_vector rayDir = vec_add(player->dir, cameraPixel);
 
-    float deltaDistX = fabs(1 / rayDir.x);
-    float deltaDistY = fabs(1 / rayDir.y);
+    /*float deltaDistX; //= fabs(1 / rayDir.x);
+    float deltaDistY; //= fabs(1 / rayDir.y);
+
+    if (rayDir.x == 0) {
+      deltaDistX = 1;
+      deltaDistY = 0;
+    } else if (rayDir.y) {
+      deltaDistX = fabs(1 / rayDir.x);
+    }
+
+    if (rayDir.y == 0) {
+      deltaDistY = 1;
+      deltaDistX = 0;
+    } else if (rayDir.x) {
+      deltaDistY = fabs(1 / rayDir.y);
+    }*/
+
+    float deltaDistX = (rayDir.x == 0) ? 1e30 : fabs(1.0 / rayDir.x);
+    float deltaDistY = (rayDir.y == 0) ? 1e30 : fabs(1.0 / rayDir.y);
 
     t_vector mapPos = {floor(player->pos.x), floor(player->pos.y)};
 
@@ -118,12 +135,50 @@ int main(void) {
       }
     }
 
-    if (hitSide == 0) {
+    /*if (hitSide == 0) {
       perpendicularDist =
           fabs(wallMapPos.x - player->pos.x + ((1 - stepX) / 2.0)) / rayDir.x;
     } else {
       perpendicularDist =
           fabs(wallMapPos.y - player->pos.y + ((1 - stepY) / 2.0)) / rayDir.y;
+    }
+
+    if (isnan(perpendicularDist) || perpendicularDist <= 0) {
+      printf("Erro: perpendicularDist inválido: %f\n", perpendicularDist);
+      pixel++;
+      continue;
+    }*/
+
+    if (hitSide == 0) {
+      perpendicularDist = ddaLineSizeX - deltaDistX;
+    } else {
+      perpendicularDist = ddaLineSizeY - deltaDistY;
+    }
+
+    perpendicularDist = fabs(perpendicularDist);
+    if (perpendicularDist < 0.0001) {
+      printf("Erro: perpendicularDist muito pequeno: %f\n", perpendicularDist);
+      continue;
+    }
+
+    float wallLineHeight = height / perpendicularDist;
+    float lineStartY = (float)height / 2 - wallLineHeight / 2;
+    float lineEndY = (float)height / 2 + wallLineHeight / 2;
+
+    int lineStart = (int)lineStartY;
+    int lineEnd = (int)lineEndY;
+    if (lineStart < 0)
+      lineStart = 0;
+    if (lineEnd >= height)
+      lineEnd = height - 1;
+
+    x = (int)pixel; // coluna da tela
+
+    int wallColor = (hitSide == 0) ? 0xFF0000 : 0x880000; // exemplo
+
+    for (y = lineStart; y <= lineEnd; y++) {
+      int offset = (y * line_len) + (x * (bpp / 8));
+      *(unsigned int *)(addr + offset) = wallColor;
     }
 
     pixel++;
