@@ -98,15 +98,19 @@ int main(void) {
     int ddaLineSizeX = distToSideX;
     int ddaLineSizeY = distToSideY;
 
+    int hitSide;
+
     t_vector wallMapPos = {mapPos.x, mapPos.y};
 
     while (hit == false) {
       if (ddaLineSizeX < ddaLineSizeY) {
         wallMapPos.x += stepX;
         ddaLineSizeX += deltaDistX;
+        hitSide = 0;
       } else {
         wallMapPos.y += stepY;
         ddaLineSizeY += deltaDistY;
+        hitSide = 1;
       }
       if (gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > 0) {
         hit = true;
