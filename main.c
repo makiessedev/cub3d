@@ -66,23 +66,23 @@ int main(void) {
     t_vector cameraPixel = vec_scale(player->plane, multiplier);
     t_vector rayDir = vec_add(player->dir, cameraPixel);
 
-    float deltaDistX = fabs(vec_length(rayDir) / rayDir.x);
-    float deltaDistY = fabs(vec_length(rayDir) / rayDir.y);
+    float deltaDistX = fabs(1 / rayDir.x);
+    float deltaDistY = fabs(1 / rayDir.y);
 
     t_vector mapPos = {floor(player->pos.x), floor(player->pos.y)};
 
     int stepY;
     int stepX;
 
-    int distToSideX;
-    int distToSideY;
+    float distToSideX;
+    float distToSideY;
 
     if (rayDir.x < 0) {
       distToSideX = (player->pos.x - mapPos.x) * deltaDistX;
       stepX = -1;
     } else {
       distToSideX = (mapPos.x + 1 - player->pos.x) * deltaDistX;
-      stepX = -1;
+      stepX = 1;
     }
 
     if (rayDir.y < 0) {
@@ -95,10 +95,11 @@ int main(void) {
 
     bool hit = false;
 
-    int ddaLineSizeX = distToSideX;
-    int ddaLineSizeY = distToSideY;
+    float ddaLineSizeX = distToSideX;
+    float ddaLineSizeY = distToSideY;
 
     int hitSide;
+    float perpendicularDist;
 
     t_vector wallMapPos = {mapPos.x, mapPos.y};
 
@@ -115,6 +116,14 @@ int main(void) {
       if (gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > 0) {
         hit = true;
       }
+    }
+
+    if (hitSide == 0) {
+      perpendicularDist =
+          fabs(wallMapPos.x - player->pos.x + ((1 - stepX) / 2.0)) / rayDir.x;
+    } else {
+      perpendicularDist =
+          fabs(wallMapPos.y - player->pos.y + ((1 - stepY) / 2.0)) / rayDir.y;
     }
 
     pixel++;
