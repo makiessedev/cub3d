@@ -46,6 +46,10 @@ int main(void) {
   player->plane.x = 0.66;
   player->plane.y = 0;
 
+  // testando a reotation
+  player->dir = vec_rotate(player->dir, 1);
+  player->plane = vec_rotate(player->plane, 1);
+
   while (y < height) {
     if (y < height / 2)
       color = sky_color;
@@ -172,7 +176,7 @@ int main(void) {
     if (lineEnd >= height)
       lineEnd = height - 1;
 
-    x = (int)pixel; // coluna da tela
+    x = (int)pixel;
 
     int wallColor = (hitSide == 0) ? 0xFF0000 : 0x880000; // exemplo
 
