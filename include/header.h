@@ -15,6 +15,20 @@
 #define WIDTH 1600
 #define HEIGHT 900
 
+#define DESTROY_NOTIFY 17
+#define IGNORE_MASK 0
+#define KEYPRESS 2
+#define KEYPRESS_MASK 1L << 0
+#define ESC 65307
+#define MOVE_UP 119
+#define MOVE_UP2 65362
+#define MOVE_DOWN 115
+#define MOVE_DOWN2 65364
+#define MOVE_RIGHT 100
+#define MOVE_LEFT 97
+#define ROTATE_RIGHT 65361
+#define ROTATE_LEFT 65363
+
 typedef struct s_vector {
   float x;
   float y;
@@ -56,6 +70,8 @@ void init_player(t_player *player);
 void put_pixel(t_img_data *img_data, int x, int y, int color);
 void render_background(t_cub *cub);
 void render_walls(t_cub *cub3d);
-int handle_no_event(void *cub3d_ptr);
+int handle_keypress(int keycode, void *cub3d_ptr);
+int game_exit(t_cub *cub);
+int main_loop(t_cub *cub);
 
 #endif
