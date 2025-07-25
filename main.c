@@ -1,5 +1,4 @@
 #include "include/header.h"
-#include "mlx/mlx.h"
 
 int main(void) {
   t_cub cub3d;

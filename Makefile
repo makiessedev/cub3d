@@ -1,6 +1,6 @@
 NAME = cub
 CC			= cc
-CFLAGS		= -Wall -Wextra -Werror
+CFLAGS		= -Wall -Wextra -Werror -g
 
 SRC_DIR		= src
 INC_DIR		= include

@@ -51,14 +51,25 @@ typedef struct {
 } t_img_data;
 
 typedef struct {
+  void *img;
+  char *addr;
+  int width;
+  int height;
+  int bpp;
+  int line_len;
+  int endian;
+} t_texture;
+
+typedef struct {
   void *mlx;
   void *win;
   t_img_data img_data;
   int **gamemap;
   t_player *player;
+  t_texture *textures;
 } t_cub;
-
 t_vector vec_add(t_vector a, t_vector b);
+
 t_vector vec_sub(t_vector a, t_vector b);
 t_vector vec_scale(t_vector v, float scalar);
 float vec_dot(t_vector a, t_vector b);
@@ -73,5 +84,6 @@ void render_walls(t_cub *cub3d);
 int handle_keypress(int keycode, void *cub3d_ptr);
 int game_exit(t_cub *cub);
 int main_loop(t_cub *cub);
+void load_all_textures(t_cub *cub);
 
 #endif
