@@ -1,7 +1,7 @@
 #include "../include/header.h"
 
 void put_pixel(t_img_data *img_data, int x, int y, int color) {
-  if (x >= 0 && x < 1600 && y >= 0 && y < 900) { // Adicione checks de limite
+  if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
     int offset = (y * img_data->line_len) + (x * (img_data->bpp / 8));
     *(unsigned int *)(img_data->addr + offset) = color;
   }

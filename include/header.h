@@ -24,6 +24,8 @@ typedef struct {
   t_vector pos;
   t_vector dir;
   t_vector plane;
+  float move_speed;
+  float rot_speed;
 } t_player;
 
 typedef struct {
