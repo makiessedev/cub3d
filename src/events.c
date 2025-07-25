@@ -1,4 +1,3 @@
-
 #include "../include/header.h"
 
 int game_exit(t_cub *cub) {
@@ -19,8 +18,6 @@ int main_loop(t_cub *cub) {
 int handle_keypress(int keycode, void *cub3d_ptr) {
   t_cub *cub3d = (t_cub *)cub3d_ptr;
   t_player *player = cub3d->player;
-
-  printf("Tecla pressionada: %d\n", keycode);
 
   // Tecla ESC para sair
   if (keycode == ESC) {
