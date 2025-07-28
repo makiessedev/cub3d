@@ -21,10 +21,10 @@ void load_texture(t_cub *cub, t_texture *texture, char *relative_path, int index
 }
 
 void load_all_textures(t_cub *cub) {
-  load_texture(cub, &cub->textures[0], "./assets/textures/texture01.xpm", 0);
-  load_texture(cub, &cub->textures[1], "./assets/textures/texture02.xpm", 1);
-  load_texture(cub, &cub->textures[2], "./assets/textures/texture03.xpm", 2);
-  load_texture(cub, &cub->textures[3], "./assets/textures/texture04.xpm", 3);
+  load_texture(cub, &cub->textures[NORTH], "./assets/textures/north.xpm", NORTH);
+  load_texture(cub, &cub->textures[SOUTH], "./assets/textures/south.xpm", SOUTH);
+  load_texture(cub, &cub->textures[EAST], "./assets/textures/east.xpm", EAST);
+  load_texture(cub, &cub->textures[WEST], "./assets/textures/west.xpm", WEST);
 }
 
 

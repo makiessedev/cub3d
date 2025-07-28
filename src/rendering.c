@@ -86,11 +86,27 @@ void render_walls(t_cub *cub3d) {
     }
 
     float perpendicularDist;
-    if (hitSide == 0) {
+    float wallX;
+    t_texture *current_tex;
+    if (hitSide == 0) // parede vertical 
+    {
       perpendicularDist = ddaLineSizeX - deltaDistX;
+      wallX = cub3d->player->pos.y + perpendicularDist * rayDir.y;
+      if (rayDir.x > 0) {
+        current_tex = &cub3d->textures[WEST];
+      } else {
+        current_tex = &cub3d->textures[EAST];
+      }
     } else {
       perpendicularDist = ddaLineSizeY - deltaDistY;
+      wallX = cub3d->player->pos.x + perpendicularDist * rayDir.x;
+      if (rayDir.y > 0) {
+        current_tex = &cub3d->textures[NORTH];
+      } else {
+        current_tex = &cub3d->textures[SOUTH];
+      }
     }
+
 
     perpendicularDist = fabs(perpendicularDist);
     if (perpendicularDist < 0.0001) {
@@ -111,9 +127,20 @@ void render_walls(t_cub *cub3d) {
     if (lineEnd >= HEIGHT)
       lineEnd = HEIGHT - 1;
 
-    int wallColor = (hitSide == 0) ? WALL_COLOR_X : WALL_COLOR_Y;
+    //int wallColor = (hitSide == 0) ? WALL_COLOR_X : WALL_COLOR_Y;
+    
+    int texX = (int)(wallX * (float)current_tex->width);
 
     for (int y_coord = lineStart; y_coord <= lineEnd; y_coord++) {
+      int texY = (int)(((y_coord - lineStart) / (lineEndY - lineStartY)) * current_tex->height);
+      if (texY < 0)
+        texY = 0;
+      if (texY > current_tex->height)
+        texY = current_tex->height - 1;
+
+      int offset_tex = (texY * current_tex->line_len) + (texX * (current_tex->bpp / 8));
+      unsigned int wallColor = *(unsigned int *)(current_tex->addr + offset_tex);
+
       put_pixel(&cub3d->img_data, (int)pixel, y_coord, wallColor);
     }
     pixel++;

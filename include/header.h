@@ -29,6 +29,11 @@
 #define ROTATE_RIGHT 65361
 #define ROTATE_LEFT 65363
 
+#define NORTH 0
+#define SOUTH 1
+#define EAST 2
+#define WEST 3
+
 typedef struct s_vector {
   float x;
   float y;
@@ -66,7 +71,7 @@ typedef struct {
   t_img_data img_data;
   int **gamemap;
   t_player *player;
-  t_texture *textures;
+  t_texture textures[4];
 } t_cub;
 t_vector vec_add(t_vector a, t_vector b);
 
