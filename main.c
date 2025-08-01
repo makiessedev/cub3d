@@ -1,6 +1,6 @@
 #include "include/header.h"
 
-int main(void) {
+/*int main(void) {
   t_cub cub3d;
 
   init_cub(&cub3d);
@@ -15,4 +15,29 @@ int main(void) {
   mlx_loop(cub3d.mlx);
 
   return (0);
+}*/
+
+#include <fcntl.h> 
+
+#define ASD 42
+
+int main(void)
+{
+    int fd = open("Makefile", O_RDONLY);
+    if (fd == -1)
+    {
+        perror("Erro ao abrir o arquivo");
+        return 1;
+    }
+
+    char *linha;
+    printf("%s", (char *)get_next_line(fd));
+    while ((linha = get_next_line(fd)) != NULL)
+    {
+        printf("%s", linha);
+        free(linha);       
+    }
+
+    close(fd);
+    return 0;
 }
