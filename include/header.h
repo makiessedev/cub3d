@@ -6,6 +6,7 @@
 #include <math.h>
 #include <stdbool.h>
 #include <stdlib.h>
+#include <fcntl.h>
 
 #define SKY_COLOR 0x87CEEB
 #define GROUND_COLOR 0x228B22
@@ -90,5 +91,6 @@ int handle_keypress(int keycode, void *cub3d_ptr);
 int game_exit(t_cub *cub);
 int main_loop(t_cub *cub);
 void load_all_textures(t_cub *cub);
+bool parser_map(t_cub *cub, char *file);
 
 #endif

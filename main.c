@@ -1,43 +1,28 @@
 #include "include/header.h"
 
-/*int main(void) {
-  t_cub cub3d;
+int main(int ac, char **av) {
+  t_cub cub;
 
-  init_cub(&cub3d);
+  if (ac != 2) {
+    ft_putendl_fd("Error", 2);
+    return (1);
+  }
 
-  cub3d.player->dir = vec_rotate(cub3d.player->dir, 1.0);
-  cub3d.player->plane = vec_rotate(cub3d.player->plane, 1.0);
+  if (parser_map(&cub, av[1]) == false) {
+    ft_putendl_fd("Error", 2);
+    return (1);
+  }
+  init_cub(&cub);
 
-  mlx_loop_hook(cub3d.mlx, &main_loop, &cub3d);
-  mlx_hook(cub3d.win, KEYPRESS, KEYPRESS_MASK, &handle_keypress, &cub3d);
-  mlx_hook(cub3d.win, DESTROY_NOTIFY, IGNORE_MASK, &game_exit, &cub3d);
+  cub.player->dir = vec_rotate(cub.player->dir, 1.0);
+  cub.player->plane = vec_rotate(cub.player->plane, 1.0);
 
-  mlx_loop(cub3d.mlx);
+  mlx_loop_hook(cub.mlx, &main_loop, &cub);
+  mlx_hook(cub.win, KEYPRESS, KEYPRESS_MASK, &handle_keypress, &cub);
+  mlx_hook(cub.win, DESTROY_NOTIFY, IGNORE_MASK, &game_exit, &cub);
+
+  mlx_loop(cub.mlx);
 
   return (0);
-}*/
-
-#include <fcntl.h> 
-
-#define ASD 42
-
-int main(void)
-{
-    int fd = open("Makefile", O_RDONLY);
-    if (fd == -1)
-    {
-        perror("Erro ao abrir o arquivo");
-        return 1;
-    }
-
-    char *linha;
-    printf("%s", (char *)get_next_line(fd));
-    while ((linha = get_next_line(fd)) != NULL)
-    {
-        printf("%s", linha);
-        free(linha);       
-    }
-
-    close(fd);
-    return 0;
 }
+

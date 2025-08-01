@@ -71,6 +71,5 @@ void init_cub(t_cub *cub) {
   init_player(cub->player);
   cub->gamemap = init_map();
 
-  //cub->textures = malloc(sizeof(t_texture) * 4);
   load_all_textures(cub);
 }
