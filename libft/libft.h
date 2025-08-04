@@ -76,7 +76,7 @@ t_list	*ft_lstmap(t_list *lst,	void *(*f)(void *), void (*del)(void *));
  */
 
 char	*get_next_line(int fd);
-void  free_matrix(char **mat);
-int count_matrix(char **mat);
+void  ft_free_matrix(char **mat);
+int ft_count_matrix(char **mat);
 
 #endif

@@ -1,6 +1,6 @@
 #include "libft.h"
 
-void free_matrix(char **mat) {
+void ft_free_matrix(char **mat) {
   int i;
 
   if (mat == NULL) {

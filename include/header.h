@@ -72,6 +72,12 @@ typedef struct {
 typedef struct {
   char **map;
   char *map_path;
+  char *SO;
+  char *NO;
+  char *WE;
+  char *EA;
+  char F[3][3];
+  char C[3][3];
 } t_map;
 
 typedef struct {
@@ -101,5 +107,6 @@ int game_exit(t_cub *cub);
 int main_loop(t_cub *cub);
 void load_all_textures(t_cub *cub);
 bool parser_map(t_cub *cub, char *file);
+void print_error_and_exit(t_cub *cub, char *msg);
 
 #endif

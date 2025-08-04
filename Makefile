@@ -16,7 +16,7 @@ LIBFT_LIB		= $(LIBFT_DIR)libft.a
 SRCS_ROOT		= main.c
 SRCS_FROM_DIR	= ./src/events.c ./src/initialization.c \
 						./src/map_parser.c ./src/vec_operations.c ./src/rendering.c \
-						./src/textures.c
+						./src/textures.c ./src/print_error_and_exit.c
 SRCS			= $(SRCS_ROOT) $(SRCS_FROM_DIR)
 
 # Objetos
