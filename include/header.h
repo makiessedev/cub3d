@@ -70,12 +70,18 @@ typedef struct {
 } t_texture;
 
 typedef struct {
+  char **map;
+  char *map_path;
+} t_map;
+
+typedef struct {
   void *mlx;
   void *win;
   t_img_data img_data;
   int **gamemap;
   t_player *player;
   t_texture textures[4];
+  t_map *map;
 } t_cub;
 t_vector vec_add(t_vector a, t_vector b);
 

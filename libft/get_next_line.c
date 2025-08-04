@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmorais <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/29 18:41:18 by mmorais           #+#    #+#             */
-/*   Updated: 2024/08/07 04:15:09 by mmorais          ###   ########.fr       */
+/*   Updated: 2024/07/29 19:03:06 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 #include "libft.h"
@@ -18,18 +18,17 @@ static char	*join_lines(char *next_lines, char *temp);
 
 char	*get_next_line(int fd)
 {
-	static char	*buffer;
+	static char	*buffer[4096];
 	char		*line;
-
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buffer = read_line(fd, buffer);
-	if (buffer == NULL)
+	buffer[fd] = read_line(fd, buffer[fd]);
+	if (buffer[fd] == NULL)
 		return (NULL);
 	line = NULL;
-	line = get_first_line(buffer, line);
-	buffer = without_first_line(buffer);
+	line = get_first_line(buffer[fd], line);
+	buffer[fd] = without_first_line(buffer[fd]);
 	return (line);
 }
 
