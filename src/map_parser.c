@@ -6,7 +6,7 @@ bool parser_map(t_cub *cub, char *file) {
 
   int fd = open(file, O_RDONLY);
   if (fd == -1) {
-    ft_putendl_fd("Error on open map", 2);
+    perror("Error to open map");
     exit(0);
   }
   char *line = get_next_line(fd);

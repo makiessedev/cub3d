@@ -3,10 +3,13 @@
 
 #include "../libft/libft.h"
 #include "../mlx/mlx.h"
+#include <errno.h>
+#include <fcntl.h>
 #include <math.h>
 #include <stdbool.h>
+#include <stdio.h>
 #include <stdlib.h>
-#include <fcntl.h>
+#include <string.h>
 
 #define SKY_COLOR 0x87CEEB
 #define GROUND_COLOR 0x228B22
