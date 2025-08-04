@@ -1,16 +1,4 @@
-# **************************************************************************** #
-#                                                                              #
-#                                                         :::      ::::::::    #
-#    Makefile                                           :+:      ::::::::    #
-#                                                     +:+ +:+         +:+      #
-#    By: seu_usuario <seu_usuario@42.fr>              +:+ +:+         +:+      #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: YYYY/MM/DD by seu_usuario                #+#    #+#             #
-#    Updated: YYYY/MM/DD by seu_usuario               ###   ########.fr        #
-#                                                                              #
-# **************************************************************************** #
-
-NAME			= cub
+NAME			= cub3D
 CC				= cc
 CFLAGS			= -Wall -Wextra -Werror -g
 MLX_FLAGS = -lX11 -lXext -lm
