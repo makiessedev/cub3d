@@ -76,8 +76,8 @@ typedef struct {
   char *NO;
   char *WE;
   char *EA;
-  char F[3][3];
-  char C[3][3];
+  char *F[3];
+  char *C[3];
 } t_map;
 
 typedef struct {
