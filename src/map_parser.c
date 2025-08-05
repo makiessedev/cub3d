@@ -8,6 +8,7 @@ static char *ft_remove_chars(const char *s, const char *set);
 static void handle_texture(t_cub *cub, char *tex_path, int argc, char **tex);
 static void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref);
 static void set_colors(t_cub *cub, char *colors_raw, char **colors_ref);
+static char **split_line(t_cub *cub, char *map_line, int *i);
 
 bool parser_map(t_cub *cub, char *file) {
   t_map *map;
@@ -20,65 +21,44 @@ bool parser_map(t_cub *cub, char *file) {
 
   fd = open_file(map->map_path);
   line = get_next_line(fd);
-  map->map = ft_calloc(count_line(map)+1, sizeof(char*));
+  map->map_raw_datas = ft_calloc(count_line(map)+1, sizeof(char*));
   i = 0;
   while (line != NULL) {
-    map->map[i] = ft_strdup(line);
+    map->map_raw_datas[i] = ft_strdup(line);
     line = get_next_line(fd);
     i++;
   }
-  map->map[i] = NULL;
+  map->map_raw_datas[i] = NULL;
   save_textures_and_color(cub);
   return true;
 }
 
 static void save_textures_and_color(t_cub *cub) {
-  const char *EMPTY = "\t ";
-  const char SPACE = ' ';
-  const char TAB = '\t';
-  const char *SO = "SO";
-  const char *WE = "WE";
-  const char *EA = "EA";
-  const char *NO = "NO";
-  const char *F = "F";
-  const char *C = "C";
   char *key;
-
   int i = 0;
-  char *line;
   char **chuncks;
   t_map *map = cub->map;
 
-  while (map->map[i]) {
-    line = ft_strtrim(map->map[i], EMPTY);
-    if (ft_strlen(line) == 0 || ft_strlen(line) == 1) {
-      i++;
+  while (map->map_raw_datas[i]) {
+    chuncks = split_line(cub, map->map_raw_datas[i], &i);
+    if (chuncks == NULL)
       continue;
-    }
-    chuncks = ft_split(line, SPACE);
-    if (ft_count_matrix(chuncks) == 1) {
-      ft_free_matrix(chuncks);
-      chuncks = ft_split(line, TAB);
-      if (ft_count_matrix(chuncks) == 1) {
-        print_error_and_exit(cub, "invalid color or textures");
-      }
-    }
 
-    key = ft_strtrim(chuncks[0], EMPTY);
+    key = ft_strtrim(chuncks[0], M_EMPTY);
     int chunck_len = ft_count_matrix(chuncks);
-    if (!ft_strncmp(key, NO, ft_strlen(NO))) {
+    if (!ft_strncmp(key, M_NO, ft_strlen(M_NO))) {
       handle_texture(cub, chuncks[1], chunck_len, &(map->NO));
-    } else if (!ft_strncmp(key, SO, ft_strlen(SO))) {
+    } else if (!ft_strncmp(key, M_SO, ft_strlen(M_SO))) {
       handle_texture(cub, chuncks[1], chunck_len, &(map->SO));
-    } else if (!ft_strncmp(key, WE, ft_strlen(WE))) {
+    } else if (!ft_strncmp(key, M_WE, ft_strlen(M_WE))) {
       handle_texture(cub, chuncks[1], chunck_len, &(map->WE));
-    } else if (!ft_strncmp(key, EA, ft_strlen(EA))) {
+    } else if (!ft_strncmp(key, M_EA, ft_strlen(M_EA))) {
       handle_texture(cub, chuncks[1], chunck_len, &(map->EA));
     }
-    else if (!ft_strncmp(key, F, ft_strlen(F))) {
+    else if (!ft_strncmp(key, M_FLOOR, ft_strlen(M_FLOOR))) {
       handle_color(cub, chuncks, chunck_len, map->F);
     }
-    else if (!ft_strncmp(key, C, ft_strlen(C))) {
+    else if (!ft_strncmp(key, M_CEIL, ft_strlen(M_CEIL))) {
       handle_color(cub, chuncks, chunck_len, map->C);
     } else {
       print_error_and_exit(cub, "Invalid Key: Color or Textures");
@@ -101,6 +81,24 @@ static void save_textures_and_color(t_cub *cub) {
     }
     i++;
   }
+}
+
+static char **split_line(t_cub *cub, char *map_line, int *i) {
+  char **chuncks;
+  char *line = ft_strtrim(map_line, M_EMPTY);
+  if (ft_strlen(line) == 0 || ft_strlen(line) == 1) {
+    (*i)++;
+    return NULL;
+  }
+  chuncks = ft_split(line, M_SPACE);
+  if (ft_count_matrix(chuncks) == 1) {
+    ft_free_matrix(chuncks);
+    chuncks = ft_split(line, M_TAB);
+    if (ft_count_matrix(chuncks) == 1) {
+      print_error_and_exit(cub, "invalid color or textures");
+    }
+  }
+  return chuncks;
 }
 
 static void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref) {

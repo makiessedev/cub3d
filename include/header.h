@@ -38,6 +38,16 @@
 #define EAST 2
 #define WEST 3
 
+#define M_EMPTY "\t "
+#define M_SPACE ' '
+#define M_TAB '\t'
+#define M_SO "SO"
+#define M_WE "WE"
+#define M_EA "EA"
+#define M_NO "NO"
+#define M_FLOOR "F"
+#define M_CEIL "C"
+
 typedef struct s_vector {
   float x;
   float y;
@@ -70,7 +80,7 @@ typedef struct {
 } t_texture;
 
 typedef struct {
-  char **map;
+  char **map_raw_datas;
   char *map_path;
   char *SO;
   char *NO;
