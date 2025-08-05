@@ -137,10 +137,10 @@ static void save_textures_and_color(t_cub *cub) {
           print_error_and_exit(cub, "Invalid color many arguments");
         for (int i = 0; i < 3; i++) {
           for(int j = 0; j < 3; j++) {
-              printf("%c ", (char)colors[i][j]);
-            if (!ft_isdigit(colors[i][j])) {
-              printf("-> %c", colors[i][j]);
-              print_error_and_exit(cub, "Invalid digit color");
+            if (ft_isprint(colors[i][j])) {
+              if (!ft_isdigit(colors[i][j])) {
+                print_error_and_exit(cub, "Invalid digit color");
+              }
             }
           }
           int digit = ft_atoi(colors[i]);
@@ -152,15 +152,78 @@ static void save_textures_and_color(t_cub *cub) {
         }
       } else 
         print_error_and_exit(cub, "Invalid arguments of colors");
-      printf("%s", map->F[0]);
-      printf("%s", map->F[1]);
-      printf("%s", map->F[2]);
     }
     else if (!ft_strncmp(key, C, ft_strlen(C))) {
-      printf("%s\n", key);
+      if (chunck_len >= 2 && chunck_len <= 6) {
+        char *color;
+        color = ft_strdup(chuncks[1]);
+        if (chunck_len > 2) {
+          free(color);
+          color = ft_strdup(chuncks[1]);
+          char *temp;
+          if (chuncks[2]) {
+            temp = ft_strdup(color);
+            free(color);
+            color = ft_strjoin(temp, chuncks[2]);
+          }
+          if (chuncks[3]) {
+            temp = ft_strdup(color);
+            free(color);
+            color = ft_strjoin(temp, chuncks[3]);
+            free(temp);
+          }
+          if (chuncks[4]) {
+            temp = ft_strdup(color);
+            free(color);
+            color = ft_strjoin(temp, chuncks[4]);
+            free(temp);
+          }
+          if (chuncks[5]) {
+            temp = ft_strdup(color);
+            free(color);
+            color = ft_strjoin(temp, chuncks[5]);
+          }
+          temp = strdup(color);
+          free(color);
+          color = ft_remove_chars(temp, EMPTY);
+          free(temp);
+        }
+        char **colors = ft_split(color, ',');
+        if (ft_count_matrix(colors) > 3)
+          print_error_and_exit(cub, "Invalid color many arguments");
+        for (int i = 0; i < 3; i++) {
+          for(int j = 0; j < 3; j++) {
+            if (ft_isprint(colors[i][j])) {
+              if (!ft_isdigit(colors[i][j])) {
+                print_error_and_exit(cub, "Invalid digit color");
+              }
+            }
+          }
+          int digit = ft_atoi(colors[i]);
+          if (digit > 255 || digit < 0)
+              print_error_and_exit(cub, "Invalid Color");
+          if (map->C[i])
+              print_error_and_exit(cub, "Invalid color: duplicated value");
+          map->C[i] = ft_strdup(colors[i]);
+        }
+      } else 
+        print_error_and_exit(cub, "Invalid arguments of colors");
     } else {
       printf("%s", key);
       print_error_and_exit(cub, "Invalid Key: Color or Textures");
+    }
+    printf("\n---------------------------------\n");
+    printf("[NO] - %s\n", map->NO);
+    printf("[SO] - %s\n", map->SO);
+    printf("[WE] - %s\n", map->WE);
+    printf("[EA] - %s\n", map->EA);
+
+    for (int i = 0; i < 3; i++) {
+      if (!map->F[i] || !map->C[i]) {
+        //continue;
+      }
+      printf("[F] - %s\n", map->F[i]);
+      printf("[C] - %s\n", map->C[i]);
     }
     i++;
   }
