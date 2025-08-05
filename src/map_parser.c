@@ -64,8 +64,7 @@ static void save_textures_and_color(t_cub *cub) {
       print_error_and_exit(cub, "Invalid Key: Color or Textures");
     }
 
-
-    if (i == 6) {
+    if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0]) {
       printf("NO - %s\n", map->NO);
       printf("SO - %s\n", map->SO);
       printf("WE - %s\n", map->WE);
@@ -78,6 +77,7 @@ static void save_textures_and_color(t_cub *cub) {
       for (int i = 0; i < 3; i++) {
         printf("C %s\n", map->C[i]);
       }
+      return;
     }
     i++;
   }
