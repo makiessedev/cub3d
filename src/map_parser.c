@@ -66,10 +66,10 @@ static void save_textures_and_color(t_cub *cub) {
 
 
     if (i == 6) {
-      printf("NO - %s", map->NO);
-      printf("SO - %s", map->SO);
-      printf("WE - %s", map->WE);
-      printf("EA - %s", map->EA);
+      printf("NO - %s\n", map->NO);
+      printf("SO - %s\n", map->SO);
+      printf("WE - %s\n", map->WE);
+      printf("EA - %s\n", map->EA);
 
       for (int i = 0; i < 3; i++) {
         printf("F %s\n", map->F[i]);
@@ -86,6 +86,7 @@ static void save_textures_and_color(t_cub *cub) {
 static char **split_line(t_cub *cub, char *map_line, int *i) {
   char **chuncks;
   char *line = ft_strtrim(map_line, M_EMPTY);
+
   if (ft_strlen(line) == 0 || ft_strlen(line) == 1) {
     (*i)++;
     return NULL;
@@ -123,8 +124,10 @@ static void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref
       free(temp);
     }
     set_colors(cub, color, colors_ref);
-  } else 
+  } else {
+    printf("arg-> %i", argc);
     print_error_and_exit(cub, "Invalid arguments of colors");
+  }
 }
 
 static void set_colors(t_cub *cub, char *colors_raw, char **colors_ref) {

@@ -38,7 +38,7 @@
 #define EAST 2
 #define WEST 3
 
-#define M_EMPTY "\t "
+#define M_EMPTY "\n\t "
 #define M_SPACE ' '
 #define M_TAB '\t'
 #define M_SO "SO"
