@@ -5,6 +5,10 @@ static int open_file(char *file);
 static void save_textures_and_color(t_cub *cub);
 static char *ft_remove_chars(const char *s, const char *set);
 
+static void handle_texture(t_cub *cub, char *tex_path, int argc, char **tex);
+static void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref);
+static void set_colors(t_cub *cub, char *colors_raw, char **colors_ref);
+
 bool parser_map(t_cub *cub, char *file) {
   t_map *map;
   int fd;
@@ -63,170 +67,97 @@ static void save_textures_and_color(t_cub *cub) {
     key = ft_strtrim(chuncks[0], EMPTY);
     int chunck_len = ft_count_matrix(chuncks);
     if (!ft_strncmp(key, NO, ft_strlen(NO))) {
-      if (chunck_len != 2) {
-        print_error_and_exit(cub, "Texture error: many arguments");
-      }
-      if (map->NO)
-        print_error_and_exit(cub, "Duplicated texture");
-      else
-        map->NO = ft_strdup(chuncks[1]);
+      handle_texture(cub, chuncks[1], chunck_len, &(map->NO));
     } else if (!ft_strncmp(key, SO, ft_strlen(SO))) {
-      if (chunck_len != 2) {
-        print_error_and_exit(cub, "Texture error: many arguments");
-      }
-      if (map->SO)
-        print_error_and_exit(cub, "Duplicated texture");
-      else
-        map->SO = ft_strdup(chuncks[1]);
+      handle_texture(cub, chuncks[1], chunck_len, &(map->SO));
     } else if (!ft_strncmp(key, WE, ft_strlen(WE))) {
-      if (chunck_len != 2) {
-        print_error_and_exit(cub, "Texture error: many arguments");
-      }
-      if (map->WE)
-        print_error_and_exit(cub, "Duplicated texture");
-      else
-        map->WE = ft_strdup(chuncks[1]);
+      handle_texture(cub, chuncks[1], chunck_len, &(map->WE));
     } else if (!ft_strncmp(key, EA, ft_strlen(EA))) {
-      if (chunck_len != 2) {
-        print_error_and_exit(cub, "Texture error: many arguments");
-      }
-      if (map->EA)
-        print_error_and_exit(cub, "Duplicated texture");
-      else
-        map->EA = ft_strdup(chuncks[1]);
-    } 
-
-
+      handle_texture(cub, chuncks[1], chunck_len, &(map->EA));
+    }
     else if (!ft_strncmp(key, F, ft_strlen(F))) {
-      if (chunck_len >= 2 && chunck_len <= 6) {
-        char *color;
-        color = ft_strdup(chuncks[1]);
-        if (chunck_len > 2) {
-          free(color);
-          color = ft_strdup(chuncks[1]);
-          char *temp;
-          if (chuncks[2]) {
-            temp = ft_strdup(color);
-            free(color);
-            color = ft_strjoin(temp, chuncks[2]);
-          }
-          if (chuncks[3]) {
-            temp = ft_strdup(color);
-            free(color);
-            color = ft_strjoin(temp, chuncks[3]);
-            free(temp);
-          }
-          if (chuncks[4]) {
-            temp = ft_strdup(color);
-            free(color);
-            color = ft_strjoin(temp, chuncks[4]);
-            free(temp);
-          }
-          if (chuncks[5]) {
-            temp = ft_strdup(color);
-            free(color);
-            color = ft_strjoin(temp, chuncks[5]);
-          }
-          temp = strdup(color);
-          free(color);
-          color = ft_remove_chars(temp, EMPTY);
-          free(temp);
-        }
-        char **colors = ft_split(color, ',');
-        if (ft_count_matrix(colors) > 3)
-          print_error_and_exit(cub, "Invalid color many arguments");
-        for (int i = 0; i < 3; i++) {
-          for(int j = 0; j < 3; j++) {
-            if (ft_isprint(colors[i][j])) {
-              if (!ft_isdigit(colors[i][j])) {
-                print_error_and_exit(cub, "Invalid digit color");
-              }
-            }
-          }
-          int digit = ft_atoi(colors[i]);
-          if (digit > 255 || digit < 0)
-              print_error_and_exit(cub, "Invalid Color");
-          if (map->F[i])
-              print_error_and_exit(cub, "Invalid color: duplicated value");
-          map->F[i] = ft_strdup(colors[i]);
-        }
-      } else 
-        print_error_and_exit(cub, "Invalid arguments of colors");
+      handle_color(cub, chuncks, chunck_len, map->F);
     }
     else if (!ft_strncmp(key, C, ft_strlen(C))) {
-      if (chunck_len >= 2 && chunck_len <= 6) {
-        char *color;
-        color = ft_strdup(chuncks[1]);
-        if (chunck_len > 2) {
-          free(color);
-          color = ft_strdup(chuncks[1]);
-          char *temp;
-          if (chuncks[2]) {
-            temp = ft_strdup(color);
-            free(color);
-            color = ft_strjoin(temp, chuncks[2]);
-          }
-          if (chuncks[3]) {
-            temp = ft_strdup(color);
-            free(color);
-            color = ft_strjoin(temp, chuncks[3]);
-            free(temp);
-          }
-          if (chuncks[4]) {
-            temp = ft_strdup(color);
-            free(color);
-            color = ft_strjoin(temp, chuncks[4]);
-            free(temp);
-          }
-          if (chuncks[5]) {
-            temp = ft_strdup(color);
-            free(color);
-            color = ft_strjoin(temp, chuncks[5]);
-          }
-          temp = strdup(color);
-          free(color);
-          color = ft_remove_chars(temp, EMPTY);
-          free(temp);
-        }
-        char **colors = ft_split(color, ',');
-        if (ft_count_matrix(colors) > 3)
-          print_error_and_exit(cub, "Invalid color many arguments");
-        for (int i = 0; i < 3; i++) {
-          for(int j = 0; j < 3; j++) {
-            if (ft_isprint(colors[i][j])) {
-              if (!ft_isdigit(colors[i][j])) {
-                print_error_and_exit(cub, "Invalid digit color");
-              }
-            }
-          }
-          int digit = ft_atoi(colors[i]);
-          if (digit > 255 || digit < 0)
-              print_error_and_exit(cub, "Invalid Color");
-          if (map->C[i])
-              print_error_and_exit(cub, "Invalid color: duplicated value");
-          map->C[i] = ft_strdup(colors[i]);
-        }
-      } else 
-        print_error_and_exit(cub, "Invalid arguments of colors");
+      handle_color(cub, chuncks, chunck_len, map->C);
     } else {
-      printf("%s", key);
       print_error_and_exit(cub, "Invalid Key: Color or Textures");
     }
-    printf("\n---------------------------------\n");
-    printf("[NO] - %s\n", map->NO);
-    printf("[SO] - %s\n", map->SO);
-    printf("[WE] - %s\n", map->WE);
-    printf("[EA] - %s\n", map->EA);
 
-    for (int i = 0; i < 3; i++) {
-      if (!map->F[i] || !map->C[i]) {
-        //continue;
+
+    if (i == 6) {
+      printf("NO - %s", map->NO);
+      printf("SO - %s", map->SO);
+      printf("WE - %s", map->WE);
+      printf("EA - %s", map->EA);
+
+      for (int i = 0; i < 3; i++) {
+        printf("F %s\n", map->F[i]);
       }
-      printf("[F] - %s\n", map->F[i]);
-      printf("[C] - %s\n", map->C[i]);
+
+      for (int i = 0; i < 3; i++) {
+        printf("C %s\n", map->C[i]);
+      }
     }
     i++;
   }
+}
+
+static void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref) {
+  const char *EMPTY = "\t ";
+
+  if (argc >= 2 && argc <= 6) {
+    char *color;
+    color = ft_strdup(chuncks[1]);
+    if (argc > 2) {
+      char *temp;
+      int i = 2;
+      while (chuncks[i]) {
+        temp = ft_strdup(color);
+        free(color);
+        color = ft_strjoin(temp, chuncks[i]);
+        free(temp);
+        i++;
+      }
+      temp = strdup(color);
+      free(color);
+      color = ft_remove_chars(temp, EMPTY);
+      free(temp);
+    }
+    set_colors(cub, color, colors_ref);
+  } else 
+    print_error_and_exit(cub, "Invalid arguments of colors");
+}
+
+static void set_colors(t_cub *cub, char *colors_raw, char **colors_ref) {
+  char **colors = ft_split(colors_raw, ',');
+  if (ft_count_matrix(colors) > 3)
+    print_error_and_exit(cub, "Invalid color many arguments");
+  for (int i = 0; i < 3; i++) {
+    for(int j = 0; j < 3; j++) {
+      if (ft_isprint(colors[i][j])) {
+        if (!ft_isdigit(colors[i][j])) {
+          print_error_and_exit(cub, "Invalid digit color");
+        }
+      }
+    }
+    int digit = ft_atoi(colors[i]);
+    if (digit > 255 || digit < 0)
+      print_error_and_exit(cub, "Invalid Color");
+    if (colors_ref[i])
+      print_error_and_exit(cub, "Invalid color: duplicated value");
+    colors_ref[i] = ft_strdup(colors[i]);
+  }
+}
+
+static void handle_texture(t_cub *cub, char *tex_path, int argc, char **tex) {
+  if (argc != 2) {
+    print_error_and_exit(cub, "Texture error: many arguments");
+  }
+  if (*tex)
+    print_error_and_exit(cub, "Duplicated texture");
+  else
+    *tex = ft_strdup(tex_path);
 }
 
 static int count_line(t_map *map) {
