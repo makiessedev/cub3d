@@ -11,11 +11,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SKY_COLOR 0x87CEEB
-#define GROUND_COLOR 0x228B22
-#define WALL_COLOR_X 0xFF0000
-#define WALL_COLOR_Y 0x880000
-
 #define WIDTH 1600
 #define HEIGHT 900
 

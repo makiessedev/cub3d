@@ -1,5 +1,9 @@
 #include "../include/header.h"
 
+int create_rgb(int r, int g, int b) {
+  return ((r << 16) | (g << 8) | b);
+}
+
 void put_pixel(t_img_data *img_data, int x, int y, int color) {
   if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
     int offset = (y * img_data->line_len) + (x * (img_data->bpp / 8));
@@ -8,6 +12,17 @@ void put_pixel(t_img_data *img_data, int x, int y, int color) {
 }
 
 void render_background(t_cub *cub) {
+  int C0 = ft_atoi(cub->map->C[0]);
+  int C1 = ft_atoi(cub->map->C[1]);
+  int C2 = ft_atoi(cub->map->C[2]);
+
+  int F0 = ft_atoi(cub->map->F[0]);
+  int F1 = ft_atoi(cub->map->F[1]);
+  int F2 = ft_atoi(cub->map->F[2]);
+
+  const int SKY_COLOR = create_rgb(C0, C1, C2);
+  const int GROUND_COLOR = create_rgb(F0, F1, F2);
+
   int y = 0;
   while (y < HEIGHT) {
     int color;
