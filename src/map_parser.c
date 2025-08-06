@@ -2,7 +2,7 @@
 
 static int count_line(t_map *map);
 static int open_file(char *file);
-static void save_textures_and_color(t_cub *cub);
+static void save_elements(t_cub *cub);
 static char *ft_remove_chars(const char *s, const char *set);
 
 static void handle_texture(t_cub *cub, char *tex_path, int argc, char **tex);
@@ -32,12 +32,12 @@ bool parser_map(t_cub *cub, char *file) {
     i++;
   }
   map->map_raw_datas[i] = NULL;
-  save_textures_and_color(cub);
+  save_elements(cub);
   print_elements(map);
   return true;
 }
 
-static void save_textures_and_color(t_cub *cub) {
+static void save_elements(t_cub *cub) {
   char *key;
   int i = 0;
   char **chuncks;
@@ -75,7 +75,6 @@ static void save_textures_and_color(t_cub *cub) {
       int j = 0;
       while (cub->map->map_raw_datas[i]) {
         line = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
-        printf("%s\n", line);
         if (line[0] == '\0') {
           i++;
           continue;
