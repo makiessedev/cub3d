@@ -15,7 +15,7 @@ void init_player(t_player *player) {
 }
 
 int **init_map(void) {
-  int static_map[10][10] = {
+  int static_map[10][20] = {
       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
       {1, 0, 1, 0, 1, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
       {1, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
@@ -24,7 +24,7 @@ int **init_map(void) {
   };
   int **gamemap = malloc(sizeof(int *) * 10);
   if (!gamemap)
-    return NULL; // Handle error
+    return NULL;
   for (int i = 0; i < 10; i++) {
     gamemap[i] = malloc(sizeof(int) * 10);
     if (!gamemap[i]) {

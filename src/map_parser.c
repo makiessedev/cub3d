@@ -10,6 +10,9 @@ static void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref
 static void set_colors(t_cub *cub, char *colors_raw, char **colors_ref);
 static char **split_line(t_cub *cub, char *map_line, int *i);
 
+static int count_map_height(t_cub *cub, int i);
+static void print_elements(t_map *map);
+
 bool parser_map(t_cub *cub, char *file) {
   t_map *map;
   int fd;
@@ -30,6 +33,7 @@ bool parser_map(t_cub *cub, char *file) {
   }
   map->map_raw_datas[i] = NULL;
   save_textures_and_color(cub);
+  print_elements(map);
   return true;
 }
 
@@ -65,22 +69,62 @@ static void save_textures_and_color(t_cub *cub) {
     }
 
     if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0]) {
-      printf("NO - %s\n", map->NO);
-      printf("SO - %s\n", map->SO);
-      printf("WE - %s\n", map->WE);
-      printf("EA - %s\n", map->EA);
-
-      for (int i = 0; i < 3; i++) {
-        printf("F %s\n", map->F[i]);
-      }
-
-      for (int i = 0; i < 3; i++) {
-        printf("C %s\n", map->C[i]);
+      i++;
+      map->gamemap = malloc(sizeof(char*) * (count_map_height(cub, i)+10));
+      char *line;
+      int j = 0;
+      while (cub->map->map_raw_datas[i]) {
+        line = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
+        printf("%s\n", line);
+        if (line[0] == '\0') {
+          i++;
+          continue;
+        }
+        map->gamemap[j] = ft_strdup(line);
+        i++;
+        j++;
       }
       return;
     }
     i++;
   }
+}
+
+static void print_elements(t_map *map) {
+  printf("NO - %s\n", map->NO);
+  printf("SO - %s\n", map->SO);
+  printf("WE - %s\n", map->WE);
+  printf("EA - %s\n", map->EA);
+
+  for (int i = 0; i < 3; i++) {
+    printf("F %s\n", map->F[i]);
+  }
+
+  for (int i = 0; i < 3; i++) {
+    printf("C %s\n", map->C[i]);
+  }
+
+  for (int i = 0; map->gamemap[i]; i++) {
+    printf("%s\n", map->gamemap[i]);
+  }
+}
+
+static int count_map_height(t_cub *cub, int i) {
+  int map_hight = 0;
+  char *line;
+  while (cub->map->map_raw_datas[i]) {
+    line = ft_strdup(ft_strtrim(cub->map->map_raw_datas[i], M_EMPTY));
+    if (line[0] == '\0') {
+      i++;
+      continue;
+    }
+    if (line[0] != '1') {
+      print_error_and_exit(cub, "Invalid Map");
+    }
+    map_hight++;
+    i++;
+  }
+  return map_hight;
 }
 
 static char **split_line(t_cub *cub, char *map_line, int *i) {
