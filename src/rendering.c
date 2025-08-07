@@ -123,14 +123,13 @@ void render_walls(t_cub *cub3d) {
       }
     }
 
-
     perpendicularDist = fabs(perpendicularDist);
-    /*if (perpendicularDist < 0.0001) {
+    if (perpendicularDist < 0.0001) {
       fprintf(stderr, "PerpendicularDist muito pequeno: %f\n",
               perpendicularDist);
       pixel++;
       continue;
-    }*/
+    }
 
     float wallLineHeight = HEIGHT / perpendicularDist;
     float lineStartY = (float)HEIGHT / 2 - wallLineHeight / 2;
@@ -142,8 +141,6 @@ void render_walls(t_cub *cub3d) {
       lineStart = 0;
     if (lineEnd >= HEIGHT)
       lineEnd = HEIGHT - 1;
-
-    //int wallColor = (hitSide == 0) ? WALL_COLOR_X : WALL_COLOR_Y;
     
     int texX = (int)(wallX * (float)current_tex->width);
 
