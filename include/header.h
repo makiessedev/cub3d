@@ -92,7 +92,6 @@ typedef struct {
   void *mlx;
   void *win;
   t_img_data img_data;
-  int **gamemap;
   t_player *player;
   t_texture textures[4];
   t_map *map;

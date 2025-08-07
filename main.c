@@ -23,15 +23,6 @@ void print_elements(t_cub *cub) {
   for (int i = 0; map->gamemap[i]; i++) {
     printf("%s\n", map->gamemap[i]);
   }
-
-  printf("\n------------------------------------------\n");
-
-  for (int i = 0; cub->gamemap[i]; i++) {
-    for (int j = 0; cub->gamemap[i][j]; j++) {
-      printf("|%i|", cub->gamemap[i][j]);
-    }
-    printf("\n");
-  }
 }
 
 int main(int ac, char **av) {

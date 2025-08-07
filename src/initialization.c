@@ -14,32 +14,6 @@ void init_player(t_player *player) {
   player->rot_speed = 0.05;
 }
 
-int **init_map(void) {
-  int static_map[10][10] = {
-      {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-      {1, 0, 1, 0, 1, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-      {1, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-      {1, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-      {1, 0, 0, 1, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-  };
-  int **gamemap = malloc(sizeof(int *) * 10);
-  if (!gamemap)
-    return NULL;
-  for (int i = 0; i < 10; i++) {
-    gamemap[i] = malloc(sizeof(int) * 10);
-    if (!gamemap[i]) {
-      for (int j = 0; j < i; j++)
-        free(gamemap[j]);
-      free(gamemap);
-      return NULL;
-    }
-    for (int j = 0; j < 10; j++) {
-      gamemap[i][j] = static_map[i][j];
-    }
-  }
-  return gamemap;
-}
-
 void init_cub(t_cub *cub) {
   cub->mlx = mlx_init();
   if (!cub->mlx) {
@@ -69,7 +43,5 @@ void init_cub(t_cub *cub) {
     exit(1);
   }
   init_player(cub->player);
-  cub->gamemap = init_map();
-
   load_all_textures(cub);
 }
