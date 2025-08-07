@@ -78,6 +78,8 @@ typedef struct {
   char **map_raw_datas;
   char *map_path;
   char **gamemap;
+  int width;
+  int height;
   char *SO;
   char *NO;
   char *WE;

@@ -1,7 +1,42 @@
 #include "include/header.h"
 
+
+void print_elements(t_cub *cub) {
+  t_map *map = cub->map;
+  printf("NO - %s\n", map->NO);
+  printf("SO - %s\n", map->SO);
+  printf("WE - %s\n", map->WE);
+  printf("EA - %s\n", map->EA);
+
+  printf("\n------------------------------------------\n");
+
+  for (int i = 0; i < 3; i++) {
+    printf("F %s\n", map->F[i]);
+  }
+
+  for (int i = 0; i < 3; i++) {
+    printf("C %s\n", map->C[i]);
+  }
+
+  printf("\n------------------------------------------\n");
+
+  for (int i = 0; map->gamemap[i]; i++) {
+    printf("%s\n", map->gamemap[i]);
+  }
+
+  printf("\n------------------------------------------\n");
+
+  for (int i = 0; cub->gamemap[i]; i++) {
+    for (int j = 0; cub->gamemap[i][j]; j++) {
+      printf("|%i|", cub->gamemap[i][j]);
+    }
+    printf("\n");
+  }
+}
+
 int main(int ac, char **av) {
   t_cub cub;
+  cub.map = malloc(sizeof(t_map));
 
   if (ac != 2) {
     ft_putendl_fd("Error", 2);
@@ -13,6 +48,8 @@ int main(int ac, char **av) {
     return (1);
   }
   init_cub(&cub);
+
+  print_elements(&cub);
 
   cub.player->dir = vec_rotate(cub.player->dir, 1.0);
   cub.player->plane = vec_rotate(cub.player->plane, 1.0);

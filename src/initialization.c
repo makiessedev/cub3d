@@ -1,8 +1,8 @@
 #include "../include/header.h"
 
 void init_player(t_player *player) {
-  player->pos.x = 5;
-  player->pos.y = 5;
+  player->pos.x = 2;
+  player->pos.y = 2;
 
   player->dir.x = 0;
   player->dir.y = -1;
@@ -15,12 +15,12 @@ void init_player(t_player *player) {
 }
 
 int **init_map(void) {
-  int static_map[10][20] = {
+  int static_map[10][10] = {
       {1, 1, 1, 1, 1, 1, 1, 1, 1, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
       {1, 0, 1, 0, 1, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
       {1, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
       {1, 0, 1, 1, 0, 0, 0, 0, 0, 1}, {1, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-      {0, 0, 0, 1, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+      {1, 0, 0, 1, 0, 0, 0, 0, 0, 1}, {1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
   };
   int **gamemap = malloc(sizeof(int *) * 10);
   if (!gamemap)

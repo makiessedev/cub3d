@@ -90,9 +90,10 @@ void render_walls(t_cub *cub3d) {
         ddaLineSizeY += deltaDistY;
         hitSide = 1;
       }
-      if ((int)wallMapPos.y >= 0 && (int)wallMapPos.y < 10 &&
-          (int)wallMapPos.x >= 0 && (int)wallMapPos.x < 10) {
-        if (cub3d->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > 0) {
+      if ((int)wallMapPos.y >= 0 && (int)wallMapPos.y < cub3d->map->height &&
+          (int)wallMapPos.x >= 0 && (int)wallMapPos.x < cub3d->map->width) {
+        //if (cub3d->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > 0) {
+        if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] == '1') {
           hit = true;
         }
       } else {
@@ -124,12 +125,12 @@ void render_walls(t_cub *cub3d) {
 
 
     perpendicularDist = fabs(perpendicularDist);
-    if (perpendicularDist < 0.0001) {
+    /*if (perpendicularDist < 0.0001) {
       fprintf(stderr, "PerpendicularDist muito pequeno: %f\n",
               perpendicularDist);
       pixel++;
       continue;
-    }
+    }*/
 
     float wallLineHeight = HEIGHT / perpendicularDist;
     float lineStartY = (float)HEIGHT / 2 - wallLineHeight / 2;
