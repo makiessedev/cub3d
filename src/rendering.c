@@ -93,7 +93,8 @@ void render_walls(t_cub *cub3d) {
       if ((int)wallMapPos.y >= 0 && (int)wallMapPos.y < cub3d->map->height &&
           (int)wallMapPos.x >= 0 && (int)wallMapPos.x < cub3d->map->width) {
         //if (cub3d->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > 0) {
-        if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] == '1') {
+        //if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] == '1') {
+        if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > '0') {
           hit = true;
         }
       } else {
@@ -142,6 +143,7 @@ void render_walls(t_cub *cub3d) {
     if (lineEnd >= HEIGHT)
       lineEnd = HEIGHT - 1;
     
+    wallX -= floor(wallX); // Essa cena me frustrou bastante porque estava casusando um segfault no programa todo. E como saberia que o problema era essa varialvel? GDB hahaha
     int texX = (int)(wallX * (float)current_tex->width);
 
     for (int y_coord = lineStart; y_coord <= lineEnd; y_coord++) {
