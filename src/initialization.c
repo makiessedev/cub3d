@@ -1,8 +1,8 @@
 #include "../include/header.h"
 
 void init_player(t_player *player) {
-  player->pos.x = 10;
-  player->pos.y = 4;
+  // player->pos.x = 10;
+  // player->pos.y = 4;
 
   player->dir.x = 0;
   player->dir.y = -1;
@@ -37,11 +37,11 @@ void init_cub(t_cub *cub) {
     ft_putendl_fd("Error to get addr", 2);
     exit(1);
   }
-  cub->player = malloc(sizeof(t_player));
   if (!cub->player) {
     ft_putendl_fd("Allocation failure", 2);
     exit(1);
   }
+
   init_player(cub->player);
   load_all_textures(cub);
 }

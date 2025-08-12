@@ -1,4 +1,5 @@
 #include "include/header.h"
+#include <stdlib.h>
 
 void print_elements(t_cub *cub) {
   t_map *map = cub->map;
@@ -25,30 +26,32 @@ void print_elements(t_cub *cub) {
 }
 
 int main(int ac, char **av) {
-  t_cub cub;
-  cub.map = malloc(sizeof(t_map));
+  t_cub *cub = malloc(sizeof(t_cub));
+  cub->map = malloc(sizeof(t_map));
+  cub->player = ft_calloc(1, sizeof(t_player));
 
   if (ac != 2) {
     ft_putendl_fd("Error", 2);
     return (1);
   }
 
-  if (parser_map(&cub, av[1]) == false) {
+  if (parser_map(cub, av[1]) == false) {
     ft_putendl_fd("Error", 2);
     return (1);
   }
-  init_cub(&cub);
 
-  print_elements(&cub);
+  init_cub(cub);
 
-  cub.player->dir = vec_rotate(cub.player->dir, 1.0);
-  cub.player->plane = vec_rotate(cub.player->plane, 1.0);
+  print_elements(cub);
 
-  mlx_loop_hook(cub.mlx, &main_loop, &cub);
-  mlx_hook(cub.win, KEYPRESS, KEYPRESS_MASK, &handle_keypress, &cub);
-  mlx_hook(cub.win, DESTROY_NOTIFY, IGNORE_MASK, &game_exit, &cub);
+  cub->player->dir = vec_rotate(cub->player->dir, 0);
+  cub->player->plane = vec_rotate(cub->player->plane, 0);
 
-  mlx_loop(cub.mlx);
+  mlx_loop_hook(cub->mlx, &main_loop, cub);
+  mlx_hook(cub->win, KEYPRESS, KEYPRESS_MASK, &handle_keypress, cub);
+  mlx_hook(cub->win, DESTROY_NOTIFY, IGNORE_MASK, &game_exit, cub);
+
+  mlx_loop(cub->mlx);
 
   return (0);
 }

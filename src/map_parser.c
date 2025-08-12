@@ -86,11 +86,34 @@ bool validate_lines(t_map *map) {
   return true;
 }
 
+void validate_and_get_player_position(t_cub *cub) {
+  int y = 0;
+  int x = 0;
+  char **lines = cub->map->gamemap;
+  char *line;
+
+  while (lines[y] != NULL) {
+    line = ft_strdup(lines[y]);
+    x = 0;
+    while (line[x] != '\0') {
+      if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' ||
+          line[x] == 'W') {
+        cub->player->pos.x = x;
+        cub->player->pos.y = y;
+        cub->map->gamemap[y][x] = '0';
+      }
+      x++;
+    }
+    y++;
+  }
+}
+
 static void validate_map(t_cub *cub) {
   if (validate_first_and_last_line(cub->map) == false)
     print_error_and_exit(cub, "Error\nInvalid map");
   if (validate_lines(cub->map) == false)
     print_error_and_exit(cub, "Error\nInvalid map");
+  validate_and_get_player_position(cub);
 }
 
 static void save_elements(t_cub *cub) {
