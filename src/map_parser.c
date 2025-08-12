@@ -12,6 +12,7 @@ static void set_colors(t_cub *cub, char *colors_raw, char **colors_ref);
 static char **split_line(t_cub *cub, char *map_line, int *i);
 
 static int count_map_height(t_cub *cub, int i);
+static void validate_map(t_cub *cub);
 
 bool parser_map(t_cub *cub, char *file) {
   t_map *map;
@@ -33,9 +34,63 @@ bool parser_map(t_cub *cub, char *file) {
   }
   map->map_raw_datas[i] = NULL;
   save_elements(cub);
+
+  validate_map(cub);
+
   printf("w - %i\n", cub->map->width);
   printf("h - %i\n", cub->map->height);
   return true;
+}
+
+bool validate_first_and_last_line(t_map *map) {
+  char *first_line = map->gamemap[0];
+  char *last_line = map->gamemap[map->height - 1];
+
+  int i = 0;
+  while (first_line[i] != '\0') {
+    if (first_line[i] != ' ' && first_line[i] != '1')
+      return false;
+    i++;
+  }
+
+  i = 0;
+  while (last_line[i] != '\0') {
+    if (last_line[i] != ' ' && last_line[i] != '1')
+      return false;
+    i++;
+  }
+
+  return true;
+}
+
+bool validate_lines(t_map *map) {
+  int i = 0;
+  int j = 0;
+  char **lines = map->gamemap;
+  char *line;
+
+  while (lines[i] != NULL) {
+    line = ft_strdup(lines[i]);
+    j = 0;
+    while (line[j] != '\0') {
+      if (line[j] && line[j] != ' ' && line[j] != '0' && line[j] != '1' &&
+          line[j] != 'N' && line[j] != 'S' && line[j] != 'E' &&
+          line[j] != 'W') {
+        return false;
+      }
+      j++;
+    }
+    i++;
+  }
+
+  return true;
+}
+
+static void validate_map(t_cub *cub) {
+  if (validate_first_and_last_line(cub->map) == false)
+    print_error_and_exit(cub, "Error\nInvalid map");
+  if (validate_lines(cub->map) == false)
+    print_error_and_exit(cub, "Error\nInvalid map");
 }
 
 static void save_elements(t_cub *cub) {
@@ -86,8 +141,7 @@ static void save_elements(t_cub *cub) {
       while (cub->map->map_raw_datas[i]) {
         temp = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
         if (temp[0] == '\0' && height < map_height) {
-          printf("height: %i\nmap_height: %i\n", width, map_height);
-          print_error_and_exit(cub, "Space inside map");
+          print_error_and_exit(cub, "Error\nSpace inside map");
         } else if (temp[0] == '\0') {
           i++;
           continue;
