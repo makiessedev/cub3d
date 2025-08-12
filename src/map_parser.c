@@ -6,7 +6,8 @@ static void save_elements(t_cub *cub);
 static char *ft_remove_chars(const char *s, const char *set);
 
 static void handle_texture(t_cub *cub, char *tex_path, int argc, char **tex);
-static void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref);
+static void handle_color(t_cub *cub, char **chuncks, int argc,
+                         char **colors_ref);
 static void set_colors(t_cub *cub, char *colors_raw, char **colors_ref);
 static char **split_line(t_cub *cub, char *map_line, int *i);
 
@@ -23,7 +24,7 @@ bool parser_map(t_cub *cub, char *file) {
 
   fd = open_file(map->map_path);
   line = get_next_line(fd);
-  map->map_raw_datas = ft_calloc(count_line(map)+1, sizeof(char*));
+  map->map_raw_datas = ft_calloc(count_line(map) + 1, sizeof(char *));
   i = 0;
   while (line != NULL) {
     map->map_raw_datas[i] = ft_strdup(line);
@@ -58,11 +59,9 @@ static void save_elements(t_cub *cub) {
       handle_texture(cub, chuncks[1], chunck_len, &(map->WE));
     } else if (!ft_strncmp(key, M_EA, ft_strlen(M_EA))) {
       handle_texture(cub, chuncks[1], chunck_len, &(map->EA));
-    }
-    else if (!ft_strncmp(key, M_FLOOR, ft_strlen(M_FLOOR))) {
+    } else if (!ft_strncmp(key, M_FLOOR, ft_strlen(M_FLOOR))) {
       handle_color(cub, chuncks, chunck_len, map->F);
-    }
-    else if (!ft_strncmp(key, M_CEIL, ft_strlen(M_CEIL))) {
+    } else if (!ft_strncmp(key, M_CEIL, ft_strlen(M_CEIL))) {
       handle_color(cub, chuncks, chunck_len, map->C);
     } else {
       print_error_and_exit(cub, "Invalid Key: Color or Textures");
@@ -70,17 +69,30 @@ static void save_elements(t_cub *cub) {
 
     if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0]) {
       i++;
-      map->gamemap = malloc(sizeof(char*) * (count_map_height(cub, i)+1));
+      int map_height = count_map_height(cub, i);
+      map->gamemap = malloc(sizeof(char *) * (map_height + 1));
       char *line;
       int j = 0;
       int width = 0;
       int height = 0;
+
+      char *temp = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
+      while (temp[0] == '\0') {
+        free(temp);
+        i++;
+        temp = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
+      }
+      free(temp);
       while (cub->map->map_raw_datas[i]) {
-        line = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
-        if (line[0] == '\0') {
+        temp = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
+        if (temp[0] == '\0' && height < map_height) {
+          printf("height: %i\nmap_height: %i\n", width, map_height);
+          print_error_and_exit(cub, "Space inside map");
+        } else if (temp[0] == '\0') {
           i++;
           continue;
         }
+        line = ft_strdup(ft_strtrim(map->map_raw_datas[i], "\n"));
         int current_width = ft_strlen(line);
         if (current_width > width)
           width = current_width;
@@ -136,7 +148,8 @@ static char **split_line(t_cub *cub, char *map_line, int *i) {
   return chuncks;
 }
 
-static void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref) {
+static void handle_color(t_cub *cub, char **chuncks, int argc,
+                         char **colors_ref) {
   const char *EMPTY = "\t ";
 
   if (argc >= 2 && argc <= 6) {
@@ -169,7 +182,7 @@ static void set_colors(t_cub *cub, char *colors_raw, char **colors_ref) {
   if (ft_count_matrix(colors) > 3)
     print_error_and_exit(cub, "Invalid color many arguments");
   for (int i = 0; i < 3; i++) {
-    for(int j = 0; j < 3; j++) {
+    for (int j = 0; j < 3; j++) {
       if (ft_isprint(colors[i][j])) {
         if (!ft_isdigit(colors[i][j])) {
           print_error_and_exit(cub, "Invalid digit color");
@@ -213,7 +226,7 @@ static int count_line(t_map *map) {
 
 static int open_file(char *file) {
   int fd;
-  
+
   fd = open(file, O_RDONLY);
   if (fd == -1) {
     perror("Error to open map");
@@ -223,36 +236,36 @@ static int open_file(char *file) {
 }
 
 static char *ft_remove_chars(const char *s, const char *set) {
-    char *new_s;
-    int i, j;
-    size_t s_len, set_len;
+  char *new_s;
+  int i, j;
+  size_t s_len, set_len;
 
-    if (!s || !set)
-        return NULL;
-    
-    s_len = strlen(s);
-    set_len = strlen(set);
+  if (!s || !set)
+    return NULL;
 
-    new_s = (char *)malloc(s_len + 1);
-    if (!new_s)
-        return NULL;
+  s_len = strlen(s);
+  set_len = strlen(set);
 
-    i = 0;
-    j = 0;
-    while (s[i]) {
-        int char_is_in_set = 0;
-        for (size_t k = 0; k < set_len; k++) {
-            if (s[i] == set[k]) {
-                char_is_in_set = 1;
-                break;
-            }
-        }
-        if (!char_is_in_set) {
-            new_s[j] = s[i];
-            j++;
-        }
-        i++;
+  new_s = (char *)malloc(s_len + 1);
+  if (!new_s)
+    return NULL;
+
+  i = 0;
+  j = 0;
+  while (s[i]) {
+    int char_is_in_set = 0;
+    for (size_t k = 0; k < set_len; k++) {
+      if (s[i] == set[k]) {
+        char_is_in_set = 1;
+        break;
+      }
     }
-    new_s[j] = '\0';
-    return new_s;
+    if (!char_is_in_set) {
+      new_s[j] = s[i];
+      j++;
+    }
+    i++;
+  }
+  new_s[j] = '\0';
+  return new_s;
 }

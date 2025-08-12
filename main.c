@@ -1,6 +1,5 @@
 #include "include/header.h"
 
-
 void print_elements(t_cub *cub) {
   t_map *map = cub->map;
   printf("NO - %s\n", map->NO);
@@ -53,4 +52,3 @@ int main(int ac, char **av) {
 
   return (0);
 }
-

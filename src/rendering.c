@@ -1,8 +1,6 @@
 #include "../include/header.h"
 
-int create_rgb(int r, int g, int b) {
-  return ((r << 16) | (g << 8) | b);
-}
+int create_rgb(int r, int g, int b) { return ((r << 16) | (g << 8) | b); }
 
 void put_pixel(t_img_data *img_data, int x, int y, int color) {
   if (x >= 0 && x < WIDTH && y >= 0 && y < HEIGHT) {
@@ -92,8 +90,9 @@ void render_walls(t_cub *cub3d) {
       }
       if ((int)wallMapPos.y >= 0 && (int)wallMapPos.y < cub3d->map->height &&
           (int)wallMapPos.x >= 0 && (int)wallMapPos.x < cub3d->map->width) {
-        //if (cub3d->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > 0) {
-        //if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] == '1') {
+        // if (cub3d->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > 0) {
+        // if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] == '1')
+        // {
         if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > '0') {
           hit = true;
         }
@@ -105,7 +104,7 @@ void render_walls(t_cub *cub3d) {
     float perpendicularDist;
     float wallX;
     t_texture *current_tex;
-    if (hitSide == 0) // parede vertical 
+    if (hitSide == 0) // parede vertical
     {
       perpendicularDist = ddaLineSizeX - deltaDistX;
       wallX = cub3d->player->pos.y + perpendicularDist * rayDir.y;
@@ -142,19 +141,25 @@ void render_walls(t_cub *cub3d) {
       lineStart = 0;
     if (lineEnd >= HEIGHT)
       lineEnd = HEIGHT - 1;
-    
-    wallX -= floor(wallX); // Essa cena me frustrou bastante porque estava casusando um segfault no programa todo. E como saberia que o problema era essa varialvel? GDB hahaha
+
+    wallX -=
+        floor(wallX); // Essa cena me frustrou bastante porque estava casusando
+                      // um segfault no programa todo. E como saberia que o
+                      // problema era essa varialvel? GDB hahaha
     int texX = (int)(wallX * (float)current_tex->width);
 
     for (int y_coord = lineStart; y_coord <= lineEnd; y_coord++) {
-      int texY = (int)(((y_coord - lineStart) / (lineEndY - lineStartY)) * current_tex->height);
+      int texY = (int)(((y_coord - lineStart) / (lineEndY - lineStartY)) *
+                       current_tex->height);
       if (texY < 0)
         texY = 0;
       if (texY > current_tex->height)
         texY = current_tex->height - 1;
 
-      int offset_tex = (texY * current_tex->line_len) + (texX * (current_tex->bpp / 8));
-      unsigned int wallColor = *(unsigned int *)(current_tex->addr + offset_tex);
+      int offset_tex =
+          (texY * current_tex->line_len) + (texX * (current_tex->bpp / 8));
+      unsigned int wallColor =
+          *(unsigned int *)(current_tex->addr + offset_tex);
 
       put_pixel(&cub3d->img_data, (int)pixel, y_coord, wallColor);
     }
