@@ -18,6 +18,8 @@
 #define IGNORE_MASK 0
 #define KEYPRESS 2
 #define KEYPRESS_MASK 1L << 0
+#define KEYRELEASE 3
+#define KEYRELEASE_MASK 1L << 1
 #define ESC 65307
 #define MOVE_UP 119
 #define MOVE_UP2 65362
@@ -89,15 +91,28 @@ typedef struct {
 } t_map;
 
 typedef struct {
+  bool ESC_PRESSED;
+  bool MOVE_UP_PRESSED;
+  bool MOVE_UP2_PRESSED;
+  bool MOVE_DOWN_PRESSED;
+  bool MOVE_DOWN2_PRESSED;
+  bool MOVE_RIGHT_PRESSED;
+  bool MOVE_LEFT_PRESSED;
+  bool ROTATE_RIGHT_PRESSED;
+  bool ROTATE_LEFT_PRESSED;
+} t_key_status;
+
+typedef struct {
   void *mlx;
   void *win;
   t_img_data img_data;
   t_player *player;
   t_texture textures[4];
   t_map *map;
+  t_key_status key_status;
 } t_cub;
-t_vector vec_add(t_vector a, t_vector b);
 
+t_vector vec_add(t_vector a, t_vector b);
 t_vector vec_sub(t_vector a, t_vector b);
 t_vector vec_scale(t_vector v, float scalar);
 float vec_dot(t_vector a, t_vector b);
@@ -115,5 +130,6 @@ int main_loop(t_cub *cub);
 void load_all_textures(t_cub *cub);
 bool parser_map(t_cub *cub, char *file);
 void print_error_and_exit(t_cub *cub, char *msg);
+int handle_keyrelease(int keycode, void *cub3d_ptr);
 
 #endif
