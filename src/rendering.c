@@ -127,8 +127,9 @@ void render_walls(t_cub *cub3d) {
     if (perpendicularDist < 0.0001) {
       fprintf(stderr, "PerpendicularDist muito pequeno: %f\n",
               perpendicularDist);
-      pixel++;
-      continue;
+      perpendicularDist += 0.0001;
+      // pixel++;
+      // continue;
     }
 
     float wallLineHeight = HEIGHT / perpendicularDist;

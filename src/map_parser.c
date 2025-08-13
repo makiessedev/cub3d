@@ -123,8 +123,10 @@ void validate_and_get_player_position(t_cub *cub) {
     while (line[x] != '\0') {
       if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' ||
           line[x] == 'W') {
-        cub->player->pos.x = x;
-        cub->player->pos.y = y;
+        if (cub->player->pos.x)
+          print_error_and_exit(cub, "Error\nDuplated player");
+        cub->player->pos.x = x + 0.5;
+        cub->player->pos.y = y + 0.5;
         cub->map->gamemap[y][x] = '0';
       }
       x++;
