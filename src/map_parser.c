@@ -66,17 +66,37 @@ bool validate_first_and_last_line(t_map *map) {
 bool validate_lines(t_map *map) {
   int i = 0;
   int j = 0;
-  char **lines = map->gamemap;
-  char *line;
 
-  while (lines[i] != NULL) {
-    line = ft_strdup(lines[i]);
+  while (map->gamemap[i] != NULL) {
     j = 0;
-    while (line[j] != '\0') {
-      if (line[j] && line[j] != ' ' && line[j] != '0' && line[j] != '1' &&
-          line[j] != 'N' && line[j] != 'S' && line[j] != 'E' &&
-          line[j] != 'W') {
+    while (map->gamemap[i][j] != '\0') {
+      if (map->gamemap[i][j] != ' ' && map->gamemap[i][j] != '0' &&
+          map->gamemap[i][j] != '1' && map->gamemap[i][j] != 'N' &&
+          map->gamemap[i][j] != 'S' && map->gamemap[i][j] != 'E' &&
+          map->gamemap[i][j] != 'W') {
         return false;
+      }
+      if (map->gamemap[i][j] == ' ') {
+        if (i + 1 < map->height) {
+          if (map->gamemap[i + 1][j] && map->gamemap[i + 1][j] != ' ' &&
+              map->gamemap[i + 1][j] != '1')
+            return false;
+        }
+        if (i - 1 > 0) {
+          if (map->gamemap[i - 1] && map->gamemap[i - 1][j] &&
+              map->gamemap[i - 1][j] != ' ' && map->gamemap[i - 1][j] != '1')
+            return false;
+        }
+        if (j + 1 < map->width) {
+          if (map->gamemap[i][j + 1] && map->gamemap[i][j + 1] != ' ' &&
+              map->gamemap[i][j + 1] != '1')
+            return false;
+        }
+        if (j - 1 > 0) {
+          if (map->gamemap[i][j - 1] && map->gamemap[i][j - 1] != ' ' &&
+              map->gamemap[i][j - 1] != '1')
+            return false;
+        }
       }
       j++;
     }

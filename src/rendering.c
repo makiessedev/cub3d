@@ -125,8 +125,8 @@ void render_walls(t_cub *cub3d) {
 
     perpendicularDist = fabs(perpendicularDist);
     if (perpendicularDist < 0.0001) {
-      // fprintf(stderr, "PerpendicularDist muito pequeno: %f\n",
-      //        perpendicularDist);
+      fprintf(stderr, "PerpendicularDist muito pequeno: %f\n",
+              perpendicularDist);
       pixel++;
       continue;
     }
