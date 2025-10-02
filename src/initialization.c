@@ -11,7 +11,7 @@ void init_player(t_player *player) {
   player->plane.y = 0;
 
   player->move_speed = 0.009999;
-  player->rot_speed = 0.007;
+  player->rot_speed = 0.009;
 }
 
 void init_cub(t_cub *cub) {

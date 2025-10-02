@@ -11,8 +11,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define WIDTH 1600
-#define HEIGHT 900
+#define WIDTH 640
+#define HEIGHT 480
 
 #define DESTROY_NOTIFY 17
 #define IGNORE_MASK 0
@@ -113,9 +113,7 @@ typedef struct {
 } t_cub;
 
 t_vector vec_add(t_vector a, t_vector b);
-t_vector vec_sub(t_vector a, t_vector b);
 t_vector vec_scale(t_vector v, float scalar);
-float vec_dot(t_vector a, t_vector b);
 float vec_length(t_vector v);
 t_vector vec_normalize(t_vector v);
 t_vector vec_rotate(t_vector v, float angle);

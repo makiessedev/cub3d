@@ -40,12 +40,12 @@ void render_background(t_cub *cub) {
 void render_walls(t_cub *cub3d) {
   float pixel = 0;
   while (pixel < WIDTH) {
-    float multiplier = 2 * (pixel / WIDTH) - 1;
+    float multiplier = 2 * (pixel / (double)WIDTH) - 1;
     t_vector cameraPixel = vec_scale(cub3d->player->plane, multiplier);
     t_vector rayDir = vec_add(cub3d->player->dir, cameraPixel);
 
-    float deltaDistX = (rayDir.x == 0) ? 1e30 : fabs(1.0 / rayDir.x);
-    float deltaDistY = (rayDir.y == 0) ? 1e30 : fabs(1.0 / rayDir.y);
+    float deltaDistX = /*(rayDir.x == 0) ? 1e30 :*/ fabs(1.0 / rayDir.x);
+    float deltaDistY = /*(rayDir.y == 0) ? 1e30 :*/ fabs(1.0 / rayDir.y);
 
     t_vector mapPos = {floor(cub3d->player->pos.x),
                        floor(cub3d->player->pos.y)};
@@ -90,15 +90,19 @@ void render_walls(t_cub *cub3d) {
       }
       if ((int)wallMapPos.y >= 0 && (int)wallMapPos.y < cub3d->map->height &&
           (int)wallMapPos.x >= 0 && (int)wallMapPos.x < cub3d->map->width) {
-        // if (cub3d->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > 0) {
-        // if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] == '1')
-        // {
         if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > '0') {
           hit = true;
         }
       } else {
         hit = true;
       }
+
+      if (wallMapPos.y < 0.25 || wallMapPos.x < 0.25 ||
+          wallMapPos.y > cub3d->map->height - 0.25 ||
+          wallMapPos.x > cub3d->map->width - 1.25)
+        break;
+      else if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > '0')
+        hit = 1;
     }
 
     float perpendicularDist;
@@ -123,14 +127,14 @@ void render_walls(t_cub *cub3d) {
       }
     }
 
-    perpendicularDist = fabs(perpendicularDist);
+    /*perpendicularDist = fabs(perpendicularDist);
     if (perpendicularDist < 0.0001) {
       fprintf(stderr, "PerpendicularDist muito pequeno: %f\n",
               perpendicularDist);
       perpendicularDist += 0.0001;
-      // pixel++;
-      // continue;
-    }
+      //  pixel++;
+      //  continue;
+    }*/
 
     float wallLineHeight = HEIGHT / perpendicularDist;
     float lineStartY = (float)HEIGHT / 2 - wallLineHeight / 2;
