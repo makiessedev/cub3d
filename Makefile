@@ -15,8 +15,12 @@ LIBFT_LIB		= $(LIBFT_DIR)libft.a
 # Arquivos fonte
 SRCS_ROOT		= main.c
 SRCS_FROM_DIR	= ./src/events.c ./src/initialization.c \
-						./src/map_parser.c ./src/vec_operations.c ./src/rendering.c \
-						./src/textures.c ./src/print_error_and_exit.c
+						./src/vec_operations.c ./src/rendering.c \
+						./src/textures.c ./src/print_error_and_exit.c ./src/moviments.c \
+						./src/rotation.c ./src/validate_position.c \
+						./src/parser/handle_color.c ./src/parser/handle_texture.c \
+						./src/parser/map_parser.c ./src/parser/utils.c ./src/parser/validation.c \
+						
 SRCS			= $(SRCS_ROOT) $(SRCS_FROM_DIR)
 
 # Objetos

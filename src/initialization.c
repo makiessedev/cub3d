@@ -1,9 +1,6 @@
 #include "../include/header.h"
 
 void init_player(t_player *player) {
-  // player->pos.x = 10;
-  // player->pos.y = 4;
-
   player->dir.x = 0;
   player->dir.y = -1;
 

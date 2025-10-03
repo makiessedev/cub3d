@@ -112,22 +112,64 @@ typedef struct {
   t_key_status key_status;
 } t_cub;
 
+// src/vec_operations.c
 t_vector vec_add(t_vector a, t_vector b);
 t_vector vec_scale(t_vector v, float scalar);
 float vec_length(t_vector v);
 t_vector vec_normalize(t_vector v);
 t_vector vec_rotate(t_vector v, float angle);
+
+// ../src/initialization.c
 void init_cub(t_cub *cub);
 void init_player(t_player *player);
+
+// ../src/rendering.c
 void put_pixel(t_img_data *img_data, int x, int y, int color);
 void render_background(t_cub *cub);
 void render_walls(t_cub *cub3d);
+
+// ../src/events.c
 int handle_keypress(int keycode, void *cub3d_ptr);
 int game_exit(t_cub *cub);
-int main_loop(t_cub *cub);
-void load_all_textures(t_cub *cub);
-bool parser_map(t_cub *cub, char *file);
-void print_error_and_exit(t_cub *cub, char *msg);
 int handle_keyrelease(int keycode, void *cub3d_ptr);
+void handle_input(t_cub *cub);
+
+// ../main.c
+int main_loop(t_cub *cub);
+
+// ../src/textures.c
+void load_all_textures(t_cub *cub);
+
+// ../src/parser/map_parser.c
+bool parser_map(t_cub *cub, char *file);
+
+// ../src/print_error_and_exit.c
+void print_error_and_exit(t_cub *cub, char *msg);
+
+// ../src/validate_position.c
+bool is_border_wall(t_cub *cub, int mapX, int mapY);
+bool newpos_isvalid(t_cub *cub, float new_posX, float new_posY);
+
+// ../src/moviments.c
+void move_up(t_cub *cub);
+void move_down(t_cub *cub);
+void move_right(t_cub *cub);
+void move_left(t_cub *cub);
+
+// ../src/rotation.c
+void rotate_right(t_cub *cub);
+void rotate_left(t_cub *cub);
+
+// ../src/parser/utils.c
+char *ft_remove_chars(const char *s, const char *set);
+
+// ../src/parser/handle_color.c
+void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref);
+
+// ../src/parser/handle_texture.c
+void handle_texture(t_cub *cub, char *tex_path, int argc, char **tex);
+
+// ../src/parser/validation.c
+void validate_map(t_cub *cub);
 
 #endif
