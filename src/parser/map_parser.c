@@ -32,8 +32,73 @@ bool parser_map(t_cub *cub, char *file) {
   return true;
 }
 
-static void save_elements(t_cub *cub) {
+bool get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
+                           int *i) {
   char *key;
+  key = ft_strtrim(elements[0], M_EMPTY);
+  int elements_len = ft_count_matrix(elements);
+  if (!ft_strncmp(key, M_NO, ft_strlen(M_NO))) {
+    handle_texture(cub_data, elements[1], elements_len, &(map->NO));
+  } else if (!ft_strncmp(key, M_SO, ft_strlen(M_SO))) {
+    handle_texture(cub_data, elements[1], elements_len, &(map->SO));
+  } else if (!ft_strncmp(key, M_WE, ft_strlen(M_WE))) {
+    handle_texture(cub_data, elements[1], elements_len, &(map->WE));
+  } else if (!ft_strncmp(key, M_EA, ft_strlen(M_EA))) {
+    handle_texture(cub_data, elements[1], elements_len, &(map->EA));
+  } else if (!ft_strncmp(key, M_FLOOR, ft_strlen(M_FLOOR))) {
+    handle_color(cub_data, elements, elements_len, map->F);
+  } else if (!ft_strncmp(key, M_CEIL, ft_strlen(M_CEIL))) {
+    handle_color(cub_data, elements, elements_len, map->C);
+  } else {
+    return false;
+  }
+
+  if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0])
+    (*i)++;
+
+  return true;
+}
+
+bool get_map(t_cub *cub_data, t_map *map, int *i) {
+  int map_height = count_map_height(cub_data, *i);
+  map->gamemap = malloc(sizeof(char *) * (map_height + 1));
+  char *line;
+  int j = 0;
+  int width = 0;
+  int height = 0;
+
+  char *raw_line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], M_EMPTY));
+  while (raw_line[0] == '\0') {
+    free(raw_line);
+    (*i)++;
+    raw_line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], M_EMPTY));
+  }
+  free(raw_line);
+  while (cub_data->map->map_raw_datas[*i]) {
+    raw_line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], M_EMPTY));
+    if (raw_line[0] == '\0' && height < map_height) {
+      return false;
+    } else if (raw_line[0] == '\0') {
+      (*i)++;
+      continue;
+    }
+    line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], "\n"));
+    int current_width = ft_strlen(line);
+    if (current_width > width)
+      width = current_width;
+
+    map->gamemap[j] = ft_strdup(line);
+    (*i)++;
+    j++;
+    height++;
+  }
+  map->width = width;
+  map->height = height;
+  map->gamemap[j] = NULL;
+  return true;
+}
+
+static void save_elements(t_cub *cub) {
   int i = 0;
   char **chuncks;
   t_map *map = cub->map;
@@ -43,61 +108,12 @@ static void save_elements(t_cub *cub) {
     if (chuncks == NULL)
       continue;
 
-    key = ft_strtrim(chuncks[0], M_EMPTY);
-    int chunck_len = ft_count_matrix(chuncks);
-    if (!ft_strncmp(key, M_NO, ft_strlen(M_NO))) {
-      handle_texture(cub, chuncks[1], chunck_len, &(map->NO));
-    } else if (!ft_strncmp(key, M_SO, ft_strlen(M_SO))) {
-      handle_texture(cub, chuncks[1], chunck_len, &(map->SO));
-    } else if (!ft_strncmp(key, M_WE, ft_strlen(M_WE))) {
-      handle_texture(cub, chuncks[1], chunck_len, &(map->WE));
-    } else if (!ft_strncmp(key, M_EA, ft_strlen(M_EA))) {
-      handle_texture(cub, chuncks[1], chunck_len, &(map->EA));
-    } else if (!ft_strncmp(key, M_FLOOR, ft_strlen(M_FLOOR))) {
-      handle_color(cub, chuncks, chunck_len, map->F);
-    } else if (!ft_strncmp(key, M_CEIL, ft_strlen(M_CEIL))) {
-      handle_color(cub, chuncks, chunck_len, map->C);
-    } else {
+    if (get_color_and_texture(cub, map, chuncks, &i) == false)
       print_error_and_exit(cub, "Invalid Key: Color or Textures");
-    }
 
     if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0]) {
-      i++;
-      int map_height = count_map_height(cub, i);
-      map->gamemap = malloc(sizeof(char *) * (map_height + 1));
-      char *line;
-      int j = 0;
-      int width = 0;
-      int height = 0;
-
-      char *temp = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
-      while (temp[0] == '\0') {
-        free(temp);
-        i++;
-        temp = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
-      }
-      free(temp);
-      while (cub->map->map_raw_datas[i]) {
-        temp = ft_strdup(ft_strtrim(map->map_raw_datas[i], M_EMPTY));
-        if (temp[0] == '\0' && height < map_height) {
-          print_error_and_exit(cub, "Error\nSpace inside map");
-        } else if (temp[0] == '\0') {
-          i++;
-          continue;
-        }
-        line = ft_strdup(ft_strtrim(map->map_raw_datas[i], "\n"));
-        int current_width = ft_strlen(line);
-        if (current_width > width)
-          width = current_width;
-
-        map->gamemap[j] = ft_strdup(line);
-        i++;
-        j++;
-        height++;
-      }
-      map->width = width;
-      map->height = height;
-      map->gamemap[j] = NULL;
+      if (get_map(cub, map, &i) == false)
+        print_error_and_exit(cub, "Error\nSpace inside map");
       return;
     }
     i++;
