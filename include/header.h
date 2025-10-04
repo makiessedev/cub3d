@@ -176,5 +176,10 @@ void validate_map(t_cub *cub);
 // ../src/parser/extract_elements.c
 bool get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
                            int *i);
-bool get_map(t_cub *cub_data, t_map *map, int *i);
+bool get_map(t_cub *cub_data, t_map *map, int map_height, int *i);
+
+// ../src/parser/extract_map_utils.c
+int count_map_height(t_cub *cub, int i);
+void salt_to_first_linemap(t_map *map, int *i);
+
 #endif

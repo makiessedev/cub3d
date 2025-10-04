@@ -1,6 +1,5 @@
 #include "../../include/header.h"
-
-static int count_map_height(t_cub *cub, int i);
+#include <stddef.h>
 
 bool get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
                            int *i) {
@@ -29,59 +28,30 @@ bool get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
   return true;
 }
 
-bool get_map(t_cub *cub_data, t_map *map, int *i) {
-  int map_height = count_map_height(cub_data, *i);
-  map->gamemap = malloc(sizeof(char *) * (map_height + 1));
+bool get_map(t_cub *cub_data, t_map *map, int map_height, int *i) {
   char *line;
   int j = 0;
-  int width = 0;
-  int height = 0;
+  map->width = 0;
+  map->height = 0;
 
-  char *raw_line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], M_EMPTY));
-  while (raw_line[0] == '\0') {
-    free(raw_line);
-    (*i)++;
-    raw_line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], M_EMPTY));
-  }
-  free(raw_line);
+  map->gamemap = malloc(sizeof(char *) * (map_height + 1));
   while (cub_data->map->map_raw_datas[*i]) {
-    raw_line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], M_EMPTY));
-    if (raw_line[0] == '\0' && height < map_height) {
+    line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], M_EMPTY));
+    if (line[0] == '\0' && map->height < map_height) {
       return false;
-    } else if (raw_line[0] == '\0') {
+    } else if (line[0] == '\0') {
       (*i)++;
       continue;
     }
+    free(line);
     line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], "\n"));
-    int current_width = ft_strlen(line);
-    if (current_width > width)
-      width = current_width;
-
+    if (ft_strlen(line) > (size_t)map->width)
+      map->width = ft_strlen(line);
     map->gamemap[j] = ft_strdup(line);
     (*i)++;
     j++;
-    height++;
+    map->height++;
   }
-  map->width = width;
-  map->height = height;
   map->gamemap[j] = NULL;
   return true;
-}
-
-static int count_map_height(t_cub *cub, int i) {
-  int map_hight = 0;
-  char *line;
-  while (cub->map->map_raw_datas[i]) {
-    line = ft_strdup(ft_strtrim(cub->map->map_raw_datas[i], M_EMPTY));
-    if (line[0] == '\0') {
-      i++;
-      continue;
-    }
-    if (line[0] != '1') {
-      print_error_and_exit(cub, "Invalid Map");
-    }
-    map_hight++;
-    i++;
-  }
-  return map_hight;
 }

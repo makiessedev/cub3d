@@ -34,6 +34,7 @@ static void save_elements(t_cub *cub) {
   int i = 0;
   char **chuncks;
   t_map *map = cub->map;
+  int map_height;
 
   while (map->map_raw_datas[i]) {
     chuncks = split_line(cub, map->map_raw_datas[i], &i);
@@ -44,7 +45,9 @@ static void save_elements(t_cub *cub) {
       print_error_and_exit(cub, "Invalid Key: Color or Textures");
 
     if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0]) {
-      if (get_map(cub, map, &i) == false)
+      map_height = count_map_height(cub, i);
+      salt_to_first_linemap(map, &i);
+      if (get_map(cub, map, map_height, &i) == false)
         print_error_and_exit(cub, "Error\nSpace inside map");
       return;
     }
