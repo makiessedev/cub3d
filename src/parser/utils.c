@@ -34,3 +34,14 @@ char *ft_remove_chars(const char *s, const char *set) {
   new_s[j] = '\0';
   return new_s;
 }
+
+int open_file(char *file) {
+  int fd;
+
+  fd = open(file, O_RDONLY);
+  if (fd == -1) {
+    perror("Error to open map");
+    exit(0);
+  }
+  return fd;
+}

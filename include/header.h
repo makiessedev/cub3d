@@ -162,6 +162,7 @@ void rotate_left(t_cub *cub);
 
 // ../src/parser/utils.c
 char *ft_remove_chars(const char *s, const char *set);
+int open_file(char *file);
 
 // ../src/parser/handle_color.c
 void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref);
@@ -172,4 +173,8 @@ void handle_texture(t_cub *cub, char *tex_path, int argc, char **tex);
 // ../src/parser/validation.c
 void validate_map(t_cub *cub);
 
+// ../src/parser/extract_elements.c
+bool get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
+                           int *i);
+bool get_map(t_cub *cub_data, t_map *map, int *i);
 #endif
