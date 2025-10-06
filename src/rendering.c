@@ -126,22 +126,29 @@ void compute_wall_data(t_cub *cub3d, t_ray *ray) {
   ray->wall_x -= floor(ray->wall_x);
 }
 
+t_wall_line compute_wall_line_info(t_ray *ray) {
+  t_wall_line info;
+
+  info.line_height = HEIGHT / ray->perp_dist;
+  info.line_start_y = (float)HEIGHT / 2 - info.line_height / 2;
+  info.line_end_y = (float)HEIGHT / 2 + info.line_height / 2;
+
+  info.start = (int)info.line_start_y;
+  info.end = (int)info.line_end_y;
+  if (info.start < 0)
+    info.start = 0;
+  if (info.end >= HEIGHT)
+    info.end = HEIGHT - 1;
+
+  info.texX = (int)(ray->wall_x * (float)ray->texture->width);
+  return info;
+}
+
 void draw_wall_line(t_cub *cub3d, t_ray *ray, int pixel) {
-  float wallLineHeight = HEIGHT / ray->perp_dist;
-  float lineStartY = (float)HEIGHT / 2 - wallLineHeight / 2;
-  float lineEndY = (float)HEIGHT / 2 + wallLineHeight / 2;
-
-  int lineStart = (int)lineStartY;
-  int lineEnd = (int)lineEndY;
-  if (lineStart < 0)
-    lineStart = 0;
-  if (lineEnd >= HEIGHT)
-    lineEnd = HEIGHT - 1;
-
-  int texX = (int)(ray->wall_x * (float)ray->texture->width);
-
-  for (int y_coord = lineStart; y_coord <= lineEnd; y_coord++) {
-    int texY = (int)(((y_coord - lineStart) / (lineEndY - lineStartY)) *
+  t_wall_line info = compute_wall_line_info(ray);
+  for (int y_coord = info.start; y_coord <= info.end; y_coord++) {
+    int texY = (int)(((y_coord - info.line_start_y) /
+                      (info.line_end_y - info.line_start_y)) *
                      ray->texture->height);
     if (texY < 0)
       texY = 0;
@@ -149,7 +156,7 @@ void draw_wall_line(t_cub *cub3d, t_ray *ray, int pixel) {
       texY = ray->texture->height - 1;
 
     int offset_tex =
-        (texY * ray->texture->line_len) + (texX * (ray->texture->bpp / 8));
+        (texY * ray->texture->line_len) + (info.texX * (ray->texture->bpp / 8));
     unsigned int wallColor = *(unsigned int *)(ray->texture->addr + offset_tex);
 
     put_pixel(&cub3d->img_data, (int)pixel, y_coord, wallColor);

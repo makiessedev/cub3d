@@ -126,6 +126,15 @@ typedef struct {
   t_ray *ray;
 } t_cub;
 
+typedef struct s_wall_line {
+  int start;
+  int end;
+  int texX;
+  float line_start_y;
+  float line_end_y;
+  float line_height;
+} t_wall_line;
+
 // src/vec_operations.c
 t_vector vec_add(t_vector a, t_vector b);
 t_vector vec_scale(t_vector v, float scalar);
