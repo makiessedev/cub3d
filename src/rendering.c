@@ -44,8 +44,8 @@ void render_walls(t_cub *cub3d) {
     t_vector cameraPixel = vec_scale(cub3d->player->plane, multiplier);
     t_vector rayDir = vec_add(cub3d->player->dir, cameraPixel);
 
-    float deltaDistX = /*(rayDir.x == 0) ? 1e30 :*/ fabs(1.0 / rayDir.x);
-    float deltaDistY = /*(rayDir.y == 0) ? 1e30 :*/ fabs(1.0 / rayDir.y);
+    float deltaDistX = (rayDir.x == 0) ? 1e30 : fabs(1.0 / rayDir.x);
+    float deltaDistY = (rayDir.y == 0) ? 1e30 : fabs(1.0 / rayDir.y);
 
     t_vector mapPos = {floor(cub3d->player->pos.x),
                        floor(cub3d->player->pos.y)};

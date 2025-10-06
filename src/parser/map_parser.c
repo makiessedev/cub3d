@@ -49,6 +49,7 @@ static void save_elements(t_cub *cub) {
       salt_to_first_linemap(map, &i);
       if (get_map(cub, map, map_height, &i) == false)
         print_error_and_exit(cub, "Error\nSpace inside map");
+
       return;
     }
     i++;

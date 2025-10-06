@@ -41,7 +41,6 @@ static bool validate_lines(t_map *map) {
     char *line = ft_strdup(ft_strtrim(map->gamemap[i], M_EMPTY));
     if (line[0] != '1' || line[ft_strlen(line) - 1] != '1')
       return false;
-
     j = 0;
     while (map->gamemap[i][j] != '\0') {
       if (map->gamemap[i][j] != ' ' && map->gamemap[i][j] != '0' &&
@@ -50,28 +49,9 @@ static bool validate_lines(t_map *map) {
           map->gamemap[i][j] != 'W') {
         return false;
       }
-
       if (map->gamemap[i][j] == ' ') {
-        if (i + 1 < map->height) {
-          if (map->gamemap[i + 1][j] && map->gamemap[i + 1][j] != ' ' &&
-              map->gamemap[i + 1][j] != '1')
-            return false;
-        }
-        if (i - 1 > 0) {
-          if (map->gamemap[i - 1] && map->gamemap[i - 1][j] &&
-              map->gamemap[i - 1][j] != ' ' && map->gamemap[i - 1][j] != '1')
-            return false;
-        }
-        if (j + 1 < map->width) {
-          if (map->gamemap[i][j + 1] && map->gamemap[i][j + 1] != ' ' &&
-              map->gamemap[i][j + 1] != '1')
-            return false;
-        }
-        if (j - 1 > 0) {
-          if (map->gamemap[i][j - 1] && map->gamemap[i][j - 1] != ' ' &&
-              map->gamemap[i][j - 1] != '1')
-            return false;
-        }
+        if (validate_lines2(map, i, j) == false)
+          return false;
       }
       j++;
     }

@@ -1,8 +1,11 @@
 #include "../../include/header.h"
+#include <stddef.h>
+
+static char *ft_remove_chars2(const char *s, const char *set, char *dest,
+                              size_t set_len);
 
 char *ft_remove_chars(const char *s, const char *set) {
   char *new_s;
-  int i, j;
   size_t s_len, set_len;
 
   if (!s || !set)
@@ -15,10 +18,20 @@ char *ft_remove_chars(const char *s, const char *set) {
   if (!new_s)
     return NULL;
 
+  new_s = ft_remove_chars2(s, set, new_s, set_len);
+  return new_s;
+}
+
+static char *ft_remove_chars2(const char *s, const char *set, char *dest,
+                              size_t set_len) {
+  int char_is_in_set;
+  int i;
+  int j;
+
   i = 0;
   j = 0;
   while (s[i]) {
-    int char_is_in_set = 0;
+    char_is_in_set = 0;
     for (size_t k = 0; k < set_len; k++) {
       if (s[i] == set[k]) {
         char_is_in_set = 1;
@@ -26,13 +39,13 @@ char *ft_remove_chars(const char *s, const char *set) {
       }
     }
     if (!char_is_in_set) {
-      new_s[j] = s[i];
+      dest[j] = s[i];
       j++;
     }
     i++;
   }
-  new_s[j] = '\0';
-  return new_s;
+  dest[j] = '\0';
+  return dest;
 }
 
 int open_file(char *file) {

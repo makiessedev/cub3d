@@ -182,4 +182,7 @@ bool get_map(t_cub *cub_data, t_map *map, int map_height, int *i);
 int count_map_height(t_cub *cub, int i);
 void salt_to_first_linemap(t_map *map, int *i);
 
+// ../src/parser/validation_utils.c
+bool validate_lines2(t_map *map, int i, int j);
+
 #endif
