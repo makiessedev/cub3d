@@ -13,6 +13,7 @@ int main(int ac, char **av) {
   t_cub *cub = malloc(sizeof(t_cub));
   cub->map = malloc(sizeof(t_map));
   cub->player = ft_calloc(1, sizeof(t_player));
+  cub->ray = malloc(sizeof(t_ray));
 
   if (ac != 2) {
     ft_putendl_fd("Error", 2);

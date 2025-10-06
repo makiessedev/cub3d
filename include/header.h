@@ -103,6 +103,19 @@ typedef struct {
 } t_key_status;
 
 typedef struct {
+  t_vector dir;
+  t_vector map_pos;
+  t_vector delta_dist;
+  t_vector side_dist;
+  int step_x;
+  int step_y;
+  int side; // 0 = X ; 1 Y
+  float perp_dist;
+  t_texture *texture;
+  float wall_x;
+} t_ray;
+
+typedef struct {
   void *mlx;
   void *win;
   t_img_data img_data;
@@ -110,6 +123,7 @@ typedef struct {
   t_texture textures[4];
   t_map *map;
   t_key_status key_status;
+  t_ray *ray;
 } t_cub;
 
 // src/vec_operations.c
