@@ -67,20 +67,24 @@ void init_dda(t_ray *ray, t_player *player) {
   }
 }
 
+void step_dda(t_ray *ray, t_vector *wallMapPos) {
+  if (ray->side_dist.x < ray->side_dist.y) {
+    wallMapPos->x += ray->step_x;
+    ray->side_dist.x += ray->delta_dist.x;
+    ray->side = 0;
+  } else {
+    wallMapPos->y += ray->step_y;
+    ray->side_dist.y += ray->delta_dist.y;
+    ray->side = 1;
+  }
+}
+
 void execute_dda(t_cub *cub3d, t_ray *ray) {
   bool hit = false;
   t_vector wallMapPos = {ray->map_pos.x, ray->map_pos.y};
 
   while (hit == false) {
-    if (ray->side_dist.x < ray->side_dist.y) {
-      wallMapPos.x += ray->step_x;
-      ray->side_dist.x += ray->delta_dist.x;
-      ray->side = 0;
-    } else {
-      wallMapPos.y += ray->step_y;
-      ray->side_dist.y += ray->delta_dist.y;
-      ray->side = 1;
-    }
+    step_dda(ray, &wallMapPos);
     if ((int)wallMapPos.y >= 0 && (int)wallMapPos.y < cub3d->map->height &&
         (int)wallMapPos.x >= 0 && (int)wallMapPos.x < cub3d->map->width) {
       if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > '0') {
@@ -95,7 +99,7 @@ void execute_dda(t_cub *cub3d, t_ray *ray) {
         wallMapPos.x > cub3d->map->width - 1.25)
       break;
     else if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > '0')
-      hit = 1;
+      hit = true;
   }
 }
 
