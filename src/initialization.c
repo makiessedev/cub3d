@@ -11,34 +11,28 @@ void init_player(t_player *player) {
   player->rot_speed = 0.009;
 }
 
-void init_cub(t_cub *cub) {
+void init_mlx(t_cub *cub) {
   cub->mlx = mlx_init();
-  if (!cub->mlx) {
-    ft_putendl_fd("Error to start MiniLibX\n", 2);
-    exit(1);
-  }
+  if (!cub->mlx)
+    print_error_and_exit(cub, "Error to start MiniLibX");
+
   cub->win = mlx_new_window(cub->mlx, WIDTH, HEIGHT, "Cub3D");
-  if (!cub->win) {
-    ft_putendl_fd("Error to open window", 2);
-    exit(1);
-  }
+  if (!cub->win)
+    print_error_and_exit(cub, "Error to open window");
+
   cub->img_data.img = mlx_new_image(cub->mlx, WIDTH, HEIGHT);
-  if (!cub->img_data.img) {
-    ft_putendl_fd("Error to create image", 2);
-    exit(0);
-  }
+  if (!cub->img_data.img)
+    print_error_and_exit(cub, "Error to create image");
+
   cub->img_data.addr =
       mlx_get_data_addr(cub->img_data.img, &cub->img_data.bpp,
                         &cub->img_data.line_len, &cub->img_data.endian);
-  if (!cub->img_data.addr) {
-    ft_putendl_fd("Error to get addr", 2);
-    exit(1);
-  }
-  if (!cub->player) {
-    ft_putendl_fd("Allocation failure", 2);
-    exit(1);
-  }
+  if (!cub->img_data.addr)
+    print_error_and_exit(cub, "Error to get addr");
+}
 
+void init_cub(t_cub *cub) {
+  init_mlx(cub);
   init_player(cub->player);
   load_all_textures(cub);
 }
