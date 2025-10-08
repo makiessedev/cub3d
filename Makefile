@@ -21,7 +21,7 @@ SRCS_FROM_DIR	= ./src/events.c ./src/initialization.c \
 						./src/parser/handle_color.c ./src/parser/handle_texture.c \
 						./src/parser/map_parser.c ./src/parser/utils.c ./src/parser/validation.c \
 						./src/parser/extract_elements.c ./src/parser/extract_map_utils.c \
-						./src/parser/validation_utils.c
+						./src/parser/validation_utils.c ./src/parser/check_cub_ext.c
 						
 SRCS			= $(SRCS_ROOT) $(SRCS_FROM_DIR)
 

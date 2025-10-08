@@ -208,4 +208,7 @@ void salt_to_first_linemap(t_map *map, int *i);
 // ../src/parser/validation_utils.c
 bool validate_lines2(t_map *map, int i, int j);
 
+// ../src/parser/check_cub_ext.c
+int check_cub_extension(const char *filename);
+
 #endif

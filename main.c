@@ -18,6 +18,9 @@ int main(int ac, char **av) {
   if (ac != 2)
     print_error_and_exit(cub, "Error");
 
+  if (!check_cub_extension(av[1]))
+    print_error_and_exit(cub, "Invalid file extension. Expected .cub");
+
   if (parser_map(cub, av[1]) == false)
     print_error_and_exit(cub, "Error");
 
