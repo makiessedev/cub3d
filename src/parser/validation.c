@@ -34,13 +34,17 @@ static bool validate_first_and_last_line(t_map *map) {
 }
 
 static bool validate_lines(t_map *map) {
+  char *line;
   int i = 0;
   int j = 0;
 
   while (map->gamemap[i] != NULL) {
-    char *line = ft_strdup(ft_strtrim(map->gamemap[i], M_EMPTY));
-    if (line[0] != '1' || line[ft_strlen(line) - 1] != '1')
+    line = ft_strtrim(map->gamemap[i], M_EMPTY);
+    if (line[0] != '1' || line[ft_strlen(line) - 1] != '1') {
+      free(line);
       return false;
+    }
+    free(line);
     j = 0;
     while (map->gamemap[i][j] != '\0') {
       if (map->gamemap[i][j] != ' ' && map->gamemap[i][j] != '0' &&
@@ -73,14 +77,17 @@ static void validate_and_get_player_position(t_cub *cub) {
     while (line[x] != '\0') {
       if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' ||
           line[x] == 'W') {
-        if (cub->player->pos.x)
+        if (cub->player->pos.x) {
+          free(line);
           print_error_and_exit(cub, "Error\nDuplated player");
+        }
         cub->player->pos.x = x + 0.5;
         cub->player->pos.y = y + 0.5;
         cub->map->gamemap[y][x] = '0';
       }
       x++;
     }
+    free(line);
     y++;
   }
 }

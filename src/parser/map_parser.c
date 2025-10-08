@@ -14,15 +14,15 @@ bool parser_map(t_cub *cub, char *file) {
   map->map_path = file;
 
   fd = open_file(map->map_path);
-  line = get_next_line(fd);
   map->map_raw_datas = ft_calloc(count_line(map) + 1, sizeof(char *));
   i = 0;
-  while (line != NULL) {
+  while ((line = get_next_line(fd)) != NULL) {
     map->map_raw_datas[i] = ft_strdup(line);
-    line = get_next_line(fd);
+    free(line);
     i++;
   }
   map->map_raw_datas[i] = NULL;
+  close(fd);
 
   save_elements(cub);
   validate_map(cub);
@@ -63,12 +63,12 @@ static int count_line(t_map *map) {
 
   fd = open_file(map->map_path);
 
-  line = get_next_line(fd);
   count = 0;
-  while (line != NULL) {
+  while ((line = get_next_line(fd)) != NULL) {
+    free(line);
     count++;
-    line = get_next_line(fd);
   }
+  close(fd);
   return (count);
 }
 
@@ -78,6 +78,7 @@ static char **split_line(t_cub *cub, char *map_line, int *i) {
 
   if (ft_strlen(line) == 0 || ft_strlen(line) == 1) {
     (*i)++;
+    free(line);
     return NULL;
   }
   chuncks = ft_split(line, M_SPACE);
@@ -85,8 +86,11 @@ static char **split_line(t_cub *cub, char *map_line, int *i) {
     ft_free_matrix(chuncks);
     chuncks = ft_split(line, M_TAB);
     if (ft_count_matrix(chuncks) == 1) {
+      free(line);
+      ft_free_matrix(chuncks);
       print_error_and_exit(cub, "invalid color or textures");
     }
   }
+  free(line);
   return chuncks;
 }

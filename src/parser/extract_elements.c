@@ -36,20 +36,23 @@ bool get_map(t_cub *cub_data, t_map *map, int map_height, int *i) {
 
   map->gamemap = malloc(sizeof(char *) * (map_height + 1));
   while (cub_data->map->map_raw_datas[*i]) {
-    line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], M_EMPTY));
+    line = ft_strtrim(map->map_raw_datas[*i], M_EMPTY);
     if (line[0] == '\0' && map->height < map_height) {
+      free(line);
       return false;
     } else if (line[0] == '\0') {
+      free(line);
       (*i)++;
       continue;
     }
     free(line);
-    line = ft_strdup(ft_strtrim(map->map_raw_datas[*i], "\n"));
+    line = ft_strtrim(map->map_raw_datas[*i], "\n");
     if (ft_strlen(line) > (size_t)map->width)
       map->width = ft_strlen(line);
     map->gamemap[j] = ft_strdup(line);
     (*i)++;
     j++;
+    free(line);
     map->height++;
   }
   map->gamemap[j] = NULL;
