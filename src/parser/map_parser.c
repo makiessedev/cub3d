@@ -38,11 +38,16 @@ static void save_elements(t_cub *cub) {
 
   while (map->map_raw_datas[i]) {
     chuncks = split_line(cub, map->map_raw_datas[i], &i);
-    if (chuncks == NULL)
+    if (chuncks == NULL) {
+      ft_free_matrix(chuncks);
       continue;
+    }
 
-    if (get_color_and_texture(cub, map, chuncks, &i) == false)
+    if (get_color_and_texture(cub, map, chuncks, &i) == false) {
+      ft_free_matrix(chuncks);
       print_error_and_exit(cub, "Invalid Key: Color or Textures");
+    }
+    ft_free_matrix(chuncks);
 
     if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0]) {
       map_height = count_map_height(cub, i);

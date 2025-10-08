@@ -19,8 +19,10 @@ bool get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
   } else if (!ft_strncmp(key, M_CEIL, ft_strlen(M_CEIL))) {
     handle_color(cub_data, elements, elements_len, map->C);
   } else {
+    free(key);
     return false;
   }
+  free(key);
 
   if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0])
     (*i)++;
