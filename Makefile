@@ -13,8 +13,7 @@ MLX_LIB			= $(MLX_DIR)libmlx.a
 LIBFT_LIB		= $(LIBFT_DIR)libft.a
 
 # Arquivos fonte
-SRCS_ROOT		= main.c
-SRCS_FROM_DIR	= ./src/events.c ./src/initialization.c \
+SRCS	= ./src/main.c ./src/events.c ./src/initialization.c \
 						./src/vec_operations.c ./src/rendering.c \
 						./src/print_error_and_exit.c ./src/moviments.c \
 						./src/rotation.c ./src/validate_position.c \
@@ -22,13 +21,11 @@ SRCS_FROM_DIR	= ./src/events.c ./src/initialization.c \
 						./src/parser/map_parser.c ./src/parser/utils.c ./src/parser/validation.c \
 						./src/parser/extract_elements.c ./src/parser/extract_map_utils.c \
 						./src/parser/validation_utils.c ./src/parser/check_cub_ext.c
-						
-SRCS			= $(SRCS_ROOT) $(SRCS_FROM_DIR)
 
 # Objetos
-OBJS_ROOT		= $(patsubst %.c, $(OBJ_PATH)%.o, $(SRCS_ROOT))
-OBJS_FROM_DIR	= $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRCS_FROM_DIR))
-OBJS			= $(OBJS_ROOT) $(OBJS_FROM_DIR)
+OBJS_ROOT		= $(patsubst %.c, $(OBJ_PATH)%.o)
+OBJS_FROM_DIR	= $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRCS))
+OBJS			= $(SRCS)
 
 INCLUDES		= -I$(INC_PATH) -I$(MLX_DIR) -I$(LIBFT_DIR)
 
