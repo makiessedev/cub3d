@@ -186,6 +186,8 @@ void rotate_left(t_cub *cub);
 // ../src/parser/utils.c
 char *ft_remove_chars(const char *s, const char *set);
 int open_file(char *file);
+void	pad_map_lines(char **map, int	max_len);
+
 
 // ../src/parser/handle_color.c
 void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref);

@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:29 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/10 11:24:02 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 11:54:20 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,11 @@ static void	save_elements(t_cub *cub)
 		if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0])
 		{
 			map_height = count_map_height(cub, i);
+      if (map_height == 0)
+        print_error_and_exit(cub, "Invalid map");
 			salt_to_first_linemap(map, &i);
 			if (get_map(cub, map, map_height, &i) == false)
-				print_error_and_exit(cub, "Error\nSpace inside map");
+				print_error_and_exit(cub, "Space inside map");
 			return ;
 		}
 		i++;
