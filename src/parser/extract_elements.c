@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:14 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/10 11:11:22 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 11:34:10 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,6 @@ bool	get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
 
 	key = ft_strtrim(elements[0], M_EMPTY);
 	elements_len = ft_count_matrix(elements);
-	printf("tex: %s\nlen %d\n", elements[1], elements_len);
 	if (!ft_strncmp(key, M_NO, ft_strlen(key)))
 		handle_texture(cub_data, elements[1], elements_len, &(map->NO));
 	else if (!ft_strncmp(key, M_SO, ft_strlen(key)))

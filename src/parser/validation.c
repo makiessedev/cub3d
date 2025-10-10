@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:03:18 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/08 11:03:19 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 11:45:11 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ static void	validate_and_get_player_position(t_cub *cub)
 				if (cub->player->pos.x)
 				{
 					free(line);
-					print_error_and_exit(cub, "Error\nDuplated player");
+					print_error_and_exit(cub, "Duplated player");
 				}
 				cub->player->pos.x = x + 0.5;
 				cub->player->pos.y = y + 0.5;
@@ -122,4 +122,6 @@ static void	validate_and_get_player_position(t_cub *cub)
 		free(line);
 		y++;
 	}
+	if (!cub->player->pos.x)
+		print_error_and_exit(cub, "Player not seted");
 }
