@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:05:25 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/08 11:07:16 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 17:17:37 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ int	main(int ac, char **av)
 	cub->player = malloc(sizeof(t_player));
 	cub->ray = malloc(sizeof(t_ray));
 	if (ac != 2)
-		print_error_and_exit(cub, "Error");
+		print_error_and_exit(cub, "Invalid arguments");
 	if (!check_cub_extension(av[1]))
 		print_error_and_exit(cub, "Invalid file extension. Expected .cub");
 	if (parser_map(cub, av[1]) == false)
-		print_error_and_exit(cub, "Error");
+		print_error_and_exit(cub, "Invalid Map");
 	init_cub(cub);
 	mlx_loop_hook(cub->mlx, &main_loop, cub);
 	mlx_hook(cub->win, DESTROY_NOTIFY, IGNORE_MASK, &game_exit, cub);

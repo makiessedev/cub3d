@@ -212,6 +212,6 @@ bool validate_lines2(t_map *map, int i, int j);
 int	is_file_empty(char *path);
 
 // ../src/parser/check_cub_ext.c
-int check_cub_extension(const char *filename);
+bool check_cub_extension(const char *filename);
 
 #endif

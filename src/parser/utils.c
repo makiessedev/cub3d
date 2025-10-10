@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:41 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/10 14:15:45 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 17:18:26 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	open_file(char *file)
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
 	{
-		perror("Error to open map");
+		perror("Error\n On open map");
 		exit(0);
 	}
 	return (fd);
