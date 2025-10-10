@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:02:13 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/08 11:03:12 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 15:03:24 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,27 @@ bool	validate_lines2(t_map *map, int i, int j)
 			return (false);
 	}
 	return (true);
+}
+
+int	is_file_empty(char *path)
+{
+	int		fd;
+	char	*line;
+	int		has_content;
+
+	fd = open_file(path);
+
+	has_content = 0;
+	while ((line = get_next_line(fd)))
+	{
+		if (line[0] != '\0' && ft_strtrim(line, " \t\n")[0] != '\0')
+		{
+			has_content = 1;
+			free(line);
+			break ;
+		}
+		free(line);
+	}
+	close(fd);
+	return (!has_content);
 }
