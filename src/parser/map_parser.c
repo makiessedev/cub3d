@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:29 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/08 19:05:23 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 11:24:02 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,15 @@ static void	save_elements(t_cub *cub)
 	char	**chuncks;
 	t_map	*map;
 	int		map_height;
+  char *has_tab;
 
 	i = 0;
 	map = cub->map;
 	while (map->map_raw_datas[i])
 	{
+    has_tab = ft_strchr(map->map_raw_datas[i], '\t');
+    if (has_tab)
+      print_error_and_exit(cub, "tab is not accepted");
 		chuncks = split_line(cub, map->map_raw_datas[i], &i);
 		if (chuncks == NULL)
 		{

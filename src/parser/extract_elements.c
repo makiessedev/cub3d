@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:14 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/09 16:27:19 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 11:11:22 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,30 +20,19 @@ bool	get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
 
 	key = ft_strtrim(elements[0], M_EMPTY);
 	elements_len = ft_count_matrix(elements);
-	if (!ft_strncmp(key, M_NO, ft_strlen(M_NO)))
-	{
+	printf("tex: %s\nlen %d\n", elements[1], elements_len);
+	if (!ft_strncmp(key, M_NO, ft_strlen(key)))
 		handle_texture(cub_data, elements[1], elements_len, &(map->NO));
-	}
-	else if (!ft_strncmp(key, M_SO, ft_strlen(M_SO)))
-	{
+	else if (!ft_strncmp(key, M_SO, ft_strlen(key)))
 		handle_texture(cub_data, elements[1], elements_len, &(map->SO));
-	}
-	else if (!ft_strncmp(key, M_WE, ft_strlen(M_WE)))
-	{
+	else if (!ft_strncmp(key, M_WE, ft_strlen(key)))
 		handle_texture(cub_data, elements[1], elements_len, &(map->WE));
-	}
-	else if (!ft_strncmp(key, M_EA, ft_strlen(M_EA)))
-	{
+	else if (!ft_strncmp(key, M_EA, ft_strlen(key)))
 		handle_texture(cub_data, elements[1], elements_len, &(map->EA));
-	}
-	else if (!ft_strncmp(key, M_FLOOR, ft_strlen(M_FLOOR)))
-	{
+	else if (!ft_strncmp(key, M_FLOOR, ft_strlen(key)))
 		handle_color(cub_data, elements, elements_len, map->F);
-	}
-	else if (!ft_strncmp(key, M_CEIL, ft_strlen(M_CEIL)))
-	{
+	else if (!ft_strncmp(key, M_CEIL, ft_strlen(key)))
 		handle_color(cub_data, elements, elements_len, map->C);
-	}
 	else
 	{
 		free(key);

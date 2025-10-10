@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:33 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/08 10:53:34 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/10 11:15:24 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	handle_texture(t_cub *cub, char *tex_path, int argc, char **tex)
 {
 	if (argc != 2)
 	{
-		print_error_and_exit(cub, "Texture error: many arguments");
+		print_error_and_exit(cub, "Texture error: invalid value");
 	}
 	if (*tex)
 		print_error_and_exit(cub, "Duplicated texture");
@@ -43,10 +43,10 @@ static void	load_texture(t_cub *cub, t_texture *texture, char *relative_path,
 	texture->img = mlx_xpm_file_to_image(cub->mlx, relative_path,
 			&texture->width, &texture->height);
 	if (!texture->img)
-		print_error_and_exit(cub, "Faile to load image");
+		print_error_and_exit(cub, "Texture invalid");
 	texture->addr = mlx_get_data_addr(texture->img, &texture->bpp,
 			&texture->line_len, &texture->endian);
 	if (!texture->addr)
-		print_error_and_exit(cub, "Faile to load image addr");
+		print_error_and_exit(cub, "Texture invalid");
 	cub->textures[index] = *texture;
 }
