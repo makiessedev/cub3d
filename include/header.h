@@ -190,10 +190,12 @@ int open_file(char *file);
 void pad_map_lines(char **map, int max_len);
 
 // ../src/parser/handle_color.c
-void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref);
+void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref,
+                  char *to_free);
 
 // ../src/parser/handle_texture.c
-void handle_texture(t_cub *cub, char *tex_path, int argc, char **tex);
+void handle_texture(t_cub *cub, char **texture, int argc, char **tex,
+                    char *to_free);
 
 // ../src/parser/validation.c
 void validate_map(t_cub *cub);
