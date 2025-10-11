@@ -12,54 +12,51 @@
 
 #include "../../include/header.h"
 
-bool	validate_lines2(t_map *map, int i, int j)
-{
-	if (i + 1 < map->height)
-	{
-		if (map->gamemap[i + 1][j] && map->gamemap[i + 1][j] != ' '
-			&& map->gamemap[i + 1][j] != '1')
-			return (false);
-	}
-	if (i - 1 > 0)
-	{
-		if (map->gamemap[i - 1] && map->gamemap[i - 1][j] && map->gamemap[i
-			- 1][j] != ' ' && map->gamemap[i - 1][j] != '1')
-			return (false);
-	}
-	if (j + 1 < map->width)
-	{
-		if (map->gamemap[i][j + 1] && map->gamemap[i][j + 1] != ' '
-			&& map->gamemap[i][j + 1] != '1')
-			return (false);
-	}
-	if (j - 1 > 0)
-	{
-		if (map->gamemap[i][j - 1] && map->gamemap[i][j - 1] != ' '
-			&& map->gamemap[i][j - 1] != '1')
-			return (false);
-	}
-	return (true);
+bool validate_lines2(t_map *map, int i, int j) {
+  if (i + 1 < map->height) {
+    if (map->gamemap[i + 1][j] && map->gamemap[i + 1][j] != ' ' &&
+        map->gamemap[i + 1][j] != '1')
+      return (false);
+  }
+  if (i - 1 > 0) {
+    if (map->gamemap[i - 1] && map->gamemap[i - 1][j] &&
+        map->gamemap[i - 1][j] != ' ' && map->gamemap[i - 1][j] != '1')
+      return (false);
+  }
+  if (j + 1 < map->width) {
+    if (map->gamemap[i][j + 1] && map->gamemap[i][j + 1] != ' ' &&
+        map->gamemap[i][j + 1] != '1')
+      return (false);
+  }
+  if (j - 1 > 0) {
+    if (map->gamemap[i][j - 1] && map->gamemap[i][j - 1] != ' ' &&
+        map->gamemap[i][j - 1] != '1')
+      return (false);
+  }
+  return (true);
 }
 
-int	is_file_empty(char *path)
-{
-	int		fd;
-	char	*line;
-	int		has_content;
+int is_file_empty(char *path) {
+  int fd;
+  char *line;
+  int has_content;
+  char *trimmend;
 
-	fd = open_file(path);
-
-	has_content = 0;
-	while ((line = get_next_line(fd)))
-	{
-		if (line[0] != '\0' && ft_strtrim(line, " \t\n")[0] != '\0')
-		{
-			has_content = 1;
-			free(line);
-			break ;
-		}
-		free(line);
-	}
-	close(fd);
-	return (!has_content);
+  fd = open_file(path);
+  line = get_next_line(fd);
+  has_content = 0;
+  while (line != NULL) {
+    trimmend = ft_strtrim(line, " \t\n");
+    if (line[0] != '\0' && trimmend[0] != '\0') {
+      has_content = 1;
+      free(line);
+      free(trimmend);
+      break;
+    }
+    free(line);
+    free(trimmend);
+    line = get_next_line(fd);
+  }
+  close(fd);
+  return (!has_content);
 }
