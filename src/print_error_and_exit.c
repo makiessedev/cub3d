@@ -81,8 +81,17 @@ static void free_map(t_map *map) {
   free(map->WE);
   free(map->EA);
 
-  ft_free_matrix(map->C);
-  ft_free_matrix(map->F);
+  i = 0;
+  while (i < 3) {
+    free(map->F[i]);
+    i++;
+  }
+
+  i = 0;
+  while (i < 3) {
+    free(map->C[i]);
+    i++;
+  }
 
   free(map);
 }
