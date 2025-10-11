@@ -67,14 +67,8 @@ static void free_map(t_map *map) {
   if (!map)
     return;
 
-  if (map->map_raw_datas) {
-    i = 0;
-    while (map->map_raw_datas[i]) {
-      free(map->map_raw_datas[i]);
-      i++;
-    }
-    free(map->map_raw_datas);
-  }
+  ft_free_matrix(map->gamemap);
+  ft_free_matrix(map->map_raw_datas);
 
   free(map->NO);
   free(map->SO);
