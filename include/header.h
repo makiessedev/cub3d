@@ -168,6 +168,7 @@ bool parser_map(t_cub *cub, char *file);
 
 // ../src/print_error_and_exit.c
 void print_error_and_exit(t_cub *cub, char *msg);
+void free_cub(t_cub *cub);
 
 // ../src/validate_position.c
 bool is_border_wall(t_cub *cub, int mapX, int mapY);
@@ -186,8 +187,7 @@ void rotate_left(t_cub *cub);
 // ../src/parser/utils.c
 char *ft_remove_chars(const char *s, const char *set);
 int open_file(char *file);
-void	pad_map_lines(char **map, int	max_len);
-
+void pad_map_lines(char **map, int max_len);
 
 // ../src/parser/handle_color.c
 void handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref);
@@ -209,7 +209,7 @@ void salt_to_first_linemap(t_map *map, int *i);
 
 // ../src/parser/validation_utils.c
 bool validate_lines2(t_map *map, int i, int j);
-int	is_file_empty(char *path);
+int is_file_empty(char *path);
 
 // ../src/parser/check_cub_ext.c
 bool check_cub_extension(const char *filename);
