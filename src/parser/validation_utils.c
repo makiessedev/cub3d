@@ -47,12 +47,8 @@ int is_file_empty(char *path) {
   has_content = 0;
   while (line != NULL) {
     trimmend = ft_strtrim(line, " \t\n");
-    if (line[0] != '\0' && trimmend[0] != '\0') {
+    if (line[0] != '\0' && trimmend[0] != '\0')
       has_content = 1;
-      free(line);
-      free(trimmend);
-      break;
-    }
     free(line);
     free(trimmend);
     line = get_next_line(fd);
