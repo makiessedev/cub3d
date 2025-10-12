@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:50:57 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 20:51:51 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:44:55 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,19 @@ bool	validate_lines_aux(t_map *map, int *i, int *j)
 				return (false);
 		}
 		(*j)++;
+	}
+	return (true);
+}
+
+bool	set_player_position(t_cub *cub, char *line, int x, int y)
+{
+	if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' || line[x] == 'W')
+	{
+		if (cub->player->pos.x)
+			return (false);
+		cub->player->pos.x = x + 0.5;
+		cub->player->pos.y = y + 0.5;
+		cub->map->gamemap[y][x] = '0';
 	}
 	return (true);
 }

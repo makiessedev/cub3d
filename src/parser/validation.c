@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:03:18 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 22:10:10 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:44:26 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,22 +89,14 @@ static void	validate_and_get_player_position(t_cub *cub)
 	while (lines[y] != NULL)
 	{
 		line = ft_strdup(lines[y]);
-		x = 0;
-		while (line[x] != '\0')
+		x = -1;
+		while (line[++x] != '\0')
 		{
-			if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E'
-				|| line[x] == 'W')
+			if (set_player_position(cub, line, x, y) == false)
 			{
-				if (cub->player->pos.x)
-				{
-					free(line);
-					print_error_and_exit(cub, "Duplated player");
-				}
-				cub->player->pos.x = x + 0.5;
-				cub->player->pos.y = y + 0.5;
-				cub->map->gamemap[y][x] = '0';
+				free(line);
+				print_error_and_exit(cub, "Duplated player");
 			}
-			x++;
 		}
 		free(line);
 		y++;
