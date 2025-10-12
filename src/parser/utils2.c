@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   utils2.c                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/12 20:50:57 by mmorais           #+#    #+#             */
+/*   Updated: 2025/10/12 20:51:51 by mmorais          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/header.h"
 
 bool	validate_lines_aux(t_map *map, int *i, int *j)
@@ -18,5 +30,5 @@ bool	validate_lines_aux(t_map *map, int *i, int *j)
 		}
 		(*j)++;
 	}
-  return true;
+	return (true);
 }
