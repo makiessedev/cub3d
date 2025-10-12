@@ -13,8 +13,7 @@ LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
 SRC_PATH = ./src/
 SRC		= 	main.c events.c initialization.c \
 						vec_operations.c rendering.c \
-						print_error_and_exit.c moviments.c \
-						rotation.c validate_position.c \
+						print_error_and_exit.c moviments.c rotation.c \
 						parser/handle_color.c parser/handle_texture.c \
 						parser/map_parser.c parser/utils.c \
 						parser/validation.c parser/utils2.c \
