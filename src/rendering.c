@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:00:03 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:03:23 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:14:49 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,33 +47,30 @@ void	init_dda(t_ray *ray, t_player *player)
 	}
 }
 
-void	execute_dda(t_cub *cub3d, t_ray *ray)
+void	execute_dda(t_cub *cub3d, t_map *map, t_ray *ray)
 {
 	bool		hit;
-	t_vector	wallMapPos;
+	t_vector	wall_map_pos;
 
 	hit = false;
-	wallMapPos = (t_vector){ray->map_pos.x, ray->map_pos.y};
+	wall_map_pos = (t_vector){ray->map_pos.x, ray->map_pos.y};
 	while (hit == false)
 	{
-		step_dda(ray, &wallMapPos);
-		if ((int)wallMapPos.y >= 0 && (int)wallMapPos.y < cub3d->map->height
-			&& (int)wallMapPos.x >= 0 && (int)wallMapPos.x < cub3d->map->width)
+		step_dda(ray, &wall_map_pos);
+		if ((int)wall_map_pos.y >= 0 && (int)wall_map_pos.y < cub3d->map->height
+			&& (int)wall_map_pos.x >= 0
+			&& (int)wall_map_pos.x < cub3d->map->width)
 		{
-			if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > '0')
-			{
+			if (map->gamemap[(int)wall_map_pos.y][(int)wall_map_pos.x] > '0')
 				hit = true;
-			}
 		}
 		else
-		{
 			hit = true;
-		}
-		if (wallMapPos.y < 0.25 || wallMapPos.x < 0.25
-			|| wallMapPos.y > cub3d->map->height - 0.25
-			|| wallMapPos.x > cub3d->map->width - 1.25)
+		if (wall_map_pos.y < 0.25 || wall_map_pos.x < 0.25
+			|| wall_map_pos.y > cub3d->map->height - 0.25
+			|| wall_map_pos.x > cub3d->map->width - 1.25)
 			break ;
-		else if (cub3d->map->gamemap[(int)wallMapPos.y][(int)wallMapPos.x] > '0')
+		else if (map->gamemap[(int)wall_map_pos.y][(int)wall_map_pos.x] > '0')
 			hit = true;
 	}
 }
@@ -81,23 +78,23 @@ void	execute_dda(t_cub *cub3d, t_ray *ray)
 void	draw_wall_line(t_cub *cub3d, t_ray *ray, int pixel)
 {
 	t_wall_line		info;
-	int				texY;
+	int				tex_y;
 	int				offset_tex;
-	unsigned int	wallColor;
+	unsigned int	wall_color;
 
 	info = compute_wall_line_info(ray);
 	for (int y_coord = info.start; y_coord <= info.end; y_coord++)
 	{
-		texY = (int)(((y_coord - info.line_start_y) / (info.line_end_y
+		tex_y = (int)(((y_coord - info.line_start_y) / (info.line_end_y
 						- info.line_start_y)) * ray->texture->height);
-		if (texY < 0)
-			texY = 0;
-		if (texY > ray->texture->height)
-			texY = ray->texture->height - 1;
-		offset_tex = (texY * ray->texture->line_len) + (info.texX
+		if (tex_y < 0)
+			tex_y = 0;
+		if (tex_y > ray->texture->height)
+			tex_y = ray->texture->height - 1;
+		offset_tex = (tex_y * ray->texture->line_len) + (info.texX
 				* (ray->texture->bpp / 8));
-		wallColor = *(unsigned int *)(ray->texture->addr + offset_tex);
-		put_pixel(&cub3d->img_data, (int)pixel, y_coord, wallColor);
+		wall_color = *(unsigned int *)(ray->texture->addr + offset_tex);
+		put_pixel(&cub3d->img_data, (int)pixel, y_coord, wall_color);
 	}
 }
 
@@ -112,7 +109,7 @@ void	render_walls(t_cub *cub3d)
 		cub3d->ray->dir = calculate_ray_direction(cub3d->player, pixel);
 		ray = cub3d->ray;
 		init_dda(ray, cub3d->player);
-		execute_dda(cub3d, ray);
+		execute_dda(cub3d, cub3d->map, ray);
 		compute_wall_data(cub3d, ray);
 		draw_wall_line(cub3d, ray, pixel);
 		pixel++;
