@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:29 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/10 16:22:24 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/11 12:14:10 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,28 +27,22 @@ bool	parser_map(t_cub *cub, char *file)
 	map->map_path = file;
 	fd = open_file(map->map_path);
 	map->map_raw_datas = ft_calloc(count_line(map) + 1, sizeof(char *));
-
-  if (is_file_empty(file))
-    print_error_and_exit(cub, "Empty file");
-
+	if (is_file_empty(file))
+		print_error_and_exit(cub, "Empty file");
 	line = get_next_line(fd);
-	i = 0;
+	i = -1;
 	while (line != NULL)
 	{
-    map->map_raw_datas[i] = ft_strdup(line);
+		map->map_raw_datas[++i] = ft_strdup(line);
 		free(line);
 		line = get_next_line(fd);
-		i++;
 	}
-	map->map_raw_datas[i] = NULL;
+	map->map_raw_datas[i + 1] = NULL;
 	close(fd);
-
 	save_elements(cub);
-  if (!map->gamemap)
-    print_error_and_exit(cub, "Invalid Map");
-	validate_map(cub);
-
-	return (true);
+	if (!map->gamemap)
+		print_error_and_exit(cub, "Invalid Map");
+	return (validate_map(cub), true);
 }
 
 static void	save_elements(t_cub *cub)
@@ -57,15 +51,15 @@ static void	save_elements(t_cub *cub)
 	char	**chuncks;
 	t_map	*map;
 	int		map_height;
-  char *has_tab;
+	char	*has_tab;
 
 	i = 0;
 	map = cub->map;
 	while (map->map_raw_datas[i])
 	{
-    has_tab = ft_strchr(map->map_raw_datas[i], '\t');
-    if (has_tab)
-      print_error_and_exit(cub, "tab is not accepted");
+		has_tab = ft_strchr(map->map_raw_datas[i], '\t');
+		if (has_tab)
+			print_error_and_exit(cub, "tab is not accepted");
 		chuncks = split_line(cub, map->map_raw_datas[i], &i);
 		if (chuncks == NULL)
 		{
@@ -81,8 +75,8 @@ static void	save_elements(t_cub *cub)
 		if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0])
 		{
 			map_height = count_map_height(cub, i);
-      if (map_height == 0)
-        print_error_and_exit(cub, "Invalid map");
+			if (map_height == 0)
+				print_error_and_exit(cub, "Invalid map");
 			salt_to_first_linemap(map, &i);
 			if (get_map(cub, map, map_height, &i) == false)
 				print_error_and_exit(cub, "Space inside map");

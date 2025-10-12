@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:03:18 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/10 17:50:06 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/11 12:02:39 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ static void	validate_and_get_player_position(t_cub *cub);
 
 void	validate_map(t_cub *cub)
 {
-
 	if (validate_first_and_last_line(cub->map) == false)
 		print_error_and_exit(cub, "Invalid map");
 	pad_map_lines(cub->map->gamemap, cub->map->width);
@@ -36,7 +35,6 @@ static bool	validate_first_and_last_line(t_map *map)
 	first_line = map->gamemap[0];
 	last_line = map->gamemap[map->height - 1];
 	i = 0;
-
 	while (first_line[i] != '\0')
 	{
 		if (first_line[i] != ' ' && first_line[i] != '1')

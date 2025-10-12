@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:41 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/10 17:18:26 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/11 12:02:29 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,17 +75,19 @@ int	open_file(char *file)
 	return (fd);
 }
 
-void	pad_map_lines(char **map, int	max_len)
+void	pad_map_lines(char **map, int max_len)
 {
-	int	y;
+	int		y;
+	int		len;
+	char	*new_line;
 
 	y = 0;
 	while (map[y])
 	{
-		int	len = ft_strlen(map[y]);
+		len = ft_strlen(map[y]);
 		if (len < max_len)
 		{
-			char *new_line = malloc(max_len + 1);
+			new_line = malloc(max_len + 1);
 			ft_memcpy(new_line, map[y], len);
 			ft_memset(new_line + len, ' ', max_len - len);
 			new_line[max_len] = '\0';
