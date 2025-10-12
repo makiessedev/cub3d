@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:41 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:02:29 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 18:26:29 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,9 @@ static char	*ft_remove_chars2(const char *s, const char *set, char *dest,
 char	*ft_remove_chars(const char *s, const char *set)
 {
 	char	*new_s;
+	size_t	s_len;
+	size_t	set_len;
 
-	size_t s_len, set_len;
 	if (!s || !set)
 		return (NULL);
 	s_len = strlen(s);
@@ -29,6 +30,22 @@ char	*ft_remove_chars(const char *s, const char *set)
 		return (NULL);
 	new_s = ft_remove_chars2(s, set, new_s, set_len);
 	return (new_s);
+}
+
+int	char_is_in(int i, int set_len, const char *s, const char *set)
+{
+	int	k;
+
+	k = 0;
+	while (k < set_len)
+	{
+		if (s[i] == set[k])
+		{
+			return (1);
+		}
+		k++;
+	}
+	return (0);
 }
 
 static char	*ft_remove_chars2(const char *s, const char *set, char *dest,
@@ -42,15 +59,7 @@ static char	*ft_remove_chars2(const char *s, const char *set, char *dest,
 	j = 0;
 	while (s[i])
 	{
-		char_is_in_set = 0;
-		for (size_t k = 0; k < set_len; k++)
-		{
-			if (s[i] == set[k])
-			{
-				char_is_in_set = 1;
-				break ;
-			}
-		}
+		char_is_in_set = char_is_in(i, set_len, s, set);
 		if (!char_is_in_set)
 		{
 			dest[j] = s[i];

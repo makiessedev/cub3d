@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:03:18 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:02:39 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 18:41:35 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,8 @@ static bool	validate_lines(t_map *map)
 		}
 		free(line);
 		j = 0;
-		while (map->gamemap[i][j] != '\0')
-		{
-			if (map->gamemap[i][j] != ' ' && map->gamemap[i][j] != '0'
-				&& map->gamemap[i][j] != '1' && map->gamemap[i][j] != 'N'
-				&& map->gamemap[i][j] != 'S' && map->gamemap[i][j] != 'E'
-				&& map->gamemap[i][j] != 'W')
-			{
-				return (false);
-			}
-			if (map->gamemap[i][j] == ' ')
-			{
-				if (validate_lines2(map, i, j) == false)
-					return (false);
-			}
-			j++;
-		}
+		if (validate_lines_aux(map, &i, &j) == false)
+			return (false);
 		i++;
 	}
 	return (true);
