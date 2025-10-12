@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:50:52 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:01:11 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:21:09 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,7 @@ bool	check_cub_extension(const char *f)
 	if (!f)
 		return (false);
 	len = ft_strlen(f);
-	if (len < 6)
-		return (false);
-	if (f[len - 5] == '/')
+	if (len < 4)
 		return (false);
 	if (f[len - 4] == '.')
 	{
