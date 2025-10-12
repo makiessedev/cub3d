@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:04:05 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:21:45 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:25:10 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,19 +14,8 @@
 
 static void	free_map(t_map *map);
 
-void	free_cub(t_cub *cub)
+void	free_cub_aux(t_cub *cub)
 {
-	int	i;
-
-	if (!cub)
-		return ;
-	i = 0;
-	while (i < 4)
-	{
-		if (cub->textures[i].img)
-			mlx_destroy_image(cub->mlx, cub->textures[i].img);
-		i++;
-	}
 	if (cub->img_data.img)
 		mlx_destroy_image(cub->mlx, cub->img_data.img);
 	if (cub->player)
@@ -42,6 +31,22 @@ void	free_cub(t_cub *cub)
 		mlx_destroy_display(cub->mlx);
 		free(cub->mlx);
 	}
+}
+
+void	free_cub(t_cub *cub)
+{
+	int	i;
+
+	if (!cub)
+		return ;
+	i = 0;
+	while (i < 4)
+	{
+		if (cub->textures[i].img)
+			mlx_destroy_image(cub->mlx, cub->textures[i].img);
+		i++;
+	}
+	free_cub_aux(cub);
 	free(cub);
 }
 
