@@ -6,11 +6,13 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:14 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 05:31:42 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 17:58:19 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
+
+static void	get_map2(t_map *map, char *line, int *i, int *j);
 
 bool	get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
 		int *i)
@@ -44,17 +46,12 @@ bool	get_map(t_cub *cub_data, t_map *map, int map_height, int *i)
 	int		j;
 
 	j = 0;
-	map->width = 0;
-	map->height = 0;
 	map->gamemap = malloc(sizeof(char *) * (map_height + 1));
 	while (cub_data->map->map_raw_datas[*i])
 	{
 		line = ft_strtrim(map->map_raw_datas[*i], M_EMPTY);
 		if (line[0] == '\0' && map->height < map_height)
-		{
-			free(line);
-			return (false);
-		}
+			return (free(line), false);
 		else if (line[0] == '\0')
 		{
 			free(line);
@@ -65,12 +62,17 @@ bool	get_map(t_cub *cub_data, t_map *map, int map_height, int *i)
 		line = ft_strtrim(map->map_raw_datas[*i], "\n");
 		if (ft_strlen(line) > (size_t)map->width)
 			map->width = ft_strlen(line);
-		map->gamemap[j] = ft_strdup(line);
-		(*i)++;
-		j++;
-		free(line);
-		map->height++;
+		get_map2(map, line, i, &j);
 	}
 	map->gamemap[j] = NULL;
 	return (true);
+}
+
+static void	get_map2(t_map *map, char *line, int *i, int *j)
+{
+	map->gamemap[*j] = ft_strdup(line);
+	(*i)++;
+	(*j)++;
+	free(line);
+	map->height++;
 }
