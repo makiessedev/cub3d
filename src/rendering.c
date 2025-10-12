@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:00:03 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:03:14 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 20:47:05 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,7 @@ void	execute_dda(t_cub *cub3d, t_ray *ray)
 
 void	compute_wall_data(t_cub *cub3d, t_ray *ray)
 {
-	if (ray->side == 0) // parede vertical
+	if (ray->side == 0)
 	{
 		ray->perp_dist = ray->side_dist.x - ray->delta_dist.x;
 		ray->wall_x = cub3d->player->pos.y + ray->perp_dist * ray->dir.y;
@@ -171,7 +171,7 @@ void	compute_wall_data(t_cub *cub3d, t_ray *ray)
 		}
 	}
 	else
-	{ // parede horizontal
+	{
 		ray->perp_dist = ray->side_dist.y - ray->delta_dist.y;
 		ray->wall_x = cub3d->player->pos.x + ray->perp_dist * ray->dir.x;
 		if (ray->dir.y > 0)

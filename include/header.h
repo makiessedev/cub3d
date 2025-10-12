@@ -108,6 +108,10 @@ typedef struct
 	bool			ROTATE_LEFT_PRESSED;
 }					t_key_status;
 
+/*
+ * 0 = X ; 1 Y
+ *
+ */
 typedef struct
 {
 	t_vector		dir;
@@ -116,7 +120,7 @@ typedef struct
 	t_vector		side_dist;
 	int				step_x;
 	int				step_y;
-	int side; // 0 = X ; 1 Y
+	int				side;
 	float			perp_dist;
 	t_texture		*texture;
 	float			wall_x;
@@ -144,89 +148,50 @@ typedef struct s_wall_line
 	float			line_height;
 }					t_wall_line;
 
-// src/vec_operations.c
 t_vector			vec_add(t_vector a, t_vector b);
 t_vector			vec_scale(t_vector v, float scalar);
 float				vec_length(t_vector v);
 t_vector			vec_normalize(t_vector v);
 t_vector			vec_rotate(t_vector v, float angle);
-
-// ../src/initialization.c
 void				init_cub(t_cub *cub);
 void				init_player(t_player *player);
-
-// ../src/rendering.c
 void				put_pixel(t_img_data *img_data, int x, int y, int color);
 void				render_background(t_cub *cub);
 void				render_walls(t_cub *cub3d);
-
-// ../src/events.c
 int					handle_keypress(int keycode, void *cub3d_ptr);
 int					game_exit(t_cub *cub);
 int					handle_keyrelease(int keycode, void *cub3d_ptr);
 void				handle_input(t_cub *cub);
-
-// ../main.c
 int					main_loop(t_cub *cub);
-
-// ../src/textures.c
 void				load_all_textures(t_cub *cub);
-
-// ../src/parser/map_parser.c
 bool				parser_map(t_cub *cub, char *file);
-
-// ../src/print_error_and_exit.c
 void				print_error_and_exit(t_cub *cub, char *msg);
 void				free_cub(t_cub *cub);
-
-// ../src/validate_position.c
 bool				is_border_wall(t_cub *cub, int mapX, int mapY);
 bool				newpos_isvalid(t_cub *cub, float new_posX, float new_posY);
-
-// ../src/moviments.c
 void				move_up(t_cub *cub);
 void				move_down(t_cub *cub);
 void				move_right(t_cub *cub);
 void				move_left(t_cub *cub);
-
-// ../src/rotation.c
 void				rotate_right(t_cub *cub);
 void				rotate_left(t_cub *cub);
-
-// ../src/parser/utils.c
 char				*ft_remove_chars(const char *s, const char *set);
 int					open_file(char *file);
 void				pad_map_lines(char **map, int max_len);
-
-// ../src/parser/utils2.c
-bool	validate_lines_aux(t_map *map, int *i, int *j);
-
-// ../src/parser/handle_color.c
+bool				validate_lines_aux(t_map *map, int *i, int *j);
 void				handle_color(t_cub *cub, char **chuncks, char **colors_ref,
 						char *to_free);
-
-// ../src/parser/handle_texture.c
 void				handle_texture(t_cub *cub, char **texture, char **tex,
 						char *to_free);
-
-// ../src/parser/validation.c
 void				validate_map(t_cub *cub);
-
-// ../src/parser/extract_elements.c
 bool				get_color_and_texture(t_cub *cub_data, t_map *map,
 						char **elements, int *i);
 bool				get_map(t_cub *cub_data, t_map *map, int map_height,
 						int *i);
-
-// ../src/parser/extract_map_utils.c
 int					count_map_height(t_cub *cub, int i);
 void				salt_to_first_linemap(t_map *map, int *i);
-
-// ../src/parser/validation_utils.c
 bool				validate_lines2(t_map *map, int i, int j);
 int					is_file_empty(char *path);
-
-// ../src/parser/check_cub_ext.c
 bool				check_cub_extension(const char *filename);
 
 #endif
