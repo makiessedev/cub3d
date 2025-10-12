@@ -194,5 +194,12 @@ int					is_file_empty(char *path, t_cub *cub);
 bool				check_cub_extension(const char *filename);
 bool				set_player_position(t_cub *cub, char *line, int x, int y);
 void				join_colors(char **chuncks, char *color, int *i);
+int					create_rgb(int r, int g, int b);
+void				put_pixel(t_img_data *img_data, int x, int y, int color);
+void				render_background(t_cub *cub);
+t_wall_line			compute_wall_line_info(t_ray *ray);
+void				compute_wall_data(t_cub *cub3d, t_ray *ray);
+t_vector	calculate_ray_direction(t_player *player, float pixel);
+void	step_dda(t_ray *ray, t_vector *wallMapPos);
 
 #endif

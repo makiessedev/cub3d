@@ -18,7 +18,8 @@ SRC		= 	main.c events.c initialization.c \
 						parser/map_parser.c parser/utils.c \
 						parser/validation.c parser/utils2.c \
 						parser/extract_elements.c parser/extract_map_utils.c \
-						parser/validation_utils.c parser/check_cub_ext.c
+						parser/validation_utils.c parser/check_cub_ext.c \
+						utils.c utils2.c
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 
