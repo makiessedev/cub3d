@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:28 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:02:04 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 05:31:55 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,20 @@
 static void	set_colors(t_cub *cub, char *colors_raw, char **colors_ref,
 				char *to_free, char **to_free2);
 
-void	handle_color(t_cub *cub, char **chuncks, int argc, char **colors_ref,
+void	handle_color(t_cub *cub, char **chuncks, char **colors_ref,
 		char *to_free)
 {
+	int			elements_len;
 	const char	*EMPTY = "\t ";
 	char		*color;
 	char		*temp;
 	int			i;
 
-	if (argc >= 2 && argc <= 6)
+	elements_len = ft_count_matrix(chuncks);
+	if (elements_len >= 2 && elements_len <= 6)
 	{
 		color = ft_strdup(chuncks[1]);
-		if (argc > 2)
+		if (elements_len > 2)
 		{
 			i = 2;
 			while (chuncks[i])

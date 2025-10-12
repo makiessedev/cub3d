@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:33 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:02:09 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 05:31:59 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,12 @@
 static void	load_texture(t_cub *cub, t_texture *texture, char *relative_path,
 				int index);
 
-void	handle_texture(t_cub *cub, char **texture, int argc, char **tex,
-		char *to_free)
+void	handle_texture(t_cub *cub, char **texture, char **tex, char *to_free)
 {
-	if (argc != 2)
+	int	elements_len;
+
+	elements_len = ft_count_matrix(texture);
+	if (elements_len != 2)
 	{
 		free(to_free);
 		ft_free_matrix(texture);

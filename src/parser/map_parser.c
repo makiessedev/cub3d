@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:29 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 05:20:29 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 05:24:41 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,27 @@ static void	save_elements(t_cub *cub)
 {
 	int		i;
 	char	**chuncks;
-	t_map	*map;
 	char	*has_tab;
 
 	i = 0;
-	map = cub->map;
-	while (map->map_raw_datas[i])
+	while (cub->map->map_raw_datas[i])
 	{
-		has_tab = ft_strchr(map->map_raw_datas[i], '\t');
+		has_tab = ft_strchr(cub->map->map_raw_datas[i], '\t');
 		if (has_tab)
 			print_error_and_exit(cub, "tab is not accepted");
-		chuncks = split_line(cub, map->map_raw_datas[i], &i);
+		chuncks = split_line(cub, cub->map->map_raw_datas[i], &i);
 		if (chuncks == NULL)
 		{
 			ft_free_matrix(chuncks);
 			continue ;
 		}
-		if (get_color_and_texture(cub, map, chuncks, &i) == false)
+		if (get_color_and_texture(cub, cub->map, chuncks, &i) == false)
 		{
 			ft_free_matrix(chuncks);
 			print_error_and_exit(cub, "Invalid Key: Color or Textures");
 		}
 		ft_free_matrix(chuncks);
-		save_map(cub, map, &i);
+		save_map(cub, cub->map, &i);
 		i++;
 	}
 }
@@ -99,10 +97,12 @@ static int	count_line(t_map *map)
 	int		fd;
 
 	fd = open_file(map->map_path);
+	line = get_next_line(fd);
 	count = 0;
-	while ((line = get_next_line(fd)) != NULL)
+	while (line != NULL)
 	{
 		free(line);
+		line = get_next_line(fd);
 		count++;
 	}
 	close(fd);
