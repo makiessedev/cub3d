@@ -150,7 +150,6 @@ typedef struct s_wall_line
 
 t_vector			vec_add(t_vector a, t_vector b);
 t_vector			vec_scale(t_vector v, float scalar);
-float				vec_length(t_vector v);
 t_vector			vec_normalize(t_vector v);
 t_vector			vec_rotate(t_vector v, float angle);
 void				init_cub(t_cub *cub);

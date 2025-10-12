@@ -30,11 +30,6 @@ t_vector	vec_scale(t_vector v, float scalar)
 	return (result);
 }
 
-float	vec_length(t_vector v)
-{
-	return (sqrt(v.x * v.x + v.y * v.y));
-}
-
 t_vector	vec_rotate(t_vector v, float angle)
 {
 	t_vector	result;

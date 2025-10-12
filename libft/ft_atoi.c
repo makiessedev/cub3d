@@ -23,6 +23,8 @@ static int	capture_the_beast(const char *str, int neg_flag, int i)
 	{
 		previous_result = result;
 		result = result * 10 + str[i++] - '0';
+		if (result > 255)
+			return -1;
 		if (previous_result > result)
 		{
 			if (neg_flag < 0)
