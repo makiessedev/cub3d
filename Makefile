@@ -1,66 +1,63 @@
-NAME			= cub3D
-CC				= cc
-CFLAGS			= -Wall -Wextra -Werror -g
-MLX_FLAGS = -lX11 -lXext -lm
+NAME	= cub3D
+CC		= cc
+CFLAGS	= -Werror -Wextra -Wall
 
-SRC_PATH		= src/
-OBJ_PATH		= obj/
-INC_PATH		= include/
-MLX_DIR			= mlx/
-LIBFT_DIR		= libft/
+MLX_PATH	= mlx/
+MLX_NAME	= libmlx.a
+MLX			= $(MLX_PATH)$(MLX_NAME)
 
-MLX_LIB			= $(MLX_DIR)libmlx.a
-LIBFT_LIB		= $(LIBFT_DIR)libft.a
+LIBFT_PATH	= libft/
+LIBFT_NAME	= libft.a
+LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
 
-# Arquivos fonte
-SRCS	= ./src/main.c ./src/events.c ./src/initialization.c \
-						./src/vec_operations.c ./src/rendering.c \
-						./src/print_error_and_exit.c ./src/moviments.c \
-						./src/rotation.c ./src/validate_position.c \
-						./src/parser/handle_color.c ./src/parser/handle_texture.c \
-						./src/parser/map_parser.c ./src/parser/utils.c ./src/parser/validation.c \
-						./src/parser/extract_elements.c ./src/parser/extract_map_utils.c \
-						./src/parser/validation_utils.c ./src/parser/check_cub_ext.c
+SRC_PATH = ./src/
+SRC		= 	main.c events.c initialization.c \
+						vec_operations.c rendering.c \
+						print_error_and_exit.c moviments.c \
+						rotation.c validate_position.c \
+						parser/handle_color.c parser/handle_texture.c \
+						parser/map_parser.c parser/utils.c \
+						parser/validation.c parser/utils2.c \
+						parser/extract_elements.c parser/extract_map_utils.c \
+						parser/validation_utils.c parser/check_cub_ext.c
 
-# Objetos
-OBJS_ROOT		= $(patsubst %.c, $(OBJ_PATH)%.o)
-OBJS_FROM_DIR	= $(patsubst $(SRC_PATH)%.c, $(OBJ_PATH)%.o, $(SRCS))
-OBJS			= $(SRCS)
+SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 
-INCLUDES		= -I$(INC_PATH) -I$(MLX_DIR) -I$(LIBFT_DIR)
+OBJ_PATH	= ./objects/
+OBJ			= $(SRC:.c=.o)
+OBJS		= $(addprefix $(OBJ_PATH), $(OBJ))
 
-all: $(OBJ_PATH) $(LIBFT_LIB) $(MLX_LIB) $(NAME)
+INC			=	-I ./includes/\
+				-I ./libft/\
+				-I ./minilibx-linux/
+
+all: $(OBJ_PATH) $(MLX) $(LIBFT) $(NAME)
 
 $(OBJ_PATH):
-	@mkdir -p $(OBJ_PATH)
-	@mkdir -p $(shell find $(SRC_PATH) -type d | sed "s|$(SRC_PATH)|$(OBJ_PATH)|")
+	mkdir -p $(OBJ_PATH)
+	mkdir -p $(OBJ_PATH)/parser
 
-# Regra de compilação para arquivos em src/
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
-
-# Regra de compilação para arquivos no diretório raiz
-$(OBJ_PATH)%.o: %.c
-	@$(CC) $(CFLAGS) -c $< -o $@ $(INCLUDES)
+	$(CC) $(CFLAGS) -c $< -o $@ $(INC)
 
 $(NAME): $(OBJS)
-	@$(CC) $(CFLAGS) $(OBJS) -o $@ $(INCLUDES) -L$(MLX_DIR) -lmlx $(MLX_FLAGS) -L$(LIBFT_DIR) -lft
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(INC) $(LIBFT) $(MLX) -lXext -lX11 -lm
 
-$(MLX_LIB):
-	@$(MAKE) -C $(MLX_DIR)
+$(LIBFT):
+	make -sC $(LIBFT_PATH)
 
-$(LIBFT_LIB):
-	@$(MAKE) -C $(LIBFT_DIR)
+$(MLX):
+	make -sC $(MLX_PATH)
 
 clean:
-	@rm -rf $(OBJ_PATH)
-	@$(MAKE) -C $(MLX_DIR) clean
-	@$(MAKE) -C $(LIBFT_DIR) clean
+	rm -rf $(OBJ_PATH)
+	make -C $(LIBFT_PATH) clean
+	make -C $(MLX_PATH) clean
 
 fclean: clean
-	@rm -f $(NAME)
-	@$(MAKE) -C $(LIBFT_DIR) fclean
+	rm -f $(NAME)
+	make -C $(LIBFT_PATH) fclean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all re clean fclean
