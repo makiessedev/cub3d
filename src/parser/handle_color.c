@@ -6,14 +6,13 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:28 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 05:31:55 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:57:06 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-static void	set_colors(t_cub *cub, char *colors_raw, char **colors_ref,
-				char *to_free, char **to_free2);
+static bool	set_colors(char *colors_raw, char **colors_ref);
 
 void	handle_color(t_cub *cub, char **chuncks, char **colors_ref,
 		char *to_free)
@@ -44,7 +43,13 @@ void	handle_color(t_cub *cub, char **chuncks, char **colors_ref,
 			color = ft_remove_chars(temp, EMPTY);
 			free(temp);
 		}
-		set_colors(cub, color, colors_ref, to_free, chuncks);
+		if (set_colors(color, colors_ref) == false)
+		{
+			free(color);
+			free(to_free);
+			ft_free_matrix(chuncks);
+			print_error_and_exit(cub, "Invalid digit color");
+		}
 		free(color);
 	}
 	else
@@ -55,8 +60,7 @@ void	handle_color(t_cub *cub, char **chuncks, char **colors_ref,
 	}
 }
 
-static void	set_colors(t_cub *cub, char *colors_raw, char **colors_ref,
-		char *to_free, char **to_free2)
+static bool	set_colors(char *colors_raw, char **colors_ref)
 {
 	int		i;
 	int		j;
@@ -66,13 +70,7 @@ static void	set_colors(t_cub *cub, char *colors_raw, char **colors_ref,
 	i = 0;
 	colors = ft_split(colors_raw, ',');
 	if (ft_count_matrix(colors) != 3)
-	{
-		free(colors_raw);
-		free(to_free);
-		ft_free_matrix(colors);
-		ft_free_matrix(to_free2);
-		print_error_and_exit(cub, "Invalid color RGB");
-	}
+		return (ft_free_matrix(colors), false);
 	while (i < 3)
 	{
 		j = 0;
@@ -81,35 +79,18 @@ static void	set_colors(t_cub *cub, char *colors_raw, char **colors_ref,
 			if (ft_isprint(colors[i][j]))
 			{
 				if (!ft_isdigit(colors[i][j]))
-				{
-					free(colors_raw);
-					free(to_free);
-					ft_free_matrix(colors);
-					ft_free_matrix(to_free2);
-					print_error_and_exit(cub, "Invalid digit color");
-				}
+					return (ft_free_matrix(colors), false);
 			}
 			j++;
 		}
 		digit = ft_atoi(colors[i]);
 		if (digit > 255 || digit < 0)
-		{
-			free(colors_raw);
-			free(to_free);
-			ft_free_matrix(colors);
-			ft_free_matrix(to_free2);
-			print_error_and_exit(cub, "Invalid Color");
-		}
+			return (ft_free_matrix(colors), false);
 		if (colors_ref[i])
-		{
-			free(colors_raw);
-			free(to_free);
-			ft_free_matrix(colors);
-			ft_free_matrix(to_free2);
-			print_error_and_exit(cub, "Invalid color: duplicated value");
-		}
+			return (ft_free_matrix(colors), false);
 		colors_ref[i] = ft_strdup(colors[i]);
 		i++;
 	}
 	ft_free_matrix(colors);
+	return true;
 }
