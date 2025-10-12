@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:17:59 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:28:01 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:39:36 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,30 @@ t_wall_line	compute_wall_line_info(t_ray *ray)
 		info.end = HEIGHT - 1;
 	info.texX = (int)(ray->wall_x * (float)ray->texture->width);
 	return (info);
+}
+
+void	init_dda_aux(t_ray *ray, t_player *player)
+{
+	if (ray->dir.x < 0)
+	{
+		ray->side_dist.x = (player->pos.x - ray->map_pos.x) * ray->delta_dist.x;
+		ray->step_x = -1;
+	}
+	else
+	{
+		ray->side_dist.x = (ray->map_pos.x + 1 - player->pos.x)
+			* ray->delta_dist.x;
+		ray->step_x = 1;
+	}
+	if (ray->dir.y < 0)
+	{
+		ray->side_dist.y = (player->pos.y - ray->map_pos.y) * ray->delta_dist.y;
+		ray->step_y = -1;
+	}
+	else
+	{
+		ray->side_dist.y = (ray->map_pos.y + 1 - player->pos.y)
+			* ray->delta_dist.y;
+		ray->step_y = 1;
+	}
 }

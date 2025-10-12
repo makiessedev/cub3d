@@ -202,5 +202,6 @@ void				compute_wall_data(t_cub *cub3d, t_ray *ray);
 t_vector	calculate_ray_direction(t_player *player, float pixel);
 void	step_dda(t_ray *ray, t_vector *wallMapPos);
 void	compute_wall_data(t_cub *cub3d, t_ray *ray);
+void	init_dda_aux(t_ray *ray, t_player *player);
 
 #endif

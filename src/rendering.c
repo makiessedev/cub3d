@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:00:03 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:16:54 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:35:43 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,28 +23,7 @@ void	init_dda(t_ray *ray, t_player *player)
 	else
 		ray->delta_dist.y = fabs(1.0 / ray->dir.y);
 	ray->map_pos = (t_vector){floor(player->pos.x), floor(player->pos.y)};
-	if (ray->dir.x < 0)
-	{
-		ray->side_dist.x = (player->pos.x - ray->map_pos.x) * ray->delta_dist.x;
-		ray->step_x = -1;
-	}
-	else
-	{
-		ray->side_dist.x = (ray->map_pos.x + 1 - player->pos.x)
-			* ray->delta_dist.x;
-		ray->step_x = 1;
-	}
-	if (ray->dir.y < 0)
-	{
-		ray->side_dist.y = (player->pos.y - ray->map_pos.y) * ray->delta_dist.y;
-		ray->step_y = -1;
-	}
-	else
-	{
-		ray->side_dist.y = (ray->map_pos.y + 1 - player->pos.y)
-			* ray->delta_dist.y;
-		ray->step_y = 1;
-	}
+	init_dda_aux(ray, player);
 }
 
 void	execute_dda(t_cub *cub3d, t_map *map, t_ray *ray)
