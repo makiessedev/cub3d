@@ -192,6 +192,7 @@ void				salt_to_first_linemap(t_map *map, int *i);
 bool				validate_lines2(t_map *map, int i, int j);
 int					is_file_empty(char *path, t_cub *cub);
 bool				check_cub_extension(const char *filename);
-bool	set_player_position(t_cub *cub, char *line, int x, int y);
+bool				set_player_position(t_cub *cub, char *line, int x, int y);
+void				join_colors(char **chuncks, char *color, int *i);
 
 #endif

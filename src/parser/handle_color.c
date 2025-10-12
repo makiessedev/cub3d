@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:28 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 22:57:06 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 23:24:08 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	handle_color(t_cub *cub, char **chuncks, char **colors_ref,
 		char *to_free)
 {
 	int			elements_len;
-	const char	*EMPTY = "\t ";
+	const char	*empty = "\t ";
 	char		*color;
 	char		*temp;
 	int			i;
@@ -40,7 +40,7 @@ void	handle_color(t_cub *cub, char **chuncks, char **colors_ref,
 			}
 			temp = strdup(color);
 			free(color);
-			color = ft_remove_chars(temp, EMPTY);
+			color = ft_remove_chars(temp, empty);
 			free(temp);
 		}
 		if (set_colors(color, colors_ref) == false)
@@ -92,5 +92,5 @@ static bool	set_colors(char *colors_raw, char **colors_ref)
 		i++;
 	}
 	ft_free_matrix(colors);
-	return true;
+	return (true);
 }
