@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:00:03 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:14:49 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:16:54 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,11 @@ void	draw_wall_line(t_cub *cub3d, t_ray *ray, int pixel)
 	int				tex_y;
 	int				offset_tex;
 	unsigned int	wall_color;
+	int				y_coord;
 
 	info = compute_wall_line_info(ray);
-	for (int y_coord = info.start; y_coord <= info.end; y_coord++)
+	y_coord = info.start;
+	while (y_coord <= info.end)
 	{
 		tex_y = (int)(((y_coord - info.line_start_y) / (info.line_end_y
 						- info.line_start_y)) * ray->texture->height);
@@ -95,6 +97,7 @@ void	draw_wall_line(t_cub *cub3d, t_ray *ray, int pixel)
 				* (ray->texture->bpp / 8));
 		wall_color = *(unsigned int *)(ray->texture->addr + offset_tex);
 		put_pixel(&cub3d->img_data, (int)pixel, y_coord, wall_color);
+		y_coord++;
 	}
 }
 
