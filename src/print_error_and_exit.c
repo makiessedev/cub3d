@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:04:05 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:03:02 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:21:45 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	free_cub(t_cub *cub)
 
 void	print_error_and_exit(t_cub *cub, char *msg)
 {
-	char	*fullMessage;
+	char	*full_message;
 
 	(void)cub;
 	free_cub(cub);
-	fullMessage = ft_strjoin("Error\n", msg);
-	ft_putendl_fd(fullMessage, 2);
-	free(fullMessage);
+	full_message = ft_strjoin("Error\n", msg);
+	ft_putendl_fd(full_message, 2);
+	free(full_message);
 	exit(0);
 }
 
