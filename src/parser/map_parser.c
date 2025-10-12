@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:29 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 22:28:12 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:32:32 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ bool	parser_map(t_cub *cub, char *file)
 	map->map_path = file;
 	fd = open_file(map->map_path, cub);
 	map->map_raw_datas = ft_calloc(count_line(map, cub) + 1, sizeof(char *));
-	if (is_file_empty(file))
+	if (is_file_empty(file, cub))
 		print_error_and_exit(cub, "Empty file");
 	line = get_next_line(fd);
 	i = -1;
