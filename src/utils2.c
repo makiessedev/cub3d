@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:17:59 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:18:00 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:28:01 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,35 +56,4 @@ t_wall_line	compute_wall_line_info(t_ray *ray)
 		info.end = HEIGHT - 1;
 	info.texX = (int)(ray->wall_x * (float)ray->texture->width);
 	return (info);
-}
-
-void	compute_wall_data(t_cub *cub3d, t_ray *ray)
-{
-	if (ray->side == 0)
-	{
-		ray->perp_dist = ray->side_dist.x - ray->delta_dist.x;
-		ray->wall_x = cub3d->player->pos.y + ray->perp_dist * ray->dir.y;
-		if (ray->dir.x > 0)
-		{
-			ray->texture = &cub3d->textures[WEST];
-		}
-		else
-		{
-			ray->texture = &cub3d->textures[EAST];
-		}
-	}
-	else
-	{
-		ray->perp_dist = ray->side_dist.y - ray->delta_dist.y;
-		ray->wall_x = cub3d->player->pos.x + ray->perp_dist * ray->dir.x;
-		if (ray->dir.y > 0)
-		{
-			ray->texture = &cub3d->textures[NORTH];
-		}
-		else
-		{
-			ray->texture = &cub3d->textures[SOUTH];
-		}
-	}
-	ray->wall_x -= floor(ray->wall_x);
 }
