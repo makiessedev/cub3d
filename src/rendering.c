@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:00:03 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 20:47:05 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 23:50:18 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,33 +30,23 @@ void	put_pixel(t_img_data *img_data, int x, int y, int color)
 
 void	render_background(t_cub *cub)
 {
-	int	C0;
-	int	C1;
-	int	C2;
-	int	F0;
-	int	F1;
-	int	F2;
-	int	SKY_COLOR;
-	int	GROUND_COLOR;
+	int	sky_color;
+	int	ground_color;
 	int	y;
 	int	x;
 	int	color;
 
-	C0 = ft_atoi(cub->map->C[0]);
-	C1 = ft_atoi(cub->map->C[1]);
-	C2 = ft_atoi(cub->map->C[2]);
-	F0 = ft_atoi(cub->map->F[0]);
-	F1 = ft_atoi(cub->map->F[1]);
-	F2 = ft_atoi(cub->map->F[2]);
-	SKY_COLOR = create_rgb(C0, C1, C2);
-	GROUND_COLOR = create_rgb(F0, F1, F2);
+	sky_color = create_rgb(ft_atoi(cub->map->C[0]), ft_atoi(cub->map->C[1]),
+			ft_atoi(cub->map->C[2]));
+	ground_color = create_rgb(ft_atoi(cub->map->F[0]), ft_atoi(cub->map->F[1]),
+			ft_atoi(cub->map->F[2]));
 	y = 0;
 	while (y < HEIGHT)
 	{
 		if (y < HEIGHT / 2)
-			color = SKY_COLOR;
+			color = sky_color;
 		else
-			color = GROUND_COLOR;
+			color = ground_color;
 		x = 0;
 		while (x < WIDTH)
 		{
@@ -70,13 +60,13 @@ void	render_background(t_cub *cub)
 t_vector	calculate_ray_direction(t_player *player, float pixel)
 {
 	float		multiplier;
-	t_vector	cameraPixel;
-	t_vector	rayDir;
+	t_vector	camera_pixel;
+	t_vector	ray_dir;
 
 	multiplier = 2 * (pixel / (double)WIDTH) - 1;
-	cameraPixel = vec_scale(player->plane, multiplier);
-	rayDir = vec_add(player->dir, cameraPixel);
-	return (rayDir);
+	camera_pixel = vec_scale(player->plane, multiplier);
+	ray_dir = vec_add(player->dir, camera_pixel);
+	return (ray_dir);
 }
 
 void	init_dda(t_ray *ray, t_player *player)
