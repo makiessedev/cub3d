@@ -6,13 +6,13 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:29 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 17:59:29 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:28:12 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
-static int	count_line(t_map *map);
+static int	count_line(t_map *map, t_cub *cub);
 static void	save_elements(t_cub *cub);
 static char	**split_line(t_cub *cub, char *map_line, int *i);
 
@@ -25,8 +25,8 @@ bool	parser_map(t_cub *cub, char *file)
 
 	map = cub->map;
 	map->map_path = file;
-	fd = open_file(map->map_path);
-	map->map_raw_datas = ft_calloc(count_line(map) + 1, sizeof(char *));
+	fd = open_file(map->map_path, cub);
+	map->map_raw_datas = ft_calloc(count_line(map, cub) + 1, sizeof(char *));
 	if (is_file_empty(file))
 		print_error_and_exit(cub, "Empty file");
 	line = get_next_line(fd);
@@ -94,13 +94,13 @@ static void	save_elements(t_cub *cub)
 	}
 }
 
-static int	count_line(t_map *map)
+static int	count_line(t_map *map, t_cub *cub)
 {
 	char	*line;
 	int		count;
 	int		fd;
 
-	fd = open_file(map->map_path);
+	fd = open_file(map->map_path, cub);
 	line = get_next_line(fd);
 	count = 0;
 	while (line != NULL)

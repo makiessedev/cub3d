@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:41 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 18:26:29 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:26:59 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,16 +71,13 @@ static char	*ft_remove_chars2(const char *s, const char *set, char *dest,
 	return (dest);
 }
 
-int	open_file(char *file)
+int	open_file(char *file, t_cub *cub)
 {
 	int	fd;
 
 	fd = open(file, O_RDONLY);
 	if (fd == -1)
-	{
-		perror("Error\n On open map");
-		exit(0);
-	}
+		print_error_and_exit(cub, "Open file");
 	return (fd);
 }
 

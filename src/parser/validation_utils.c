@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:02:13 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:02:34 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 22:29:42 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ bool	validate_lines2(t_map *map, int i, int j)
 	return (true);
 }
 
-int	is_file_empty(char *path)
+int	is_file_empty(char *path, t_cub *cub)
 {
 	int		fd;
 	char	*line;
 	int		has_content;
 	char	*trimmend;
 
-	fd = open_file(path);
+	fd = open_file(path, cub);
 	line = get_next_line(fd);
 	has_content = 0;
 	while (line != NULL)

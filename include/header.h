@@ -175,7 +175,7 @@ void				move_left(t_cub *cub);
 void				rotate_right(t_cub *cub);
 void				rotate_left(t_cub *cub);
 char				*ft_remove_chars(const char *s, const char *set);
-int					open_file(char *file);
+int					open_file(char *file, t_cub *cub);
 void				pad_map_lines(char **map, int max_len);
 bool				validate_lines_aux(t_map *map, int *i, int *j);
 void				handle_color(t_cub *cub, char **chuncks, char **colors_ref,
@@ -190,7 +190,7 @@ bool				get_map(t_cub *cub_data, t_map *map, int map_height,
 int					count_map_height(t_cub *cub, int i);
 void				salt_to_first_linemap(t_map *map, int *i);
 bool				validate_lines2(t_map *map, int i, int j);
-int					is_file_empty(char *path);
+int					is_file_empty(char *path, t_cub *cub);
 bool				check_cub_extension(const char *filename);
 
 #endif
