@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:29 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:14:10 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/12 05:20:29 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,27 @@ bool	parser_map(t_cub *cub, char *file)
 	return (validate_map(cub), true);
 }
 
+void	save_map(t_cub *cub, t_map *map, int *i)
+{
+	int	map_height;
+
+	if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0])
+	{
+		map_height = count_map_height(cub, *i);
+		if (map_height == 0)
+			print_error_and_exit(cub, "Invalid map");
+		salt_to_first_linemap(map, i);
+		if (get_map(cub, map, map_height, i) == false)
+			print_error_and_exit(cub, "Space inside map");
+		return ;
+	}
+}
+
 static void	save_elements(t_cub *cub)
 {
 	int		i;
 	char	**chuncks;
 	t_map	*map;
-	int		map_height;
 	char	*has_tab;
 
 	i = 0;
@@ -72,16 +87,7 @@ static void	save_elements(t_cub *cub)
 			print_error_and_exit(cub, "Invalid Key: Color or Textures");
 		}
 		ft_free_matrix(chuncks);
-		if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0])
-		{
-			map_height = count_map_height(cub, i);
-			if (map_height == 0)
-				print_error_and_exit(cub, "Invalid map");
-			salt_to_first_linemap(map, &i);
-			if (get_map(cub, map, map_height, &i) == false)
-				print_error_and_exit(cub, "Space inside map");
-			return ;
-		}
+		save_map(cub, map, &i);
 		i++;
 	}
 }
