@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialization.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
+/*   By: zombunga <zombunga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:03:36 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:02:47 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 17:05:05 by zombunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,6 @@
 
 void	init_player(t_player *player)
 {
-	player->dir.x = 0;
-	player->dir.y = -1;
-	player->plane.x = 0.66;
-	player->plane.y = 0;
 	player->move_speed = 0.009999;
 	player->rot_speed = 0.009;
 }
