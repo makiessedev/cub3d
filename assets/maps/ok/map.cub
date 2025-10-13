@@ -4,7 +4,7 @@ EA  ./assets/textures/east.xpm
 WE  ./assets/textures/west.xpm
 
 F          255   ,   255,   255
-C    255,      255  ,   255
+C    255,      255  ,   256
 
 
 

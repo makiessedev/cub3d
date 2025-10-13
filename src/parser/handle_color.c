@@ -6,14 +6,14 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:28 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:43:40 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 00:59:01 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/header.h"
 
 static char	*process_color_line(char **chuncks);
-static bool	validate_and_set_colors(t_cub *cub, char *color, char **colors_ref,
+static bool	validate_and_set_colors(char *color, char **colors_ref,
 				char *to_free);
 static bool	parse_color_values(char *colors_raw, char **colors_ref);
 
@@ -31,7 +31,7 @@ void	handle_color(t_cub *cub, char **chuncks, char **colors_ref,
 		print_error_and_exit(cub, "Invalid arguments of colors");
 	}
 	color = process_color_line(chuncks);
-	if (validate_and_set_colors(cub, color, colors_ref, to_free) == false)
+	if (validate_and_set_colors(color, colors_ref, to_free) == false)
 	{
 		free(color);
 		free(to_free);
@@ -65,14 +65,13 @@ static char	*process_color_line(char **chuncks)
 	return (color);
 }
 
-static bool	validate_and_set_colors(t_cub *cub, char *color, char **colors_ref,
+static bool	validate_and_set_colors(char *color, char **colors_ref,
 		char *to_free)
 {
 	if (parse_color_values(color, colors_ref) == false)
 	{
 		free(color);
 		free(to_free);
-		print_error_and_exit(cub, "Invalid digit color");
 		return (false);
 	}
 	return (true);
