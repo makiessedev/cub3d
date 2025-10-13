@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   compute_wall.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
+/*   By: zombunga <zombunga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:17:59 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:31:50 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 15:58:19 by zombunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,11 @@ static void	handle_vertical_wall(t_cub *cub3d, t_ray *ray)
 	ray->wall_x = cub3d->player->pos.y + ray->perp_dist * ray->dir.y;
 	if (ray->dir.x > 0)
 	{
-		ray->texture = &cub3d->textures[WEST];
+		ray->texture = &cub3d->textures[EAST];
 	}
 	else
 	{
-		ray->texture = &cub3d->textures[EAST];
+		ray->texture = &cub3d->textures[WEST];
 	}
 }
 
@@ -44,10 +44,10 @@ static void	handle_horizontal_wall(t_cub *cub3d, t_ray *ray)
 	ray->wall_x = cub3d->player->pos.x + ray->perp_dist * ray->dir.x;
 	if (ray->dir.y > 0)
 	{
-		ray->texture = &cub3d->textures[NORTH];
+		ray->texture = &cub3d->textures[SOUTH];
 	}
 	else
 	{
-		ray->texture = &cub3d->textures[SOUTH];
+		ray->texture = &cub3d->textures[NORTH];
 	}
 }
