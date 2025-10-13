@@ -44,11 +44,11 @@ bool	set_player_position(t_cub *cub, char *line, int x, int y)
 		cub->map->gamemap[y][x] = '0';
 		cub->player->orientation = line[x];
 	}
-	if(line[x] == 'S'){
+	if(line[x] == 'N'){
 		cub->player->dir = (t_vector){0, -1};
 		cub->player->plane = (t_vector){0.66, 0};
 	}
-	else if(line[x] == 'N'){
+	else if(line[x] == 'S'){
 		cub->player->dir = (t_vector){0, 1};
 		cub->player->plane = (t_vector){0.66, 0};
 	}

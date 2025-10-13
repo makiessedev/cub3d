@@ -38,19 +38,24 @@ void	handle_input(t_cub *cub)
 			rotate_left(cub);
 		else if (cub->player->orientation == 'S')
 			rotate_left(cub);
-		else if (cub->player->orientation == 'E' || cub->player->orientation == 'E')
+		else if (cub->player->orientation == 'E')
 			rotate_right(cub);
-	
+		else if (cub->player->orientation == 'N')	
+			rotate_right(cub);		
 	}
 	if (cub->key_status.rotate_left_pressed == true) {
 		if (cub->player->orientation == 'W')
 			rotate_right(cub);
 		else if (cub->player->orientation == 'S')
 			rotate_right(cub);
-		else if (cub->player->orientation == 'E' || cub->player->orientation == 'N')
+		else if (cub->player->orientation == 'E')
+			rotate_left(cub);
+		else if (cub->player->orientation == 'N')
 			rotate_left(cub);
 	}
 }
+
+void	handle_input_
 
 int	handle_keypress(int keycode, void *cub3d_ptr)
 {
