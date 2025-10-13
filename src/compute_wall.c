@@ -30,11 +30,11 @@ static void	handle_vertical_wall(t_cub *cub3d, t_ray *ray)
 	ray->wall_x = cub3d->player->pos.y + ray->perp_dist * ray->dir.y;
 	if (ray->dir.x > 0)
 	{
-		ray->texture = &cub3d->textures[EAST];
+		ray->texture = &cub3d->textures[WEST];
 	}
 	else
 	{
-		ray->texture = &cub3d->textures[WEST];
+		ray->texture = &cub3d->textures[EAST];
 	}
 }
 
@@ -44,10 +44,10 @@ static void	handle_horizontal_wall(t_cub *cub3d, t_ray *ray)
 	ray->wall_x = cub3d->player->pos.x + ray->perp_dist * ray->dir.x;
 	if (ray->dir.y > 0)
 	{
-		ray->texture = &cub3d->textures[SOUTH];
+		ray->texture = &cub3d->textures[NORTH];
 	}
 	else
 	{
-		ray->texture = &cub3d->textures[NORTH];
+		ray->texture = &cub3d->textures[SOUTH];
 	}
 }

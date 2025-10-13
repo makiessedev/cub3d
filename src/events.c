@@ -55,8 +55,6 @@ void	handle_input(t_cub *cub)
 	}
 }
 
-void	handle_input_
-
 int	handle_keypress(int keycode, void *cub3d_ptr)
 {
 	t_cub	*cub3d;
