@@ -38,6 +38,7 @@ all: $(OBJ_PATH) $(MLX) $(LIBFT) $(NAME)
 $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)
 	mkdir -p $(OBJ_PATH)parser
+	mkdir -p $(OBJ_PATH)initialization
 
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	$(CC) $(CFLAGS) -c $< -o $@ $(INC)

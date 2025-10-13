@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:14 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 23:25:37 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/14 00:11:57 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,14 +50,14 @@ bool	get_color_and_texture(t_cub *cub_data, t_map *map, char **elements,
 	return (true);
 }
 
-static bool	process_map_line(t_cub *cub_data, t_map *map, int *i, int *j)
+static bool	process_map_line(t_map *map, int *i, int *j, int hight)
 {
 	char	*line;
 
 	line = ft_strtrim(map->map_raw_datas[*i], M_EMPTY);
 	if (!line)
 		return (false);
-	if (line[0] == '\0' && map->height < map->height)
+	if (line[0] == '\0' && map->height < hight)
 		return (free(line), false);
 	else if (line[0] == '\0')
 	{
@@ -83,7 +83,7 @@ bool	get_map(t_cub *cub_data, t_map *map, int map_height, int *i)
 		return (false);
 	while (cub_data->map->map_raw_datas[*i])
 	{
-		if (!process_map_line(cub_data, map, i, &j))
+		if (!process_map_line(map, i, &j, map_height))
 			return (false);
 	}
 	map->gamemap[j] = NULL;

@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:03:24 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 23:16:00 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/14 00:10:55 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	handle_keyrelease(int keycode, void *cub)
 {
 	t_cub	*cub3d;
 
-	cub3d = (t_cub *)cub3d_ptr;
+	cub3d = (t_cub *)cub;
 	if (keycode == ESC)
 		cub3d->key_status.esc_pressed = false;
 	if (keycode == MOVE_UP)
