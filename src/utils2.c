@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 00:17:59 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:39:36 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 05:33:05 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,10 @@ void	render_background(t_cub *cub)
 	int	x;
 	int	color;
 
-	sky_color = create_rgb(ft_atoi(cub->map->C[0]), ft_atoi(cub->map->C[1]),
-			ft_atoi(cub->map->C[2]));
-	ground_color = create_rgb(ft_atoi(cub->map->F[0]), ft_atoi(cub->map->F[1]),
-			ft_atoi(cub->map->F[2]));
+	sky_color = create_rgb(ft_atoi(cub->map->c[0]), ft_atoi(cub->map->c[1]),
+			ft_atoi(cub->map->c[2]));
+	ground_color = create_rgb(ft_atoi(cub->map->f[0]), ft_atoi(cub->map->f[1]),
+			ft_atoi(cub->map->f[2]));
 	y = 0;
 	while (y < HEIGHT)
 	{
@@ -54,7 +54,7 @@ t_wall_line	compute_wall_line_info(t_ray *ray)
 		info.start = 0;
 	if (info.end >= HEIGHT)
 		info.end = HEIGHT - 1;
-	info.texX = (int)(ray->wall_x * (float)ray->texture->width);
+	info.tex_x = (int)(ray->wall_x * (float)ray->texture->width);
 	return (info);
 }
 

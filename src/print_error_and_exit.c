@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:04:05 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 00:25:10 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 05:27:59 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,20 +70,20 @@ static void	free_map(t_map *map)
 		return ;
 	ft_free_matrix(map->gamemap);
 	ft_free_matrix(map->map_raw_datas);
-	free(map->NO);
-	free(map->SO);
-	free(map->WE);
-	free(map->EA);
+	free(map->no);
+	free(map->so);
+	free(map->we);
+	free(map->ea);
 	i = 0;
 	while (i < 3)
 	{
-		free(map->F[i]);
+		free(map->f[i]);
 		i++;
 	}
 	i = 0;
 	while (i < 3)
 	{
-		free(map->C[i]);
+		free(map->c[i]);
 		i++;
 	}
 	free(map);

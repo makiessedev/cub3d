@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorais <mmorais@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 09:04:54 by mmorais           #+#    #+#             */
-/*   Updated: 2024/05/19 09:05:03 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 05:18:31 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	capture_the_beast(const char *str, int neg_flag, int i)
 		previous_result = result;
 		result = result * 10 + str[i++] - '0';
 		if (result > 255)
-			return -1;
+			return (-1);
 		if (previous_result > result)
 		{
 			if (neg_flag < 0)
@@ -38,8 +38,8 @@ static int	capture_the_beast(const char *str, int neg_flag, int i)
 
 int	ft_atoi(const char *str)
 {
-	int		i;
-	int		neg_flag;
+	int	i;
+	int	neg_flag;
 
 	i = 0;
 	neg_flag = 1;

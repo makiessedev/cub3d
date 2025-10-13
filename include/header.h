@@ -1,6 +1,17 @@
-#ifndef _CUB3D
-# define _CUB3D
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   header.h                                           :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/10/13 05:19:03 by mmorais           #+#    #+#             */
+/*   Updated: 2025/10/13 05:37:08 by mmorais          ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
+#ifndef CUB_H
+# define CUB_H
 # include "../libft/libft.h"
 # include "../mlx/mlx.h"
 # include <errno.h>
@@ -17,9 +28,7 @@
 # define DESTROY_NOTIFY 17
 # define IGNORE_MASK 0
 # define KEYPRESS 2
-# define KEYPRESS_MASK 1L << 0
 # define KEYRELEASE 3
-# define KEYRELEASE_MASK 1L << 1
 # define ESC 65307
 # define MOVE_UP 119
 # define MOVE_UP2 65362
@@ -51,7 +60,7 @@ typedef struct s_vector
 	float			y;
 }					t_vector;
 
-typedef struct
+typedef struct s_player
 {
 	t_vector		pos;
 	t_vector		dir;
@@ -60,7 +69,7 @@ typedef struct
 	float			rot_speed;
 }					t_player;
 
-typedef struct
+typedef struct s_img_data
 {
 	void			*img;
 	char			*addr;
@@ -69,7 +78,7 @@ typedef struct
 	int				endian;
 }					t_img_data;
 
-typedef struct
+typedef struct s_texture
 {
 	void			*img;
 	char			*addr;
@@ -80,39 +89,39 @@ typedef struct
 	int				endian;
 }					t_texture;
 
-typedef struct
+typedef struct s_map
 {
 	char			**map_raw_datas;
 	char			*map_path;
 	char			**gamemap;
 	int				width;
 	int				height;
-	char			*SO;
-	char			*NO;
-	char			*WE;
-	char			*EA;
-	char			*F[3];
-	char			*C[3];
+	char			*so;
+	char			*no;
+	char			*we;
+	char			*ea;
+	char			*f[3];
+	char			*c[3];
 }					t_map;
 
-typedef struct
+typedef struct s_key_status
 {
-	bool			ESC_PRESSED;
-	bool			MOVE_UP_PRESSED;
-	bool			MOVE_UP2_PRESSED;
-	bool			MOVE_DOWN_PRESSED;
-	bool			MOVE_DOWN2_PRESSED;
-	bool			MOVE_RIGHT_PRESSED;
-	bool			MOVE_LEFT_PRESSED;
-	bool			ROTATE_RIGHT_PRESSED;
-	bool			ROTATE_LEFT_PRESSED;
+	bool			esc_pressed;
+	bool			move_up_pressed;
+	bool			move_up2_pressed;
+	bool			move_down_pressed;
+	bool			move_down2_pressed;
+	bool			move_right_pressed;
+	bool			move_left_pressed;
+	bool			rotate_right_pressed;
+	bool			rotate_left_pressed;
 }					t_key_status;
 
 /*
  * 0 = X ; 1 Y
  *
  */
-typedef struct
+typedef struct s_ray
 {
 	t_vector		dir;
 	t_vector		map_pos;
@@ -126,7 +135,7 @@ typedef struct
 	float			wall_x;
 }					t_ray;
 
-typedef struct
+typedef struct s_cub
 {
 	void			*mlx;
 	void			*win;
@@ -142,7 +151,7 @@ typedef struct s_wall_line
 {
 	int				start;
 	int				end;
-	int				texX;
+	int				tex_x;
 	float			line_start_y;
 	float			line_end_y;
 	float			line_height;
@@ -199,9 +208,9 @@ void				put_pixel(t_img_data *img_data, int x, int y, int color);
 void				render_background(t_cub *cub);
 t_wall_line			compute_wall_line_info(t_ray *ray);
 void				compute_wall_data(t_cub *cub3d, t_ray *ray);
-t_vector	calculate_ray_direction(t_player *player, float pixel);
-void	step_dda(t_ray *ray, t_vector *wallMapPos);
-void	compute_wall_data(t_cub *cub3d, t_ray *ray);
-void	init_dda_aux(t_ray *ray, t_player *player);
+t_vector			calculate_ray_direction(t_player *player, float pixel);
+void				step_dda(t_ray *ray, t_vector *wallMapPos);
+void				compute_wall_data(t_cub *cub3d, t_ray *ray);
+void				init_dda_aux(t_ray *ray, t_player *player);
 
 #endif

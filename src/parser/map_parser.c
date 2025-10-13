@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:01:29 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 22:32:32 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 05:27:59 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	save_map(t_cub *cub, t_map *map, int *i)
 	map->height = 0;
 	map->width = 0;
 	map->height = 0;
-	if (map->NO && map->SO && map->WE && map->EA && map->C[0] && map->F[0])
+	if (map->no && map->so && map->we && map->ea && map->c[0] && map->f[0])
 	{
 		map_height = count_map_height(cub, *i);
 		if (map_height == 0)

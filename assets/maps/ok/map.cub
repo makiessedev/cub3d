@@ -1,10 +1,10 @@
 NO  ./assets/textures/north.xpm
 SO  ./assets/textures/south.xpm
-EA  ./assets/textures/east.xpm
 WE  ./assets/textures/west.xpm
+EA  ./assets/textures/east.xpm
 
 F          255   ,   255,   255
-C    255,      255  ,   256
+C    255,      255  ,   255
 
 
 

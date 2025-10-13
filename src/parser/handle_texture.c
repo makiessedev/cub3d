@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 10:53:33 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/12 05:31:59 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 05:27:32 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,10 @@ void	handle_texture(t_cub *cub, char **texture, char **tex, char *to_free)
 
 void	load_all_textures(t_cub *cub)
 {
-	load_texture(cub, &cub->textures[NORTH], cub->map->NO, NORTH);
-	load_texture(cub, &cub->textures[SOUTH], cub->map->SO, SOUTH);
-	load_texture(cub, &cub->textures[EAST], cub->map->EA, EAST);
-	load_texture(cub, &cub->textures[WEST], cub->map->WE, WEST);
+	load_texture(cub, &cub->textures[NORTH], cub->map->no, NORTH);
+	load_texture(cub, &cub->textures[SOUTH], cub->map->so, SOUTH);
+	load_texture(cub, &cub->textures[EAST], cub->map->ea, EAST);
+	load_texture(cub, &cub->textures[WEST], cub->map->we, WEST);
 }
 
 static void	load_texture(t_cub *cub, t_texture *texture, char *relative_path,

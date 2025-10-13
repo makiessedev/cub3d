@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mmorais <mmorais@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/19 09:09:20 by mmorais           #+#    #+#             */
-/*   Updated: 2024/05/19 09:09:22 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 05:17:21 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 char	*ft_strchr(const char *s, int i)
 {
-  if (!s)
-    return NULL;
+	if (!s)
+		return (NULL);
 	while (*s)
 	{
 		if (*s == (unsigned char)i)

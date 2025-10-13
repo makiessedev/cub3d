@@ -6,7 +6,7 @@
 /*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:03:24 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/11 12:02:43 by mmorais          ###   ########.fr       */
+/*   Updated: 2025/10/13 05:32:16 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ int	game_exit(t_cub *cub)
 
 void	handle_input(t_cub *cub)
 {
-	if (cub->key_status.ESC_PRESSED == true)
+	if (cub->key_status.esc_pressed == true)
 		game_exit(cub);
-	if (cub->key_status.MOVE_UP_PRESSED == true
-		|| cub->key_status.MOVE_UP2_PRESSED == true)
+	if (cub->key_status.move_up_pressed == true
+		|| cub->key_status.move_up2_pressed == true)
 		move_up(cub);
-	if (cub->key_status.MOVE_DOWN_PRESSED == true
-		|| cub->key_status.MOVE_DOWN2_PRESSED == true)
+	if (cub->key_status.move_down_pressed == true
+		|| cub->key_status.move_down2_pressed == true)
 		move_down(cub);
-	if (cub->key_status.MOVE_RIGHT_PRESSED == true)
+	if (cub->key_status.move_right_pressed == true)
 		move_right(cub);
-	if (cub->key_status.MOVE_LEFT_PRESSED == true)
+	if (cub->key_status.move_left_pressed == true)
 		move_left(cub);
-	if (cub->key_status.ROTATE_RIGHT_PRESSED == true)
+	if (cub->key_status.rotate_right_pressed == true)
 		rotate_right(cub);
-	if (cub->key_status.ROTATE_LEFT_PRESSED == true)
+	if (cub->key_status.rotate_left_pressed == true)
 		rotate_left(cub);
 }
 
@@ -45,23 +45,23 @@ int	handle_keypress(int keycode, void *cub3d_ptr)
 
 	cub3d = (t_cub *)cub3d_ptr;
 	if (keycode == ESC)
-		cub3d->key_status.ESC_PRESSED = true;
+		cub3d->key_status.esc_pressed = true;
 	if (keycode == MOVE_UP)
-		cub3d->key_status.MOVE_UP_PRESSED = true;
+		cub3d->key_status.move_up_pressed = true;
 	if (keycode == MOVE_UP2)
-		cub3d->key_status.MOVE_UP2_PRESSED = true;
+		cub3d->key_status.move_up2_pressed = true;
 	if (keycode == MOVE_DOWN)
-		cub3d->key_status.MOVE_DOWN_PRESSED = true;
+		cub3d->key_status.move_down_pressed = true;
 	if (keycode == MOVE_DOWN2)
-		cub3d->key_status.MOVE_DOWN2_PRESSED = true;
+		cub3d->key_status.move_down2_pressed = true;
 	if (keycode == MOVE_RIGHT)
-		cub3d->key_status.MOVE_RIGHT_PRESSED = true;
+		cub3d->key_status.move_right_pressed = true;
 	if (keycode == MOVE_LEFT)
-		cub3d->key_status.MOVE_LEFT_PRESSED = true;
+		cub3d->key_status.move_left_pressed = true;
 	if (keycode == ROTATE_RIGHT)
-		cub3d->key_status.ROTATE_RIGHT_PRESSED = true;
+		cub3d->key_status.rotate_right_pressed = true;
 	if (keycode == ROTATE_LEFT)
-		cub3d->key_status.ROTATE_LEFT_PRESSED = true;
+		cub3d->key_status.rotate_left_pressed = true;
 	return (0);
 }
 
@@ -71,22 +71,22 @@ int	handle_keyrelease(int keycode, void *cub3d_ptr)
 
 	cub3d = (t_cub *)cub3d_ptr;
 	if (keycode == ESC)
-		cub3d->key_status.ESC_PRESSED = false;
+		cub3d->key_status.esc_pressed = false;
 	if (keycode == MOVE_UP)
-		cub3d->key_status.MOVE_UP_PRESSED = false;
+		cub3d->key_status.move_up_pressed = false;
 	if (keycode == MOVE_UP2)
-		cub3d->key_status.MOVE_UP2_PRESSED = false;
+		cub3d->key_status.move_up2_pressed = false;
 	if (keycode == MOVE_DOWN)
-		cub3d->key_status.MOVE_DOWN_PRESSED = false;
+		cub3d->key_status.move_down_pressed = false;
 	if (keycode == MOVE_DOWN2)
-		cub3d->key_status.MOVE_DOWN2_PRESSED = false;
+		cub3d->key_status.move_down2_pressed = false;
 	if (keycode == MOVE_RIGHT)
-		cub3d->key_status.MOVE_RIGHT_PRESSED = false;
+		cub3d->key_status.move_right_pressed = false;
 	if (keycode == MOVE_LEFT)
-		cub3d->key_status.MOVE_LEFT_PRESSED = false;
+		cub3d->key_status.move_left_pressed = false;
 	if (keycode == ROTATE_RIGHT)
-		cub3d->key_status.ROTATE_RIGHT_PRESSED = false;
+		cub3d->key_status.rotate_right_pressed = false;
 	if (keycode == ROTATE_LEFT)
-		cub3d->key_status.ROTATE_LEFT_PRESSED = false;
+		cub3d->key_status.rotate_left_pressed = false;
 	return (0);
 }
