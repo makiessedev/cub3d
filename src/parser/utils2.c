@@ -6,7 +6,7 @@
 /*   By: zombunga <zombunga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:50:57 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 16:51:40 by zombunga         ###   ########.fr       */
+/*   Updated: 2025/10/13 18:13:10 by zombunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,13 @@ bool	set_player_position(t_cub *cub, char *line, int x, int y)
 		cub->player->pos.x = x + 0.5;
 		cub->player->pos.y = y + 0.5;
 		cub->map->gamemap[y][x] = '0';
+		cub->player->orientation = line[x];
 	}
-	if(line[x] == 'N'){
+	if(line[x] == 'S'){
 		cub->player->dir = (t_vector){0, -1};
 		cub->player->plane = (t_vector){0.66, 0};
 	}
-	else if(line[x] == 'S'){
+	else if(line[x] == 'N'){
 		cub->player->dir = (t_vector){0, 1};
 		cub->player->plane = (t_vector){0.66, 0};
 	}

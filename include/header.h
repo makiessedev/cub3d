@@ -6,7 +6,7 @@
 /*   By: zombunga <zombunga@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 05:19:03 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 16:48:49 by zombunga         ###   ########.fr       */
+/*   Updated: 2025/10/13 17:29:27 by zombunga         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ typedef struct s_player
 	t_vector		plane;
 	float			move_speed;
 	float			rot_speed;
+	char orientation;
 }					t_player;
 
 typedef struct s_img_data
