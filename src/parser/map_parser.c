@@ -51,8 +51,6 @@ void	save_map(t_cub *cub, t_map *map, int *i)
 
 	map->width = 0;
 	map->height = 0;
-	map->width = 0;
-	map->height = 0;
 	if (map->no && map->so && map->we && map->ea && map->c[0] && map->f[0])
 	{
 		map_height = count_map_height(cub, *i);

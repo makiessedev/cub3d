@@ -50,6 +50,8 @@ bool	get_map(t_cub *cub_data, t_map *map, int map_height, int *i)
 	while (cub_data->map->map_raw_datas[*i])
 	{
 		line = ft_strtrim(map->map_raw_datas[*i], M_EMPTY);
+		if (!line)
+			return (false);
 		if (line[0] == '\0' && map->height < map_height)
 			return (free(line), false);
 		else if (line[0] == '\0')
