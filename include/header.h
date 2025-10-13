@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zombunga <zombunga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/13 05:19:03 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 17:29:27 by zombunga         ###   ########.fr       */
+/*   Updated: 2025/10/13 23:11:09 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ typedef struct s_player
 	t_vector		plane;
 	float			move_speed;
 	float			rot_speed;
-	char orientation;
+	char			orientation;
 }					t_player;
 
 typedef struct s_img_data
@@ -213,6 +213,14 @@ t_vector			calculate_ray_direction(t_player *player, float pixel);
 void				step_dda(t_ray *ray, t_vector *wallMapPos);
 void				compute_wall_data(t_cub *cub3d, t_ray *ray);
 void				init_dda_aux(t_ray *ray, t_player *player);
-t_cub	*initialization(void);
+t_cub				*initialization(void);
+t_vector			init_vector(float x, float y);
+t_player			*init_player_struct(void);
+t_img_data			init_img_data(void);
+t_texture			init_texture(void);
+t_map				*init_map(void);
+t_key_status		init_key_status(void);
+t_ray				*init_ray(void);
+t_wall_line			init_wall_line(void);
 
 #endif

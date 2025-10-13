@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zombunga <zombunga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/12 20:50:57 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 18:13:10 by zombunga         ###   ########.fr       */
+/*   Updated: 2025/10/13 23:22:57 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,30 @@ bool	validate_lines_aux(t_map *map, int *i, int *j)
 	return (true);
 }
 
+static void	set_player_direction(t_player *player, char orientation)
+{
+	if (orientation == 'N')
+	{
+		player->dir = (t_vector){0, -1};
+		player->plane = (t_vector){0.66, 0};
+	}
+	else if (orientation == 'S')
+	{
+		player->dir = (t_vector){0, 1};
+		player->plane = (t_vector){0.66, 0};
+	}
+	else if (orientation == 'E')
+	{
+		player->dir = (t_vector){1, 0};
+		player->plane = (t_vector){0, 0.66};
+	}
+	else if (orientation == 'W')
+	{
+		player->dir = (t_vector){-1, 0};
+		player->plane = (t_vector){0, 0.66};
+	}
+}
+
 bool	set_player_position(t_cub *cub, char *line, int x, int y)
 {
 	if (line[x] == 'N' || line[x] == 'S' || line[x] == 'E' || line[x] == 'W')
@@ -43,22 +67,7 @@ bool	set_player_position(t_cub *cub, char *line, int x, int y)
 		cub->player->pos.y = y + 0.5;
 		cub->map->gamemap[y][x] = '0';
 		cub->player->orientation = line[x];
-	}
-	if(line[x] == 'N'){
-		cub->player->dir = (t_vector){0, -1};
-		cub->player->plane = (t_vector){0.66, 0};
-	}
-	else if(line[x] == 'S'){
-		cub->player->dir = (t_vector){0, 1};
-		cub->player->plane = (t_vector){0.66, 0};
-	}
-	else if(line[x] == 'E'){
-		cub->player->dir = (t_vector){1, 0};
-		cub->player->plane = (t_vector){0, 0.66};
-	}
-	else if(line[x] == 'W'){
-		cub->player->dir = (t_vector){-1, 0};
-		cub->player->plane = (t_vector){0, 0.66};
+		set_player_direction(cub->player, line[x]);
 	}
 	return (true);
 }

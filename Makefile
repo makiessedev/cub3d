@@ -11,7 +11,7 @@ LIBFT_NAME	= libft.a
 LIBFT		= $(LIBFT_PATH)$(LIBFT_NAME)
 
 SRC_PATH = ./src/
-SRC		= 	main.c events.c initialization.c \
+SRC		= 	main.c events.c \
 						vec_operations.c rendering.c \
 						print_error_and_exit.c moviments.c rotation.c \
 						parser/handle_color.c parser/handle_texture.c \
@@ -19,7 +19,9 @@ SRC		= 	main.c events.c initialization.c \
 						parser/validation.c parser/utils2.c \
 						parser/extract_elements.c parser/extract_map_utils.c \
 						parser/validation_utils.c parser/check_cub_ext.c \
-						utils.c utils2.c compute_wall.c
+						utils.c utils2.c compute_wall.c \
+						initialization/initialization.c initialization/initialization2.c \
+						initialization/initialization3.c
 
 SRCS	= $(addprefix $(SRC_PATH), $(SRC))
 

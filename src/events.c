@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: zombunga <zombunga@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mmorais <makiesse.dev@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/10/08 11:03:24 by mmorais           #+#    #+#             */
-/*   Updated: 2025/10/13 18:26:30 by zombunga         ###   ########.fr       */
+/*   Updated: 2025/10/13 23:16:00 by mmorais          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,26 @@ int	game_exit(t_cub *cub)
 	free_cub(cub);
 	exit(0);
 	return (0);
+}
+
+void	handle_rotation(t_cub *cub)
+{
+	if (cub->key_status.rotate_right_pressed == true)
+	{
+		if (cub->player->orientation == 'W' || cub->player->orientation == 'S')
+			rotate_left(cub);
+		else if (cub->player->orientation == 'E'
+			|| cub->player->orientation == 'N')
+			rotate_right(cub);
+	}
+	if (cub->key_status.rotate_left_pressed == true)
+	{
+		if (cub->player->orientation == 'W' || cub->player->orientation == 'S')
+			rotate_right(cub);
+		else if (cub->player->orientation == 'E'
+			|| cub->player->orientation == 'N')
+			rotate_left(cub);
+	}
 }
 
 void	handle_input(t_cub *cub)
@@ -33,26 +53,7 @@ void	handle_input(t_cub *cub)
 		move_right(cub);
 	if (cub->key_status.move_left_pressed == true)
 		move_left(cub);
-	if (cub->key_status.rotate_right_pressed == true) {
-		if (cub->player->orientation == 'W')
-			rotate_left(cub);
-		else if (cub->player->orientation == 'S')
-			rotate_left(cub);
-		else if (cub->player->orientation == 'E')
-			rotate_right(cub);
-		else if (cub->player->orientation == 'N')	
-			rotate_right(cub);		
-	}
-	if (cub->key_status.rotate_left_pressed == true) {
-		if (cub->player->orientation == 'W')
-			rotate_right(cub);
-		else if (cub->player->orientation == 'S')
-			rotate_right(cub);
-		else if (cub->player->orientation == 'E')
-			rotate_left(cub);
-		else if (cub->player->orientation == 'N')
-			rotate_left(cub);
-	}
+	handle_rotation(cub);
 }
 
 int	handle_keypress(int keycode, void *cub3d_ptr)
@@ -81,7 +82,7 @@ int	handle_keypress(int keycode, void *cub3d_ptr)
 	return (0);
 }
 
-int	handle_keyrelease(int keycode, void *cub3d_ptr)
+int	handle_keyrelease(int keycode, void *cub)
 {
 	t_cub	*cub3d;
 
