@@ -25,10 +25,7 @@ int	main(int ac, char **av)
 {
 	t_cub	*cub;
 
-	cub = malloc(sizeof(t_cub));
-	cub->map = malloc(sizeof(t_map));
-	cub->player = malloc(sizeof(t_player));
-	cub->ray = malloc(sizeof(t_ray));
+	cub = initialization();
 	if (ac != 2)
 		print_error_and_exit(cub, "Invalid arguments");
 	if (!check_cub_extension(av[1]))
