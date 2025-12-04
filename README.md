@@ -63,4 +63,4 @@ Useful resources for this project are:
 - Movement: [Calculating heading in 2d games: Using trigonometric functions part 1](http://gamecodeschool.com/essentials/calculating-heading-in-2d-games-using-trigonometric-functions-part-1/)
 
 ---
-Made by aquesada and mcombeau
+Made by [Makiese Dev](https://github.com/makiessedev) and [Zola Mbunga](https://github.com/zolambunga)
