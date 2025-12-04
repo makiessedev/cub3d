@@ -19,7 +19,6 @@ git submodule update --init --recursive
 
 ## Compile and Run
 
-
 To compile the projecto, `cd` into the cloned directory and:
 
 ```shell
@@ -29,7 +28,7 @@ make
 To run the program:
 
 ```shell
-./cub3D assets/maps/map.cub
+./cub3D assets/maps/good/map.cub
 ```
 
 The program takes a map file as an argument. Maps are available in the `maps` directory. There are good maps which the program should run smoothly with, and bad maps which the program should reject.
@@ -63,4 +62,5 @@ Useful resources for this project are:
 - Movement: [Calculating heading in 2d games: Using trigonometric functions part 1](http://gamecodeschool.com/essentials/calculating-heading-in-2d-games-using-trigonometric-functions-part-1/)
 
 ---
+
 Made by [Makiese Dev](https://github.com/makiessedev) and [Zola Mbunga](https://github.com/zolambunga)
