@@ -29,7 +29,7 @@ make
 To run the program:
 
 ```shell
-./cub3d <path/to/map.cub>
+./cub3D assets/maps/map.cub
 ```
 
 The program takes a map file as an argument. Maps are available in the `maps` directory. There are good maps which the program should run smoothly with, and bad maps which the program should reject.
